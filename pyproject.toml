@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vba_types"
+version = "0.0.1"
+authors = [
+  { name="Kevin Nowaczyk", email="beakerboy99@yahoo.com" },
+]
+description = "VBA Native Data Types."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+]
+[project.optional-dependencies]
+tests = [
+  'coveralls',
+  'flake8-annotations',
+  'mypy',
+  'pep8-naming',
+  'pytest',
+  'pytest-cov',
+  'pytest-mock',
+]
+[project.urls]
+"Homepage" = "https://github.com/Beakerboy/Vba-Types"
+"Bug Tracker" = "https://github.com/Beakerboy/Vba-Types/issues"
+
+[tool.setuptools.package-data]
+"vba_types" = ["py.typed"]
+
+[tool.pytest.ini_options]
+pythonpath = "src:tests"
+testpaths = [
+    "tests",
+]
