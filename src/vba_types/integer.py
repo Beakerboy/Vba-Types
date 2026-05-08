@@ -20,11 +20,14 @@ class VBAInteger:
 
     def _validate(self: T, value: VBACompatible) -> int:
         # Extract raw numeric value
-        raw_val: float = float(value.value) if isinstance(value, VBAInteger) else float(value)
-        
+        if isinstance(value, VBAInteger):
+            raw_val = float(value.value)
+        else:
+            raw_val = float(value)
+
         # VBA uses 'Banker's Rounding' (rounds to nearest even number)
         final_val: int = int(round(raw_val))
-        
+
         if not (self.MIN_VALUE <= final_val <= self.MAX_VALUE):
             raise OverflowError("Run-time error '6': Overflow")
         return final_val
