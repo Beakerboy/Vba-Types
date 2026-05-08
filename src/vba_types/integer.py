@@ -1,8 +1,10 @@
 from typing import Union, TypeVar
 
+
 # Type alias for types that can be converted to/interact with VBAInteger
 VBACompatible = Union[int, float, "VBAInteger"]
 T = TypeVar("T", bound="VBAInteger")
+
 
 class VBAInteger:
     """
@@ -13,10 +15,10 @@ class VBAInteger:
     MAX_VALUE: int = 32767
     value: int
 
-    def __init__(self, value: VBACompatible = 0) -> None:
+    def __init__(self: T, value: VBACompatible = 0) -> None:
         self.value = self._validate(value)
 
-    def _validate(self, value: VBACompatible) -> int:
+    def _validate(self: T, value: VBACompatible) -> int:
         # Extract raw numeric value
         raw_val: float = float(value.value) if isinstance(value, VBAInteger) else float(value)
         
@@ -27,13 +29,13 @@ class VBAInteger:
             raise OverflowError("Run-time error '6': Overflow")
         return final_val
 
-    def __repr__(self) -> str:
+    def __repr__(self: T) -> str:
         return str(self.value)
 
-    def __int__(self) -> int:
+    def __int__(self: T) -> int:
         return self.value
 
-    def __index__(self) -> int:
+    def __index__(self: T) -> int:
         """Allows the object to be used in slice indices or bin() functions."""
         return self.value
 
