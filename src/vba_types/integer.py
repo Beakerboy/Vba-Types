@@ -51,7 +51,7 @@ class VBAInteger:
     def __mul__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value * int(other))
 
-    def __truediv__(self, other: VBACompatible) -> float:
+    def __truediv__(self: T, other: VBACompatible) -> float:
         # VBA '/' always returns a Double (float in Python)
         return float(self.value) / float(other)
 
