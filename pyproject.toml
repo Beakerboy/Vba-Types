@@ -21,6 +21,7 @@ dependencies = [
 [project.optional-dependencies]
 tests = [
   'coveralls',
+  'python-dateutil',
   'flake8-annotations',
   'mypy',
   'pep8-naming',
