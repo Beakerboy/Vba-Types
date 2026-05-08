@@ -23,7 +23,10 @@ def test_vba_rounding() -> None:
 
 
 def test_arithmetic_overflow() -> None:
-    """Test that operations resulting in out-of-bounds values raise OverflowError."""
+    """
+    Test that operations resulting in out-of-bounds
+    values raise OverflowError.
+    """
     a = VBAInteger(30000)
     b = VBAInteger(3000)
 
