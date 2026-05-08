@@ -17,17 +17,18 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+  'python-dateutil',
 ]
 [project.optional-dependencies]
 tests = [
   'coveralls',
-  'python-dateutil',
   'flake8-annotations',
   'mypy',
   'pep8-naming',
   'pytest',
   'pytest-cov',
   'pytest-mock',
+  'types-python-dateutil',
 ]
 [project.urls]
 "Homepage" = "https://github.com/Beakerboy/Vba-Types"
