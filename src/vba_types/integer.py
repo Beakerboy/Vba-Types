@@ -1,3 +1,4 @@
+from functools import total_ordering
 from typing import Union, TypeVar
 
 
@@ -6,6 +7,7 @@ VBACompatible = Union[int, float, "VBAInteger"]
 T = TypeVar("T", bound="VBAInteger")
 
 
+@total_ordering
 class VBAInteger:
     """
     Simulates the VBA Integer data type (16-bit signed).
@@ -45,6 +47,9 @@ class VBAInteger:
 
     def __eq__(self: T, other: VBACompatible) -> bool:
         return type(self)(self.value == int(other))
+
+    def __lt__(self: T, other: VBACompatible) -> bool:
+        return type(self)(self.value < int(other))
 
     def __add__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value + int(other))
