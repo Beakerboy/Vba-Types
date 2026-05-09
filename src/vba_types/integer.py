@@ -43,6 +43,9 @@ class VBAInteger:
         """Allows the object to be used in slice indices or bin() functions."""
         return self.value
 
+    def __eq__(self: T, other: VBACompatible) -> bool:
+        return type(self)(self.value == int(other))
+
     def __add__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value + int(other))
 
