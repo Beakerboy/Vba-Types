@@ -66,6 +66,9 @@ class VBAInteger:
     def __mul__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value * int(other))
 
+    def __rmul__(self: T, other: VBACompatible) -> T:
+        return type(self)(self.value * int(other))
+
     def __pow__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value ** int(other))
 
