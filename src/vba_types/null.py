@@ -41,3 +41,5 @@ class VBANull:
 
     def __ne__(self, other: Any) -> bool:
         return True # In VBA, Null <> anything is also effectively handled as not-equal
+
+Null = VBANull()
