@@ -1,15 +1,19 @@
 import pytest
+from vba_types.nothing import VBANothing, Nothing
+
 
 def test_nothing_singleton():
     """Ensure Nothing is a singleton."""
     assert VBANothing() is Nothing
     assert id(VBANothing()) == id(Nothing)
 
+
 def test_nothing_boolean():
     """Nothing should be falsy."""
     assert bool(Nothing) is False
     if Nothing:
         pytest.fail("Nothing should evaluate to False")
+
 
 def test_nothing_equality():
     """Nothing should only equal itself."""
@@ -18,6 +22,7 @@ def test_nothing_equality():
     assert Nothing != ""
     assert Nothing is not None
 
+
 def test_nothing_errors():
     """Math operations on Nothing should raise TypeErrors (mimicking VBA Error 91)."""
     with pytest.raises(TypeError, match="Object variable"):
@@ -25,6 +30,7 @@ def test_nothing_errors():
     
     with pytest.raises(TypeError, match="Object variable"):
         _ = Nothing * 5
+
 
 def test_nothing_repr():
     assert repr(Nothing) == "Nothing"
