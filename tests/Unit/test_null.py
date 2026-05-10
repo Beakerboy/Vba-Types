@@ -27,3 +27,6 @@ def test_vba_comparison_behavior():
 def test_null_boolean():
     """Null should be falsy."""
     assert bool(Null) is False
+
+
+Null = VBANull()
