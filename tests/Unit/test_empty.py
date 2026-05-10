@@ -1,5 +1,5 @@
 import pytest
-from your_module import VBAEmpty, Empty  # Adjust import based on your file name
+from vba_types.empty import VBAEmpty, Empty
 
 def test_singleton_behavior():
     """Ensure that only one instance of VBAEmpty ever exists."""
