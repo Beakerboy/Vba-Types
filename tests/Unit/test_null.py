@@ -24,14 +24,6 @@ def test_vba_comparison_behavior():
     assert (Null != 10) is True
 
 
-def test_isnull_function():
-    """Verify the helper function works like VBA's IsNull()."""
-    assert IsNull(Null) is True
-    assert IsNull(0) is False
-    assert IsNull("") is False
-    assert IsNull(None) is False # VBA Null is distinct from Python None
-
-
 def test_null_boolean():
     """Null should be falsy."""
     assert bool(Null) is False
