@@ -60,6 +60,9 @@ class VBAInteger:
     def __sub__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value - int(other))
 
+    def __rsub__(self: T, other: VBACompatible) -> T:
+        return type(self)(int(other) - self.value)
+
     def __mod__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value % int(other))
 
