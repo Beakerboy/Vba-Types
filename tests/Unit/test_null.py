@@ -1,5 +1,5 @@
 import pytest
-from vba_types.null import VBANull, Null
+from vba_types.null import VBANull
 
 
 def test_null_singleton():
