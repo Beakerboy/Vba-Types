@@ -46,10 +46,10 @@ class VBAInteger:
         return self.value
 
     def __eq__(self: T, other: VBACompatible) -> bool:
-        return type(self)(self.value == int(other))
+        return self.value == int(other)
 
     def __lt__(self: T, other: VBACompatible) -> bool:
-        return type(self)(self.value < int(other))
+        return self.value < int(other)
 
     def __add__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value + int(other))
