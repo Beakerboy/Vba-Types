@@ -33,3 +33,6 @@ class VBANothing:
     def __sub__(self, other): raise TypeError("VBA Error 91: Object variable or With block variable not set")
     def __mul__(self, other): raise TypeError("VBA Error 91: Object variable or With block variable not set")
     def __truediv__(self, other): raise TypeError("VBA Error 91: Object variable or With block variable not set")
+
+
+Nothing = VBANothing()
