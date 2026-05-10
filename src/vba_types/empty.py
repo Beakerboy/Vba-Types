@@ -45,3 +45,6 @@ class VBAEmpty:
     def __mul__(self, other: Any) -> Any: return 0 * other
     def __rmul__(self, other: Any) -> Any: return other * 0
     def __truediv__(self, other: Any) -> Any: return 0 / other
+
+
+Empty = VBAEmpty()
