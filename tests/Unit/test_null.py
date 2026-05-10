@@ -1,0 +1,36 @@
+import pytest
+
+
+def test_null_singleton():
+    assert VBANull() is Null
+    assert id(VBANull()) == id(Null)
+
+
+def test_null_propagation_arithmetic():
+    """Any math operation with Null should return Null."""
+    assert Null + 5 is Null
+    assert 10 - Null is Null
+    assert Null * 2 is Null
+    assert 100 / Null is Null
+    assert (Null + 10) * 5 is Null
+
+
+def test_vba_comparison_behavior():
+    """In VBA, Null = Null and Null = 0 are both NOT True."""
+    assert (Null == Null) is False
+    assert (Null == 0) is False
+    assert (Null == "") is False
+    assert (Null != 10) is True
+
+
+def test_isnull_function():
+    """Verify the helper function works like VBA's IsNull()."""
+    assert IsNull(Null) is True
+    assert IsNull(0) is False
+    assert IsNull("") is False
+    assert IsNull(None) is False # VBA Null is distinct from Python None
+
+
+def test_null_boolean():
+    """Null should be falsy."""
+    assert bool(Null) is False
