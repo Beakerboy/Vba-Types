@@ -1,15 +1,16 @@
 from functools import total_ordering
 from typing import Union, TypeVar
 from .exceptions import DivisionByZeroError
+from .vba_type_base import VBATypeBase
 
 
 # Type alias for types that can be converted to/interact with VBAInteger
-VBACompatible = Union[int, float, "VBAInteger"]
+VBACompatible = Union[int, float, "VBATypeBase"]
 T = TypeVar("T", bound="VBAInteger")
 
 
 @total_ordering
-class VBAInteger:
+class VBAInteger(VBATypeBase):
     """
     Simulates the VBA Integer data type (16-bit signed).
     Range: -32,768 to 32,767.
