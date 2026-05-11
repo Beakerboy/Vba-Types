@@ -11,7 +11,7 @@ class VBANull:
     """
     _instance: Optional['VBANull'] = None
 
-    def __new__(cls:Type[T]) -> 'VBANull':
+    def __new__(cls: Type[T]) -> 'VBANull':
         if cls._instance is None:
             cls._instance = super(VBANull, cls).__new__(cls)
         return cls._instance
