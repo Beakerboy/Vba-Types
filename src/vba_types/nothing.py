@@ -37,7 +37,7 @@ class VBANothing:
     def __add__(self: T, other: Any) -> None:
         raise ObjectVariableNotSetError()
 
-    def __sub__(self: T, other: Any) -> None:  
+    def __sub__(self: T, other: Any) -> None:
         raise ObjectVariableNotSetError()
 
     def __mul__(self: T, other: Any) -> None:
