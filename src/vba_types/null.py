@@ -1,4 +1,4 @@
-from typing import Any, Optional, TypeVar
+from typing import Any, Optional, Type, TypeVar
 
 
 T = TypeVar('T', bound='VBANull')
