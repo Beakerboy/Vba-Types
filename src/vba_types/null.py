@@ -39,10 +39,11 @@ class VBANull:
 
     # VBA Comparison logic: Any comparison with Null returns Null
     # Note: In Python, __eq__ must return a boolean for dict/set keys to work.
-    # To mimic VBA's "If x = Null" always being False, we return False for equality.
+    # To mimic VBA's "If x = Null" always being False, we return False for
+    # equality.
     def __eq__(self: T, other: Any) -> bool:
         # In VBA, Null = Null is False (use IsNull instead)
-        return False  
+        return False
 
     def __ne__(self: T, other: Any) -> bool:
         # In VBA, Null <> anything is also effectively handled as not-equal
