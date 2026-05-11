@@ -1,190 +1,205 @@
+from typing import TypeVar
+
+
+T = TypeVar('T', bound='VBARuntimeError')
+
+
 class VBARuntimeError(Exception):
-    """Base class for all trappable VBA runtime errors."""
-    def __init__(self, code, message):
-        self.code = code
-        self.message = message
+    """Base class that pulls metadata from class attributes."""
+    code: int
+    message: str
+
+    def __init__(self: T) -> None:
+        # Standard VBA error format: "Run-time error 'X': Message"
         super().__init__(f"Run-time error '{self.code}': {self.message}")
 
 
 class ReturnWithoutGosubError(VBARuntimeError):
-    def __init__(self): super().__init__(3, "Return without GoSub")
-
+    code = 3
+    message = "Return without GoSub"
 
 class InvalidProcedureCallError(VBARuntimeError):
-    def __init__(self): super().__init__(5, "Invalid procedure call")
-
+    code = 5
+    message = "Invalid procedure call"
 
 class OverflowError(VBARuntimeError):
-    def __init__(self): super().__init__(6, "Overflow")
-
+    code = 6
+    message = "Overflow"
 
 class OutOfMemoryError(VBARuntimeError):
-    def __init__(self): super().__init__(7, "Out of memory")
-
+    code = 7
+    message = "Out of memory"
 
 class SubscriptOutOfRangeError(VBARuntimeError):
-    def __init__(self): super().__init__(9, "Subscript out of range")
-
+    code = 9
+    message = "Subscript out of range"
 
 class ArrayLockedError(VBARuntimeError):
-    def __init__(self): super().__init__(10, "This array is fixed or temporarily locked")
-
+    code = 10
+    message = "This array is fixed or temporarily locked"
 
 class DivisionByZeroError(VBARuntimeError):
-    def __init__(self): super().__init__(11, "Division by zero")
-
+    code = 11
+    message = "Division by zero"
 
 class TypeMismatchError(VBARuntimeError):
-    def __init__(self): super().__init__(13, "Type mismatch")
-
+    code = 13
+    message = "Type mismatch"
 
 class OutOfStringSpaceError(VBARuntimeError):
-    def __init__(self): super().__init__(14, "Out of string space")
-
+    code = 14
+    message = "Out of string space"
 
 class ExpressionTooComplexError(VBARuntimeError):
-    def __init__(self): super().__init__(16, "Expression too complex")
-
+    code = 16
+    message = "Expression too complex"
 
 class CantPerformOperationError(VBARuntimeError):
-    def __init__(self): super().__init__(17, "Can't perform requested operation")
-
+    code = 17
+    message = "Can't perform requested operation"
 
 class UserInterruptError(VBARuntimeError):
-    def __init__(self): super().__init__(18, "User interrupt occurred")
-
+    code = 18
+    message = "User interrupt occurred"
 
 class ResumeWithoutError(VBARuntimeError):
-    def __init__(self): super().__init__(20, "Resume without error")
-
+    code = 20
+    message = "Resume without error"
 
 class OutOfStackSpaceError(VBARuntimeError):
-    def __init__(self): super().__init__(28, "Out of stack space")
-
+    code = 28
+    message = "Out of stack space"
 
 class ProcedureNotDefinedError(VBARuntimeError):
-    def __init__(self): super().__init__(35, "Sub, Function, or Property not defined")
-
+    code = 35
+    message = "Sub, Function, or Property not defined"
 
 class ErrorLoadingDllError(VBARuntimeError):
-    def __init__(self): super().__init__(48, "Error in loading DLL")
-
+    code = 48
+    message = "Error in loading DLL"
 
 class BadDllCallingConventionError(VBARuntimeError):
-    def __init__(self): super().__init__(49, "Bad DLL calling convention")
-
+    code = 49
+    message = "Bad DLL calling convention"
 
 class InternalError(VBARuntimeError):
-    def __init__(self): super().__init__(51, "Internal error")
-
+    code = 51
+    message = "Internal error"
 
 class BadFileNameOrNumberError(VBARuntimeError):
-    def __init__(self): super().__init__(52, "Bad file name or number")
-
+    code = 52
+    message = "Bad file name or number"
 
 class FileNotFoundError(VBARuntimeError):
-    def __init__(self): super().__init__(53, "File not found")
-
+    code = 53
+    message = "File not found"
 
 class BadFileModeError(VBARuntimeError):
-    def __init__(self): super().__init__(54, "Bad file mode")
-
+    code = 54
+    message = "Bad file mode"
 
 class FileAlreadyOpenError(VBARuntimeError):
-    def __init__(self): super().__init__(55, "File already open")
-
+    code = 55
+    message = "File already open"
 
 class DeviceIOError(VBARuntimeError):
-    def __init__(self): super().__init__(57, "Device I/O error")
-
+    code = 57
+    message = "Device I/O error"
 
 class FileAlreadyExistsError(VBARuntimeError):
-    def __init__(self): super().__init__(58, "File already exists")
-
+    code = 58
+    message = "File already exists"
 
 class BadRecordLengthError(VBARuntimeError):
-    def __init__(self): super().__init__(59, "Bad record length")
-
+    code = 59
+    message = "Bad record length"
 
 class DiskFullError(VBARuntimeError):
-    def __init__(self): super().__init__(61, "Disk full")
-
+    code = 61
+    message = "Disk full"
 
 class InputPastEndOfFileError(VBARuntimeError):
-    def __init__(self): super().__init__(62, "Input past end of file")
-
+    code = 62
+    message = "Input past end of file"
 
 class BadRecordNumberError(VBARuntimeError):
-    def __init__(self): super().__init__(63, "Bad record number")
-
+    code = 63
+    message = "Bad record number"
 
 class TooManyFilesError(VBARuntimeError):
-    def __init__(self): super().__init__(67, "Too many files")
-
+    code = 67
+    message = "Too many files"
 
 class DeviceUnavailableError(VBARuntimeError):
-    def __init__(self): super().__init__(68, "Device unavailable")
-
+    code = 68
+    message = "Device unavailable"
 
 class PermissionDeniedError(VBARuntimeError):
-    def __init__(self): super().__init__(70, "Permission denied")
-
+    code = 70
+    message = "Permission denied"
 
 class DiskNotReadyError(VBARuntimeError):
-    def __init__(self): super().__init__(71, "Disk not ready")
-
+    code = 71
+    message = "Disk not ready"
 
 class PathFileAccessError(VBARuntimeError):
-    def __init__(self): super().__init__(75, "Path/File access error")
-
+    code = 75
+    message = "Path/File access error"
 
 class PathNotFoundError(VBARuntimeError):
-    def __init__(self): super().__init__(76, "Path not found")
-
+    code = 76
+    message = "Path not found"
 
 class ObjectVariableNotSetError(VBARuntimeError):
-    def __init__(self): super().__init__(91, "Object variable or With block variable not set")
-
+    code = 91
+    message = "Object variable or With block variable not set"
 
 class ForLoopNotInitializedError(VBARuntimeError):
-    def __init__(self): super().__init__(92, "For loop not initialized")
-
+    code = 92
+    message = "For loop not initialized"
 
 class InvalidPatternStringError(VBARuntimeError):
-    def __init__(self): super().__init__(93, "Invalid pattern string")
-
+    code = 93
+    message = "Invalid pattern string"
 
 class InvalidUseOfNullError(VBARuntimeError):
-    def __init__(self): super().__init__(94, "Invalid use of Null")
+    code = 94
+    message = "Invalid use of Null"
 
+# --- Object and Automation Errors (Codes 424 - 1004) ---
+
+class ObjectRequiredError(VBARuntimeError):
+    code = 424
+    message = "Object required"
 
 class ActiveXComponentCantCreateObjectError(VBARuntimeError):
-    def __init__(self): super().__init__(429, "ActiveX component can't create object")
-
+    code = 429
+    message = "ActiveX component can't create object"
 
 class ClassDoesNotSupportAutomationError(VBARuntimeError):
-    def __init__(self): super().__init__(430, "Class doesn't support Automation")
-
+    code = 430
+    message = "Class doesn't support Automation"
 
 class ObjectDoesntSupportPropertyOrMethodError(VBARuntimeError):
-    def __init__(self): super().__init__(438, "Object doesn't support this property or method")
-
+    code = 438
+    message = "Object doesn't support this property or method"
 
 class AutomationError(VBARuntimeError):
-    def __init__(self): super().__init__(440, "Automation error")
-
+    code = 440
+    message = "Automation error"
 
 class ObjectDoesNotSupportThisActionError(VBARuntimeError):
-    def __init__(self): super().__init__(445, "Object doesn't support this action")
-
+    code = 445
+    message = "Object doesn't support this action"
 
 class NamedArgumentNotFoundError(VBARuntimeError):
-    def __init__(self): super().__init__(448, "Named argument not found")
-
+    code = 448
+    message = "Named argument not found"
 
 class ArgumentNotOptionalError(VBARuntimeError):
-    def __init__(self): super().__init__(449, "Argument not optional")
-
+    code = 449
+    message = "Argument not optional"
 
 class ApplicationDefinedError(VBARuntimeError):
-    def __init__(self): super().__init__(1004, "Application-defined or object-defined error")
+    code = 1004
+    message = "Application-defined or object-defined error"
