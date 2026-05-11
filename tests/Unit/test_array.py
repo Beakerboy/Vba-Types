@@ -1,6 +1,6 @@
 import pytest
 from vba_types.array import VBAArray
-from vba_types.exceptions import DivisionByZeroError
+from vba_types.exceptions import SubscriptOutOfRangeError
 
 
 def test_base_0_initialization() -> None:
