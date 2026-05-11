@@ -13,7 +13,7 @@ class VBAArray:
     @classmethod
     def initialize(cls: Type[T],
                    *args: int | list[tuple[int, int]],
-                   empty: Any = None) -> Type[T]:
+                   empty: Any = None) -> T:
         data = list(args)
         if len(data) == 1 and not isinstance(data[0], tuple):
             input = [empty] * (data[0] + 1)
