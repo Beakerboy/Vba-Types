@@ -33,12 +33,12 @@ def literal_from_string(value: str) -> Any:
     if re.fullmatch(boolean_pattern, value.upper()):
         return value.upper() == "TRUE"
     if re.fullmatch(hex_pattern, value):
-        return VBAInteger("0x" + value[2:], 16)
+        return VBAInteger(int("0x" + value[2:], 16))
     if re.fullmatch(oct_pattern, value):
         start = 2 if value[1].upper() == 'O' else 1
-        return VBAInteger(value[start:], 8)
+        return VBAInteger(int(value[start:], 8))
     if re.fullmatch(dec_pattern, value):
-        return VBAInteger(value)
+        return VBAInteger(int(value))
     if (re.fullmatch(float_pattern1, value) or
             re.fullmatch(float_pattern2, value) or
             re.fullmatch(float_pattern3, value)):
