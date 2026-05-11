@@ -1,4 +1,5 @@
 from typing import Any, Tuple, Type, TypeVar, Union
+from .exceptions import SubscriptOutOfRangeError
 
 
 T = TypeVar('T', bound='VBAArray')
@@ -33,14 +34,13 @@ class VBAArray:
 
     def _get_coords(self: T, indices: Tuple[int, ...]) -> Tuple[int, ...]:
         if len(indices) != len(self._bounds):
-            raise IndexError("Subscript out of range (dimension mismatch)")
+            raise SubscriptOutOfRangeError()
 
         internal = []
         for i, idx in enumerate(indices):
             low, high = self._bounds[i]
             if not (low <= idx <= high):
-                msg = f"Subscript out of range: {idx} (Expected {low} to {high})"
-                raise IndexError(msg)
+                raise SubscriptOutOfRangeError()
             internal.append(idx - low)
         return tuple(internal)
 
