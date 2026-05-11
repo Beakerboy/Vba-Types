@@ -28,22 +28,22 @@ class VBANull:
         return False
 
     # Null Propagation: Any math with Null returns Null
-    def __add__(self, other: Any) -> 'VBANull': return self
-    def __radd__(self, other: Any) -> 'VBANull': return self
-    def __sub__(self, other: Any) -> 'VBANull': return self
-    def __rsub__(self, other: Any) -> 'VBANull': return self
-    def __mul__(self, other: Any) -> 'VBANull': return self
-    def __rmul__(self, other: Any) -> 'VBANull': return self
-    def __truediv__(self, other: Any) -> 'VBANull': return self
-    def __rtruediv__(self, other: Any) -> 'VBANull': return self
+    def __add__(self: T, other: Any) -> 'VBANull': return self
+    def __radd__(self: T, other: Any) -> 'VBANull': return self
+    def __sub__(self: T, other: Any) -> 'VBANull': return self
+    def __rsub__(self: T, other: Any) -> 'VBANull': return self
+    def __mul__(self: T, other: Any) -> 'VBANull': return self
+    def __rmul__(self: T, other: Any) -> 'VBANull': return self
+    def __truediv__(self: T, other: Any) -> 'VBANull': return self
+    def __rtruediv__(self: T, other: Any) -> 'VBANull': return self
 
     # VBA Comparison logic: Any comparison with Null returns Null
     # Note: In Python, __eq__ must return a boolean for dict/set keys to work.
     # To mimic VBA's "If x = Null" always being False, we return False for equality.
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self: T, other: Any) -> bool:
         return False  # In VBA, Null = Null is False (use IsNull instead)
 
-    def __ne__(self, other: Any) -> bool:
+    def __ne__(self: T, other: Any) -> bool:
         return True # In VBA, Null <> anything is also effectively handled as not-equal
 
 Null = VBANull()
