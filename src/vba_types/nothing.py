@@ -1,4 +1,5 @@
 from typing import Any, Optional, TypeVar
+from .exceptions import ObjectVariableNotSetError
 
 
 T = TypeVar('T', bound='VBANothing')
@@ -34,13 +35,13 @@ class VBANothing:
 
     # Disable math/string operations to mimic VBA's "Object not set" errors
     def __add__(self: T, other: Any) -> None:
-        raise TypeError("VBA Error 91: Object variable or With block variable not set")
-    def __sub__(self: T, other: Any) -> None:
-        raise TypeError("VBA Error 91: Object variable or With block variable not set")
+        raise ObjectVariableNotSetError()
+    def __sub__(self: T, other: Any) -> None:  
+        raise ObjectVariableNotSetError()
     def __mul__(self: T, other: Any) -> None:
-        raise TypeError("VBA Error 91: Object variable or With block variable not set")
+        raise ObjectVariableNotSetError()
     def __truediv__(self: T, other: Any) -> None:
-        raise TypeError("VBA Error 91: Object variable or With block variable not set")
+        raise TObjectVariableNotSetError()
 
 
 Nothing = VBANothing()
