@@ -51,7 +51,7 @@ class OutOfStackSpaceError(VBAMetadata, RecursionError):
     message = "Out of stack space"
 
 
-class FileNotFoundError(VBAMetadata, FileNotFoundError):
+class FileNotFoundException(VBAMetadata, FileNotFoundError):
     code = 53
     message = "File not found"
 
