@@ -26,7 +26,7 @@ class VBAException(VBAMetadata, Exception):
 # These inherit from standard Python exceptions for better interoperability.
 
 
-class OverflowError(VBAMetadata, OverflowError):
+class OverflowException(VBAMetadata, OverflowError):
     code = 6
     message = "Overflow"
 
