@@ -1,5 +1,7 @@
 import pytest
 from vba_types.empty import VBAEmpty, Empty
+from vba_types.integer import VBAInteger
+
 
 def test_singleton_behavior():
     """Ensure that only one instance of VBAEmpty ever exists."""
@@ -7,16 +9,19 @@ def test_singleton_behavior():
     assert another_empty is Empty
     assert id(another_empty) == id(Empty)
 
+
 def test_string_and_repr():
     """Test string representations."""
     assert str(Empty) == ""
     assert repr(Empty) == "Empty"
+
 
 def test_type_casting():
     """Test explicit casting to Python primitives."""
     assert int(Empty) == 0
     assert float(Empty) == 0.0
     assert bool(Empty) is False
+
 
 def test_equality_comparisons():
     """Test equality logic against various types."""
@@ -30,6 +35,7 @@ def test_equality_comparisons():
     assert Empty != "0"
     assert Empty != [1, 2, 3]
     assert Empty is not None    # Empty is distinct from None
+
 
 def test_arithmetic_operations():
     """Test that Empty behaves like 0 in math operations."""
@@ -48,7 +54,8 @@ def test_arithmetic_operations():
     # Division
     assert Empty / 2 == 0.0
     with pytest.raises(ZeroDivisionError):
-        10 / Empty
+        VBAInteger(10) / Empty
+
 
 def test_boolean_context():
     """Test how Empty behaves in if-statements."""
