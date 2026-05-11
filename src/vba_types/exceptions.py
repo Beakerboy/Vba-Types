@@ -10,7 +10,7 @@ class VBAMetadata:
     """Mixin for VBA metadata; avoids memory layout conflicts with C-based exceptions."""
     code: int
     message: str
-    
+
     def __str__(self: T) -> str:
         return f"Run-time error '{self.code}': {self.message}"
 
