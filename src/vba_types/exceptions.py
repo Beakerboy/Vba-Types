@@ -125,11 +125,12 @@ class ApplicationDefinedError(VBAException):
     code = 1004
     message = "Application-defined or object-defined error"
 
+
 # --- Registry and Factory ---
 
 # Collect all exception classes that utilize the VBAMetadata mixin
 VBA_REGISTRY: Dict[int, Type[Union[VBAException, VBAMetadata]]] = {
-    cls.code: cls for cls in [*VBAException.__subclasses__(), 
+    cls.code: cls for cls in [*VBAException.__subclasses__(),
                               OverflowError, SubscriptOutOfRangeError,
                               DivisionByZeroError, TypeMismatchError,
                               OutOfStackSpaceError, FileNotFoundError,
