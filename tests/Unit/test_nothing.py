@@ -26,7 +26,7 @@ def test_nothing_equality() -> None:
 
 def test_nothing_errors() -> None:
     """
-    Math operations on Nothing should raise TypeErrors (mimicking VBA Error 91).
+    Math operations on Nothing should raise Errors
     """
     with pytest.raises(ObjectVariableNotSetError):
         _ = Nothing + 1
