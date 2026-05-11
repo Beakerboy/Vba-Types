@@ -10,7 +10,9 @@ class VBAArray:
         self._bounds = [(base, base + len(args) - 1)]
 
     @classmethod
-    def initialize(cls, *args: int | list[tuple[int, int]], empty: Any = None)-> Type[T]:
+    def initialize(cls: Type[T],
+                   *args: int | list[tuple[int, int]],
+                   empty: Any = None) -> Type[T]:
         data = list(args)
         if len(data) == 1 and not isinstance(data[0], tuple):
             input = [empty] * (data[0] + 1)
@@ -32,12 +34,13 @@ class VBAArray:
     def _get_coords(self: T, indices: Tuple[int, ...]) -> Tuple[int, ...]:
         if len(indices) != len(self._bounds):
             raise IndexError("Subscript out of range (dimension mismatch)")
-        
+
         internal = []
         for i, idx in enumerate(indices):
             low, high = self._bounds[i]
             if not (low <= idx <= high):
-                raise IndexError(f"Subscript out of range: {idx} (Expected {low} to {high})")
+                msg = f"Subscript out of range: {idx} (Expected {low} to {high})"
+                raise IndexError(msg)
             internal.append(idx - low)
         return tuple(internal)
 
