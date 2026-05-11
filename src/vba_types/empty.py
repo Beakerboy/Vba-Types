@@ -1,4 +1,4 @@
-from typing import Any, Optional, TypeVar, Union
+from typing import Any, Optional, Type, TypeVar, Union
 from .exceptions import DivisionByZeroError
 from .vba_type_base import VBATypeBase
 
@@ -13,7 +13,7 @@ class VBAEmpty(VBATypeBase):
     """
     _instance: Optional['VBAEmpty'] = None
 
-    def __new__(cls) -> 'VBAEmpty':
+    def __new__(cls: Type[T]) -> 'VBAEmpty':
         if cls._instance is None:
             cls._instance = super(VBAEmpty, cls).__new__(cls)
         return cls._instance
