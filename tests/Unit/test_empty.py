@@ -1,6 +1,7 @@
 import pytest
 from vba_types.empty import VBAEmpty, Empty
 from vba_types.integer import VBAInteger
+from vba_types.exceptions import DivisionByZeroError
 
 
 def test_singleton_behavior():
@@ -53,8 +54,8 @@ def test_arithmetic_operations():
     
     # Division
     assert Empty / 2 == 0.0
-    with pytest.raises(ZeroDivisionError):
-        VBAInteger(10) / Empty
+    with pytest.raises(DivisionByZeroError):
+        10 / Empty
 
 
 def test_boolean_context():
