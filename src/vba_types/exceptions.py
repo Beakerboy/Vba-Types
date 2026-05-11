@@ -1,4 +1,8 @@
-from typing import Type, Dict, Optional, Union
+from typing import Type, TypeVar, Dict, Optional, Union
+
+
+T = TypeVar('T', bound='VBAMetadata')
+
 
 # --- Core Infrastructure ---
 
@@ -7,7 +11,7 @@ class VBAMetadata:
     code: int
     message: str
     
-    def __str__(self) -> str:
+    def __str__(self: T) -> str:
         return f"Run-time error '{self.code}': {self.message}"
 
 
@@ -17,6 +21,7 @@ class VBAException(VBAMetadata, Exception):
 
 # --- Native Python Mappings ---
 # These inherit from standard Python exceptions for better interoperability.
+
 
 class OverflowError(VBAMetadata, OverflowError):
     code = 6
@@ -64,6 +69,7 @@ class ObjectDoesntSupportPropertyOrMethodError(VBAMetadata, AttributeError):
 
 # --- Unique VBA Exceptions ---
 # These describe states unique to the VBA environment.
+
 
 class ReturnWithoutGosubError(VBAException):
     code = 3
