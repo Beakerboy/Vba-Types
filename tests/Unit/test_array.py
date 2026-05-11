@@ -28,8 +28,8 @@ def test_initialize_with_number() -> None:
     arr = VBAArray.initialize(3)
     assert arr.lbound() == 0
     assert arr.ubound() == 3
-    assert arr[0] is None
-    assert arr[3] is None
+    assert arr[0] is Empty
+    assert arr[3] is Empty
 
 
 def test_initialize_with_tuple() -> None:
