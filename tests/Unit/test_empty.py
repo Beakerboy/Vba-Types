@@ -4,27 +4,27 @@ from vba_types.integer import VBAInteger
 from vba_types.exceptions import DivisionByZeroError
 
 
-def test_singleton_behavior():
+def test_singleton_behavior() -> None:
     """Ensure that only one instance of VBAEmpty ever exists."""
     another_empty = VBAEmpty()
     assert another_empty is Empty
     assert id(another_empty) == id(Empty)
 
 
-def test_string_and_repr():
+def test_string_and_repr() -> None:
     """Test string representations."""
     assert str(Empty) == ""
     assert repr(Empty) == "Empty"
 
 
-def test_type_casting():
+def test_type_casting() -> None:
     """Test explicit casting to Python primitives."""
     assert int(Empty) == 0
     assert float(Empty) == 0.0
     assert bool(Empty) is False
 
 
-def test_equality_comparisons():
+def test_equality_comparisons() -> None:
     """Test equality logic against various types."""
     assert Empty == VBAEmpty()  # Identity/Type
     assert Empty == 0           # Integer context
@@ -38,7 +38,7 @@ def test_equality_comparisons():
     assert Empty is not None    # Empty is distinct from None
 
 
-def test_arithmetic_operations():
+def test_arithmetic_operations() -> None:
     """Test that Empty behaves like 0 in math operations."""
     # Addition
     assert Empty + 10 == 10
@@ -58,7 +58,7 @@ def test_arithmetic_operations():
         10 / Empty
 
 
-def test_boolean_context():
+def test_boolean_context() -> None:
     """Test how Empty behaves in if-statements."""
     if Empty:
         pytest.fail("Empty should evaluate to False")
