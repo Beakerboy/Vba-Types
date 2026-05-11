@@ -1,4 +1,4 @@
-from typing import Any, Optional, TypeVar
+from typing import Any, Optional, Type, TypeVar
 from .exceptions import ObjectVariableNotSetError
 
 
@@ -41,7 +41,7 @@ class VBANothing:
     def __mul__(self: T, other: Any) -> None:
         raise ObjectVariableNotSetError()
     def __truediv__(self: T, other: Any) -> None:
-        raise TObjectVariableNotSetError()
+        raise ObjectVariableNotSetError()
 
 
 Nothing = VBANothing()
