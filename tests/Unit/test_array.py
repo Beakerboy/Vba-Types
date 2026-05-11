@@ -1,5 +1,6 @@
 import pytest
 from vba_types.array import VBAArray
+from vba_types.exceptions import DivisionByZeroError
 
 
 def test_base_0_initialization() -> None:
@@ -61,14 +62,15 @@ def test_multidimensional_custom_bounds() -> None:
 
 def test_out_of_bounds_raises_error() -> None:
     """
-    Ensures that accessing indices outside the defined bounds raises IndexError.
+    Ensures that accessing indices outside the defined bounds raises
+    an Exception.
     """
     arr = VBAArray(1, 2, 3, base=1)
 
-    with pytest.raises(IndexError, match="Subscript out of range"):
+    with pytest.raises(SubscriptOutOfRangeError):
         _ = arr[0]  # Too low for base 1
 
-    with pytest.raises(IndexError, match="Subscript out of range"):
+    with pytest.raises(SubscriptOutOfRangeError):
         _ = arr[4]  # Too high
 
 
