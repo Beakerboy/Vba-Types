@@ -60,7 +60,9 @@ def test_multidimensional_custom_bounds() -> None:
 
 
 def test_out_of_bounds_raises_error() -> None:
-    """Ensures that accessing indices outside the defined bounds raises IndexError."""
+    """
+    Ensures that accessing indices outside the defined bounds raises IndexError.
+    """
     arr = VBAArray(1, 2, 3, base=1)
 
     with pytest.raises(IndexError, match="Subscript out of range"):
