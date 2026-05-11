@@ -124,10 +124,10 @@ class ApplicationDefinedError(VBAException):
 # Collect all exception classes that utilize the VBAMetadata mixin
 VBA_REGISTRY: Dict[int, Type[Union[VBAException, VBAMetadata]]] = {
     cls.code: cls for cls in [*VBAException.__subclasses__(), 
-                              OverflowError, SubscriptOutOfRangeError, 
-                              DivisionByZeroError, TypeMismatchError, 
-                              OutOfStackSpaceError, FileNotFoundError, 
-                              PermissionDeniedError, PathNotFoundError, 
+                              OverflowError, SubscriptOutOfRangeError,
+                              DivisionByZeroError, TypeMismatchError,
+                              OutOfStackSpaceError, FileNotFoundError,
+                              PermissionDeniedError, PathNotFoundError,
                               ObjectDoesntSupportPropertyOrMethodError]
 }
 
