@@ -1,4 +1,5 @@
 from typing import Any, Tuple, Type, TypeVar, Union
+from .empty import Empty
 from .exceptions import SubscriptOutOfRangeError
 
 
@@ -16,7 +17,7 @@ class VBAArray:
                    empty: Any = None) -> T:
         data = list(args)
         if len(data) == 1 and not isinstance(data[0], tuple):
-            input = [empty] * (data[0] + 1)
+            input = [Empty] * (data[0] + 1)
             return cls(*input)
         else:
             arr = cls.__new__(cls)
