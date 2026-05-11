@@ -45,7 +45,7 @@ class PermissionDeniedError(VBAMetadata, PermissionError):
     code = 70
     message = "Permission denied"
 
-class PathNotFoundError(VBAMetadata, FileNotFoundError):
+class PathNotFoundError(FileNotFoundError, VBAMetadata):
     code = 76
     message = "Path not found"
 
