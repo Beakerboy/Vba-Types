@@ -1,4 +1,4 @@
-from typing import Any, Optional, Type, TypeVar, Union
+from typing import Any, Optional, Type, TypeVar
 from .exceptions import DivisionByZeroError
 from .vba_type_base import VBATypeBase
 
@@ -8,7 +8,7 @@ T = TypeVar("T", bound="VBAEmpty")
 
 class VBAEmpty(VBATypeBase):
     """
-    Represents the VBA 'Empty' type. 
+    Represents the VBA 'Empty' type.
     It is initialized to 0 in a numeric context and "" in a string context.
     """
     _instance: Optional['VBAEmpty'] = None
