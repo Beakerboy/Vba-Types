@@ -1,5 +1,6 @@
 from functools import total_ordering
 from typing import Union, TypeVar
+from .exceptions import DivisionByZeroError
 
 
 # Type alias for types that can be converted to/interact with VBAInteger
@@ -77,6 +78,8 @@ class VBAInteger:
 
     def __truediv__(self: T, other: VBACompatible) -> float:
         # VBA '/' always returns a Double (float in Python)
+        if other == 0:
+            raise DivisionByZeroError()
         return float(self.value) / float(other)
 
     def __floordiv__(self: T, other: VBACompatible) -> T:
