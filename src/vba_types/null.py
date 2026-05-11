@@ -1,4 +1,8 @@
-from typing import Any, Optional
+from typing import Any, Optional, TypeVar
+
+
+T = TypeVar('T', bound='VBANull')
+
 
 class VBANull:
     """
@@ -12,13 +16,13 @@ class VBANull:
             cls._instance = super(VBANull, cls).__new__(cls)
         return cls._instance
 
-    def __repr__(self) -> str:
+    def __repr__(self: T) -> str:
         return "Null"
 
-    def __str__(self) -> str:
+    def __str__(self: T) -> str:
         return "Null"
 
-    def __bool__(self) -> bool:
+    def __bool__(self: T) -> bool:
         # In VBA, 'If Null Then' results in an error or False-like behavior 
         # depending on context, but it is effectively falsy in Python.
         return False
