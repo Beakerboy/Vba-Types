@@ -1,5 +1,6 @@
 import pytest
 from vba_types.array import VBAArray
+from vba_types.empty import Empty
 from vba_types.exceptions import SubscriptOutOfRangeError
 
 
@@ -35,8 +36,8 @@ def test_initialize_with_tuple() -> None:
     arr = VBAArray.initialize((0, 3))
     assert arr.lbound() == 0
     assert arr.ubound() == 3
-    assert arr[0] is None
-    assert arr[3] is None
+    assert arr[0] is Empty
+    assert arr[3] is Empty
 
 
 def test_multidimensional_custom_bounds() -> None:
