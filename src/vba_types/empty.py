@@ -1,4 +1,5 @@
 from typing import Any, Optional, TypeVar, Union
+from .exceptions import DivisionByZeroError
 from .vba_type_base import VBATypeBase
 
 
@@ -43,6 +44,7 @@ class VBAEmpty(VBATypeBase):
         return False
 
     # Arithmetic behavior (Empty acts as 0)
+    def __rdiv__(self: T, other: Any) -> None: raise DivisionByZeroError()
     def __add__(self: T, other: Any) -> Any: return 0 + other
     def __radd__(self: T, other: Any) -> Any: return other + 0
     def __sub__(self: T, other: Any) -> Any: return 0 - other
