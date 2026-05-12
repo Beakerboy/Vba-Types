@@ -1,4 +1,5 @@
 from .array import VBAArray
+from .empty import VBAEmpty
 from .integer import VBAInteger
 from .literal_factory import literal_from_string
 
