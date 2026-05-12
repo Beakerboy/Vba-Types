@@ -5,5 +5,5 @@ from .literal_factory import literal_from_string
 __all__ = [
     "VBAArray",
     "VBAInteger",
-    "lieral_from_string",
+    "literal_from_string",
 ]
