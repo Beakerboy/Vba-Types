@@ -49,7 +49,7 @@ def test_comparisons_and_type_safety():
     assert VBADouble(0.1 + 0.2) == 0.3
 
     # Type safety: strings shouldn't crash the program with ValueError
-    .assertFalse(v == "not a float")
+    assert not (v == "not a float")
 
     # Less-than with unsupported types should return NotImplemented (TypeError in python)
     with pytest.raises(TypeError):
