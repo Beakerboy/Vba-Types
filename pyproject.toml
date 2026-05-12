@@ -17,6 +17,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+  'numpy',
   'python-dateutil',
 ]
 [project.optional-dependencies]
