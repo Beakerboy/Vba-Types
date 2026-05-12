@@ -1,6 +1,6 @@
 import unittest
-from .exceptions import DivisionByZeroError
-from .vba_double import VBADouble
+from vba_types.exceptions import DivisionByZeroError
+from vba_types.vba_double import VBADouble
 
 
 def test_initialization_and_value(self):
