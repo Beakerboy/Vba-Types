@@ -49,8 +49,8 @@ def test_arithmetic_operations() -> None:
     assert vba_types.integer.VBAInteger(10) - Empty == vba_types.integer.VBAInteger(10)
 
     # Multiplication
-    assert Empty * vba_types.integer.VBAInteger(100) == 0
-    assert vba_types.integer.VBAInteger(50) * Empty == 0
+    assert Empty * vba_types.integer.VBAInteger(100) == vba_types.integer.VBAInteger(0)
+    assert vba_types.integer.VBAInteger(50) * Empty == vba_types.integer.VBAInteger(0)
 
     # Division
     assert Empty / vba_types.integer.VBAInteger(2) == vba_types.double.VBADouble(0.0)
