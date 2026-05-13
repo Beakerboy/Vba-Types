@@ -39,7 +39,7 @@ class VBAEmpty(VBATypeBase):
         return False
 
     def __eq__(self: T, other: VBATypeBase) -> bool:
-        if is_instance(other, vba_types.array.VBAArray):
+        if isinstance(other, vba_types.array.VBAArray):
             raise TypeMismatchError()
         if other is Empty:
             return True
