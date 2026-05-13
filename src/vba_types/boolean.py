@@ -2,7 +2,7 @@ import vba_types
 from functools import total_ordering
 from typing import TypeVar
 from .exceptions import TypeMismatchError
-from .null import Null
+from .null import Null, VBANull
 from .vba_type_base import VBATypeBase
 
 
