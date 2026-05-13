@@ -83,7 +83,7 @@ class VBAInteger(VBATypeBase):
 
     def __truediv__(self: T, other: VBATypeBase) -> float:
         # VBA '/' always returns a Double (float in Python)
-        if other == 0:
+        if other.value == 0:
             raise DivisionByZeroError()
         return vba_types.double.VBADouble(self.value / other.value)
 
