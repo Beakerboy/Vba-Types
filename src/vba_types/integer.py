@@ -1,6 +1,7 @@
 from functools import total_ordering
 from typing import Union, TypeVar
 from .exceptions import DivisionByZeroError
+from .null import Null
 from .vba_type_base import VBATypeBase
 
 
@@ -46,9 +47,13 @@ class VBAInteger(VBATypeBase):
         return self.value
 
     def __eq__(self: T, other: VBATypeBase) -> bool:
+        if other is Null:
+             return Null
         return self.value == other.value
 
     def __lt__(self: T, other: VBATypeBase) -> bool:
+        if other is Null:
+             return Null
         return self.value < int(other)
 
     def __add__(self: T, other: VBATypeBase) -> T:
