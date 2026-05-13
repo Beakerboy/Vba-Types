@@ -1,6 +1,7 @@
 import re
 from dateutil.parser import parse
 from typing import Any
+from .double import VBADouble
 from .integer import VBAInteger
 
 
@@ -42,7 +43,7 @@ def literal_from_string(value: str) -> Any:
     if (re.fullmatch(float_pattern1, value) or
             re.fullmatch(float_pattern2, value) or
             re.fullmatch(float_pattern3, value)):
-        return float(value)
+        return VBADouble(float(value))
     if value[-1] == '"' and value[0] == '"':
         return value[1:-1]
     if re.fullmatch("#" + date + "#", value.upper()):
