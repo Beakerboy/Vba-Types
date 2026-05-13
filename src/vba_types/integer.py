@@ -58,7 +58,7 @@ class VBAInteger(VBATypeBase):
         return self.value < int(other)
 
     def __add__(self: T, other: VBATypeBase) -> VBATypeBase:
-        if isinstance(other, VBAInteger) or isinstance(other, vba_types.boolean.VBABoolean):
+        if isinstance(other, VBAInteger) or isinstance(other, vba_types.VBABoolean):
             return type(self)(self.value + int(other))
         else:
             return other + self
