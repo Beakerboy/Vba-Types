@@ -48,7 +48,7 @@ class VBAInteger(VBATypeBase):
         return self.value
 
     def __eq__(self: T, other: VBACompatible) -> bool:
-        return self.value == int(other)
+        return self.value == other.value
 
     def __lt__(self: T, other: VBACompatible) -> bool:
         return self.value < int(other)
