@@ -3,6 +3,7 @@ from dateutil.parser import parse
 from typing import Any
 from .double import VBADouble
 from .integer import VBAInteger
+from .string import VBAString
 
 
 def literal_from_string(value: str) -> Any:
@@ -45,7 +46,7 @@ def literal_from_string(value: str) -> Any:
             re.fullmatch(float_pattern3, value)):
         return VBADouble(float(value))
     if value[-1] == '"' and value[0] == '"':
-        return value[1:-1]
+        return VBAString(value[1:-1])
     if re.fullmatch("#" + date + "#", value.upper()):
         return parse(value[1:-1])
     # assume non-quoted string.
