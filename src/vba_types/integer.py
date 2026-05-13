@@ -4,8 +4,6 @@ from .exceptions import DivisionByZeroError
 from .vba_type_base import VBATypeBase
 
 
-# Type alias for types that can be converted to/interact with VBAInteger
-VBACompatible = Union[int, float, "VBATypeBase"]
 T = TypeVar("T", bound="VBAInteger")
 
 
@@ -19,10 +17,10 @@ class VBAInteger(VBATypeBase):
     MAX_VALUE: int = 32767
     value: int
 
-    def __init__(self: T, value: VBACompatible = 0) -> None:
+    def __init__(self: T, value: VBATypeBase = 0) -> None:
         self.value = self._validate(value)
 
-    def _validate(self: T, value: VBACompatible) -> int:
+    def _validate(self: T, value: VBATypeBase) -> int:
         # Extract raw numeric value
         if isinstance(value, VBAInteger):
             raw_val = float(value.value)
@@ -47,37 +45,37 @@ class VBAInteger(VBATypeBase):
         """Allows the object to be used in slice indices or bin() functions."""
         return self.value
 
-    def __eq__(self: T, other: VBACompatible) -> bool:
+    def __eq__(self: T, other: VBATypeBase) -> bool:
         return self.value == other.value
 
-    def __lt__(self: T, other: VBACompatible) -> bool:
+    def __lt__(self: T, other: VBATypeBase) -> bool:
         return self.value < int(other)
 
-    def __add__(self: T, other: VBACompatible) -> T:
+    def __add__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value + int(other))
 
-    def __radd__(self: T, other: VBACompatible) -> T:
+    def __radd__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value + int(other))
 
-    def __sub__(self: T, other: VBACompatible) -> T:
+    def __sub__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value - int(other))
 
-    def __rsub__(self: T, other: VBACompatible) -> T:
+    def __rsub__(self: T, other: VBATypeBase) -> T:
         return type(self)(int(other) - self.value)
 
-    def __mod__(self: T, other: VBACompatible) -> T:
+    def __mod__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value % int(other))
 
-    def __mul__(self: T, other: VBACompatible) -> T:
+    def __mul__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value * int(other))
 
-    def __rmul__(self: T, other: VBACompatible) -> T:
+    def __rmul__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value * int(other))
 
-    def __pow__(self: T, other: VBACompatible) -> T:
+    def __pow__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value ** int(other))
 
-    def __truediv__(self: T, other: VBACompatible) -> float:
+    def __truediv__(self: T, other: VBATypeBase) -> float:
         # VBA '/' always returns a Double (float in Python)
         if other == 0:
             raise DivisionByZeroError()
