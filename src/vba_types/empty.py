@@ -1,3 +1,4 @@
+import vba_types
 from functools import total_ordering
 from typing import Any, Optional, Type, TypeVar
 from .exceptions import DivisionByZeroError
@@ -47,7 +48,7 @@ class VBAEmpty(VBATypeBase):
         if other is Empty:
             return False
         if isinstance(other, vba_types.string.VBAString):
-            return VBAString("") < other
+            return vba_types.string.VBAString("") < other
         return 0 < other.value
 
     # Arithmetic behavior (Empty acts as 0)
