@@ -18,7 +18,7 @@ class VBABoolean(VBATypeBase):
     def __bool__(self: T) -> bool:
         return self.value == -1
 
-    def __eq__(self: T, other: VBATypeBase) -> bool:
+    def __eq__(self: T, other: VBATypeBase) -> VBABoolean | VBANull:
         if other is Null:
              return Null
         if isinstance(other, vba_types.string.VBAString):
@@ -29,7 +29,7 @@ class VBABoolean(VBATypeBase):
             raise TypeMismatchError()
         return VBABoolean(self.value == other.value)
 
-    def __lt__(self: T, other: VBATypeBase) -> bool:
+    def __lt__(self: T, other: VBATypeBase) -> VBABoolean | VBANull:
         if other is Null:
              return Null
         if isinstance(other, vba_types.string.VBAString):
