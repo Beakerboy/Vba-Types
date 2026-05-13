@@ -57,17 +57,14 @@ class VBAInteger(VBATypeBase):
              return Null
         return self.value < int(other)
 
-    def __add__(self: T, other: VBATypeBase) -> T:
-        return type(self)(self.value + int(other))
-
-    def __radd__(self: T, other: VBATypeBase) -> T:
-        return type(self)(self.value + int(other))
+    def __add__(self: T, other: VBATypeBase) -> VBATypeBase:
+        if isinstance(other, VBAInteger) or isinstance(other, vba_types.boolean.VBABoolean):
+            return type(self)(self.value + int(other))
+        else:
+            return other + self
 
     def __sub__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value - int(other))
-
-    def __rsub__(self: T, other: VBATypeBase) -> T:
-        return type(self)(int(other) - self.value)
 
     def __mod__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value % int(other))
