@@ -69,5 +69,5 @@ def test_truediv_returns_float() -> None:
 def test_interoperability() -> None:
     """Test interaction between VBAInteger and standard Python ints."""
     a = VBAInteger(100)
-    assert int(a + 50) == 150
-    assert int(50 + a) == 150
+    assert int(a + VBAInteger(50)) == 150
+    assert int(VBAInteger(50) + a) == 150
