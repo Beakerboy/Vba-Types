@@ -42,7 +42,8 @@ def test_arithmetic_operations() -> None:
     # Addition
     int_ten = vba_types.integer.VBAInteger(10)
     assert Empty + int_ten == int_ten
-    assert vba_types.integer.VBAInteger(5) + Empty == vba_types.integer.VBAInteger(5)
+    result = vba_types.integer.VBAInteger(5) + Empty
+    assert result == vba_types.integer.VBAInteger(5)
 
     # Subtraction
     assert Empty - vba_types.integer.VBAInteger(5) == vba_types.integer.VBAInteger(-5)
@@ -54,7 +55,8 @@ def test_arithmetic_operations() -> None:
     assert vba_types.integer.VBAInteger(50) * Empty == int_zero
 
     # Division
-    assert Empty / vba_types.integer.VBAInteger(2) == vba_types.double.VBADouble(0.0)
+    result = Empty / vba_types.integer.VBAInteger(2)
+    assert  result == vba_types.double.VBADouble(0.0)
     with pytest.raises(DivisionByZeroError):
         int_ten / Empty
 
