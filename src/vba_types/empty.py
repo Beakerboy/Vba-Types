@@ -39,14 +39,14 @@ class VBAEmpty(VBATypeBase):
     def __eq__(self: T, other: VBATypeBase) -> bool:
         if other is Empty:
             return True
-        if isinstance(other, VBAString):
+        if isinstance(other, vba_types.string.VBAString):
             return "" == other.value
         return class_construct(0) == other.value
 
     def __lt__(self: T, other: VBATypeBase) -> bool:
         if other is Empty:
             return False
-        if isinstance(other, VBAString):
+        if isinstance(other, vba_types.string.VBAString):
             return VBAString("") < other
         return 0 < other.value
 
