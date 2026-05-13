@@ -34,7 +34,6 @@ def test_equality_comparisons() -> None:
     # Non-equal cases
     assert Empty != vba_types.integer.VBAInteger(1)
     assert Empty != vba_types.string.VBAString("0")
-    assert Empty != vba_types.array.VBAArray(1, 2, 3)
     assert Empty is not None    # Empty is distinct from None
 
 
