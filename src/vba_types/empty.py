@@ -1,3 +1,4 @@
+from functools import total_ordering
 from typing import Any, Optional, Type, TypeVar
 from .exceptions import DivisionByZeroError
 from .vba_type_base import VBATypeBase
@@ -6,6 +7,7 @@ from .vba_type_base import VBATypeBase
 T = TypeVar("T", bound="VBAEmpty")
 
 
+@total_ordering
 class VBAEmpty(VBATypeBase):
     """
     Represents the VBA 'Empty' type.
@@ -34,14 +36,19 @@ class VBAEmpty(VBATypeBase):
         # In VBA, Empty evaluates to False/0
         return False
 
-    def __eq__(self: T, other: Any) -> bool:
-        if isinstance(other, VBAEmpty):
+    def __eq__(self: T, other: VBATypeBase) -> bool:
+        if other is Empty:
             return True
-        if isinstance(other, (int, float)):
-            return other == 0
-        if isinstance(other, str):
-            return other == ""
-        return False
+        if isinstance(other, VBAString):
+            return "" == other.value
+        return class_construct(0) == other.value
+
+    def __lt__(self: T, other: VBATypeBase) -> bool:
+        if other is Empty:
+            return False
+        if isinstance(other, VBAString):
+            return VBAString("") < other
+        return 0 < other.value
 
     # Arithmetic behavior (Empty acts as 0)
     def __add__(self: T, other: Any) -> Any: return 0 + other
