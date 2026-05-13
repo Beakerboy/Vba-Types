@@ -2,6 +2,7 @@ import vba_types
 from functools import total_ordering
 from typing import Union, TypeVar
 from .exceptions import DivisionByZeroError
+from.boolean import VBABoolean
 from .null import Null, VBANull
 from .vba_type_base import VBATypeBase
 
@@ -47,15 +48,15 @@ class VBAInteger(VBATypeBase):
         """Allows the object to be used in slice indices or bin() functions."""
         return self.value
 
-    def __eq__(self: T, other: VBATypeBase) -> bool:
+    def __eq__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
              return Null
-        return self.value == other.value
+        return VBABoolean(self.value == other.value)
 
-    def __lt__(self: T, other: VBATypeBase) -> bool:
+    def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
              return Null
-        return self.value < int(other)
+        return VBABoolean(self.value < int(other))
 
     def __add__(self: T, other: VBATypeBase) -> VBATypeBase:
         if isinstance(other, VBAInteger) or isinstance(other, vba_types.VBABoolean):
