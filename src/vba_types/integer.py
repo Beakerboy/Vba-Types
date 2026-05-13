@@ -81,7 +81,7 @@ class VBAInteger(VBATypeBase):
     def __pow__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value ** int(other))
 
-    def __truediv__(self: T, other: VBATypeBase) -> float:
+    def __truediv__(self: T, other: VBATypeBase) -> vba_types.double.VBADouble:
         # VBA '/' always returns a Double (float in Python)
         if other.value == 0:
             raise DivisionByZeroError()
