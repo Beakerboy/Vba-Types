@@ -85,7 +85,7 @@ class VBAInteger(VBATypeBase):
         # VBA '/' always returns a Double (float in Python)
         if other == 0:
             raise DivisionByZeroError()
-        return vba_types.double.VBADouble(float(self.value) / float(other.value))
+        return vba_types.double.VBADouble(self.value / other.value)
 
     def __floordiv__(self: T, other: VBATypeBase) -> T:
         # VBA '\' is integer division
