@@ -1,15 +1,52 @@
+from functools import total_ordering
 from typing import Any, Tuple, Type, TypeVar, Union
 from .empty import Empty
 from .exceptions import SubscriptOutOfRangeError
+from .exceptions import TypeMismatchError
+from .vba_type_base import VBATypeBase
 
 
 T = TypeVar('T', bound='VBAArray')
 
 
-class VBAArray:
+@total_ordering
+class VBAArray(VBATypeBase):
     def __init__(self: T, *args: Any, base: int = 0) -> None:
         self._data = list(args)
         self._bounds = [(base, base + len(args) - 1)]
+
+    def __getitem__(self: T, key: Union[int, Tuple[int, ...]]) -> Any:
+        indices = key if isinstance(key, tuple) else (key,)
+        coords = self._get_coords(indices)
+        val = self._data
+        for c in coords:
+            val = val[c]
+        return val
+
+    def __setitem__(self: T,
+                    key: Union[int, Tuple[int, ...]],
+                    value: Any) -> None:
+        indices = key if isinstance(key, tuple) else (key,)
+        coords = self._get_coords(indices)
+        target = self._data
+        for c in coords[:-1]:
+            target = target[c]
+        target[coords[-1]] = value
+
+    def __eq__(self: T, other: VBATypeBase) -> None:
+        raise TypeMismatchError()
+
+    def __lt__(self: T, other: VBATypeBase) -> None:
+        raise TypeMismatchError()
+
+    def __add__(self: T, other: VBATypeBase) -> None:
+        raise TypeMismatchError()
+
+    def __sub__(self: T, other: VBATypeBase) -> None:
+        raise TypeMismatchError()
+
+    def __mul__(self: T, other: VBATypeBase) -> None:
+        raise TypeMismatchError()
 
     @classmethod
     def initialize(cls: Type[T],
@@ -44,24 +81,6 @@ class VBAArray:
                 raise SubscriptOutOfRangeError()
             internal.append(idx - low)
         return tuple(internal)
-
-    def __getitem__(self: T, key: Union[int, Tuple[int, ...]]) -> Any:
-        indices = key if isinstance(key, tuple) else (key,)
-        coords = self._get_coords(indices)
-        val = self._data
-        for c in coords:
-            val = val[c]
-        return val
-
-    def __setitem__(self: T,
-                    key: Union[int, Tuple[int, ...]],
-                    value: Any) -> None:
-        indices = key if isinstance(key, tuple) else (key,)
-        coords = self._get_coords(indices)
-        target = self._data
-        for c in coords[:-1]:
-            target = target[c]
-        target[coords[-1]] = value
 
     def lbound(self: T, dimension: int = 1) -> int:
         return self._bounds[dimension - 1][0]
