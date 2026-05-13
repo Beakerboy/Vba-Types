@@ -15,6 +15,9 @@ class VBABoolean(VBATypeBase):
     def __init__(self: T, value: bool = False) -> None:
         self.value = -1 if value else 0
 
+    def __bool__(self: T) -> bool:
+        return velf.value == -1
+
     def __eq__(self: T, other: VBATypeBase) -> bool:
         if other is Null:
              return Null
