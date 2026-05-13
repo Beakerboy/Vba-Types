@@ -1,4 +1,5 @@
 import pytest
+from vba_types.double import VBADouble
 from vba_types.integer import VBAInteger
 
 
@@ -60,9 +61,9 @@ def test_basic_math_operations() -> None:
 def test_truediv_returns_float() -> None:
     """Test that '/' returns a float, matching VBA's 'Double' return type."""
     a = VBAInteger(10)
-    res = a / 4
-    assert res == 2.5
-    assert isinstance(res, float)
+    res = a / VBAInteger(4)
+    assert res == VBADouble(2.5)
+    assert isinstance(res, VBADouble)
 
 
 def test_interoperability() -> None:
