@@ -1,4 +1,5 @@
 import pytest
+import vba_types
 from vba_types.empty import VBAEmpty, Empty
 from vba_types.exceptions import DivisionByZeroError
 
@@ -26,35 +27,35 @@ def test_type_casting() -> None:
 def test_equality_comparisons() -> None:
     """Test equality logic against various types."""
     assert Empty == VBAEmpty()  # Identity/Type
-    assert Empty == 0           # Integer context
-    assert Empty == 0.0         # Float context
-    assert Empty == ""          # String context
+    assert Empty == vba_types.integer.VBAInteger(0)           # Integer context
+    assert Empty == vba_types.double.VBADouble(0.0)         # Float context
+    assert Empty == vba_types.string.VBAString("")          # String context
 
     # Non-equal cases
-    assert Empty != 1
-    assert Empty != "0"
-    assert Empty != [1, 2, 3]
+    assert Empty != vba_types.integer.VBAInteger(1)
+    assert Empty != vba_types.string.VBAString("0")
+    assert Empty != vba_types.array.VBAArray(1, 2, 3)
     assert Empty is not None    # Empty is distinct from None
 
 
 def test_arithmetic_operations() -> None:
     """Test that Empty behaves like 0 in math operations."""
     # Addition
-    assert Empty + 10 == 10
-    assert 5 + Empty == 5
+    assert Empty + vba_types.integer.VBAInteger(10) == vba_types.integer.VBAInteger(10)
+    assert vba_types.integer.VBAInteger(5) + Empty == vba_types.integer.VBAInteger(5)
 
     # Subtraction
-    assert Empty - 5 == -5
-    assert 10 - Empty == 10
+    assert Empty - vba_types.integer.VBAInteger(5) == vba_types.integer.VBAInteger(-5)
+    assert vba_types.integer.VBAInteger(10) - Empty == vba_types.integer.VBAInteger(10)
 
     # Multiplication
-    assert Empty * 100 == 0
-    assert 50 * Empty == 0
+    assert Empty * vba_types.integer.VBAInteger(100) == 0
+    assert vba_types.integer.VBAInteger(50) * Empty == 0
 
     # Division
-    assert Empty / 2 == 0.0
+    assert Empty / vba_types.integer.VBAInteger(2) == vba_types.double.VBADouble(0.0)
     with pytest.raises(DivisionByZeroError):
-        10 / Empty
+        vba_types.integer.VBAInteger(10) / Empty
 
 
 def test_boolean_context() -> None:
