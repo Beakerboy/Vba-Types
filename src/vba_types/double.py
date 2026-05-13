@@ -58,7 +58,8 @@ class VBADouble(VBATypeBase):
 
     def __int__(self: T) -> int:
         # VBA converts Double to Integer/Long using Banker's rounding.
-        # However, for a generic __int__, casting via a helper math pattern is safer.
+        # However, for a generic __int__, casting via a helper math pattern is
+        # safer.
         return int(self.value)
 
     def _safefloat(self, other: VBACompatible) -> float:
@@ -118,10 +119,10 @@ class VBADouble(VBATypeBase):
         return type(self)(self._safefloat(other) / self.value)
 
     def __floordiv__(self: T, other: VBACompatible) -> T:
-        # VBA '\' (Integer division) drops decimal points BEFORE dividing.
-        # This converts operands to integers first via Banker's Rounding, then divides.
-        # To replicate VBA's '\' fully, you would typically return a VBA Long/Integer.
-        # For this class, we cast both to integers first.
+        # VBA '\' (Integer division) drops decimal points BEFORE dividing. This
+        # converts operands to integers first via Banker's Rounding, then
+        # divides. To replicate VBA's '\' fully, you would typically return a
+        # VBA Long/Integer. For this class, we cast both to integers first.
         denom = int(self._safefloat(other))
         if denom == 0:
             raise DivisionByZeroError()
