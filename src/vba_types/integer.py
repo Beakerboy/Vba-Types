@@ -89,4 +89,4 @@ class VBAInteger(VBATypeBase):
 
     def __floordiv__(self: T, other: VBATypeBase) -> T:
         # VBA '\' is integer division
-        return type(self)(self.value // int(other))
+        return type(self)(self.value // other.value)
