@@ -49,7 +49,7 @@ def test_arithmetic_operations() -> None:
     assert int_ten - Empty == int_ten
 
     # Multiplication
-    int_zero = vba_types.integer.VBAInteger(0)
+    int_zero = vba_types.VBAInteger(0)
     assert Empty * vba_types.integer.VBAInteger(100) == int_zero
     assert vba_types.integer.VBAInteger(50) * Empty == int_zero
 
