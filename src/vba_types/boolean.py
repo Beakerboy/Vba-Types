@@ -1,6 +1,7 @@
 from functools import total_ordering
 from typing import TypeVar
 from .exceptions import TypeMismatchError
+from .null import Null
 from .vba_type_base import VBATypeBase
 
 
@@ -16,7 +17,7 @@ class VBABoolean(VBATypeBase):
     def __eq__(self: T, other: VBATypeBase) -> bool:
         if other is Null:
              return Null
-        if isinstance(other, VBAString):
+        if isinstance(other, vba_types.string.VBAString):
             if other.value.lower() == "true":
                 return self.value == -1
             if other.value.lower() == "false":
@@ -27,7 +28,7 @@ class VBABoolean(VBATypeBase):
     def __lt__(self: T, other: VBATypeBase) -> bool:
         if other is Null:
              return Null
-        if isinstance(other, VBAString):
+        if isinstance(other, vba_types.string.VBAString):
             if other.value.lower() == "true":
                 return self.value < -1
             if other.value.lower() == "false":
