@@ -41,21 +41,23 @@ def test_equality_comparisons() -> None:
 def test_arithmetic_operations() -> None:
     """Test that Empty behaves like 0 in math operations."""
     # Addition
-    assert Empty + vba_types.integer.VBAInteger(10) == vba_types.integer.VBAInteger(10)
+    int_ten = vba_types.integer.VBAInteger(10)
+    assert Empty + int_ten == int_ten
     assert vba_types.integer.VBAInteger(5) + Empty == vba_types.integer.VBAInteger(5)
 
     # Subtraction
     assert Empty - vba_types.integer.VBAInteger(5) == vba_types.integer.VBAInteger(-5)
-    assert vba_types.integer.VBAInteger(10) - Empty == vba_types.integer.VBAInteger(10)
+    assert int_ten - Empty == int_ten
 
     # Multiplication
-    assert Empty * vba_types.integer.VBAInteger(100) == vba_types.integer.VBAInteger(0)
-    assert vba_types.integer.VBAInteger(50) * Empty == vba_types.integer.VBAInteger(0)
+    int_zero = vba_types.integer.VBAInteger(0)
+    assert Empty * vba_types.integer.VBAInteger(100) == int_zero
+    assert vba_types.integer.VBAInteger(50) * Empty == int_zero
 
     # Division
     assert Empty / vba_types.integer.VBAInteger(2) == vba_types.double.VBADouble(0.0)
     with pytest.raises(DivisionByZeroError):
-        vba_types.integer.VBAInteger(10) / Empty
+        int_ten / Empty
 
 
 def test_boolean_context() -> None:
