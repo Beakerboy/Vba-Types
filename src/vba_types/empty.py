@@ -16,6 +16,7 @@ class VBAEmpty(VBATypeBase):
     It is initialized to 0 in a numeric context and "" in a string context.
     """
     _instance: Optional['VBAEmpty'] = None
+    value: int = 0
 
     def __new__(cls: Type[T]) -> 'VBAEmpty':
         if cls._instance is None:
