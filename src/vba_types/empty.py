@@ -2,6 +2,7 @@ import vba_types
 from functools import total_ordering
 from typing import Any, Optional, Type, TypeVar
 from .exceptions import DivisionByZeroError
+from .exceptions import TypeMismatchError
 from .vba_type_base import VBATypeBase
 
 
@@ -38,6 +39,8 @@ class VBAEmpty(VBATypeBase):
         return False
 
     def __eq__(self: T, other: VBATypeBase) -> bool:
+        if is_instance(other, vba_types.array.VBAArray):
+            raise TypeMismatchError()
         if other is Empty:
             return True
         if isinstance(other, vba_types.string.VBAString):
