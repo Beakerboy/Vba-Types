@@ -23,19 +23,19 @@ class VBABoolean(VBATypeBase):
              return Null
         if isinstance(other, vba_types.string.VBAString):
             if other.value.lower() == "true":
-                return self.value == -1
+                return VBABoolean(self.value == -1)
             if other.value.lower() == "false":
-                return self.value == 0
+                return VBABoolean(self.value == 0)
             raise TypeMismatchError()
-        return self.value == other.value
+        return VBABoolean(self.value == other.value)
 
     def __lt__(self: T, other: VBATypeBase) -> bool:
         if other is Null:
              return Null
         if isinstance(other, vba_types.string.VBAString):
             if other.value.lower() == "true":
-                return self.value < -1
+                return VBABoolean(self.value < -1)
             if other.value.lower() == "false":
-                return self.value < 0
+                return VBABoolean(self.value < 0)
             raise TypeMismatchError()
-        return self.value < other.value
+        return VBABoolean(self.value < other.value)
