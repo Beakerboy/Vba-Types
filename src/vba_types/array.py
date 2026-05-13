@@ -1,6 +1,6 @@
+import vba_types
 from functools import total_ordering
 from typing import Any, Tuple, Type, TypeVar, Union
-from .empty import Empty
 from .exceptions import SubscriptOutOfRangeError
 from .exceptions import TypeMismatchError
 from .vba_type_base import VBATypeBase
@@ -51,10 +51,10 @@ class VBAArray(VBATypeBase):
     @classmethod
     def initialize(cls: Type[T],
                    *args: int | list[tuple[int, int]],
-                   empty: Any = None) -> T:
+                   empty: Any = vba_types.empty.Empty) -> T:
         data = list(args)
         if len(data) == 1 and not isinstance(data[0], tuple):
-            input = [Empty] * (data[0] + 1)
+            input = [vba_types.empty.Empty] * (data[0] + 1)
             return cls(*input)
         else:
             arr = cls.__new__(cls)
