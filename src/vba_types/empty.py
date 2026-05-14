@@ -67,6 +67,7 @@ class VBAEmpty(VBATypeBase):
     def __truediv__(self: T, other: Any) -> Any:
         return type(other)(0 / other.value)
 
+    @property
     def type_name(self: T) -> VBAType:
         return VBAType.EMPTY
 
