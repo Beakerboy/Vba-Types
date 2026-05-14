@@ -84,6 +84,9 @@ class VBADouble(VBATypeBase):
         except (TypeError, ValueError):
             return NotImplemented
 
+    def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
+        return VBABoolean(self.value > float(other))
+
     # --- Math Operators ---
     def __add__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value + self._safefloat(other))
