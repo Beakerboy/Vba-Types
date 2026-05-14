@@ -58,12 +58,12 @@ class VBAEmpty(VBATypeBase):
     def __add__(self: T, other: Any) -> Any: 
         return type(other)(0 + other.value)
         
-    def __sub__(self: T, other: Any) -> Any: 
+    def __sub__(self: T, other: Any) -> Any:
         return type(other)(0 - other.value)
-        
+
     def __mul__(self: T, other: Any) -> Any:
         return type(other)(0 * other.value)
-        
+
     def __truediv__(self: T, other: Any) -> Any:
         return type(other)(0 / other.value)
 
