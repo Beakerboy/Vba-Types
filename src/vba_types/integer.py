@@ -4,14 +4,12 @@ from .boolean import VBABoolean
 from .null import Null
 from .vba_type_base import VBAType, VBATypeBase
 import vba_types
-from functools import total_ordering
 from typing import TypeVar
 
 
 T = TypeVar("T", bound="VBAInteger")
 
 
-@total_ordering
 class VBAInteger(VBATypeBase):
     """
     Simulates the VBA Integer data type (16-bit signed).
