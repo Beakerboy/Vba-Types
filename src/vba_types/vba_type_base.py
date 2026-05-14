@@ -10,5 +10,5 @@ class VBATypeBase(ABC):
     value: Any
 
     def __add__(self: T, other: T) -> T:
-        from vba_registry import registry
+        from vba_types.vba_registry import registry
         return registry.execute_binary_op("+", self, other)
