@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Callable, Dict, Tuple, TYPE_CHECKING
+from typing import Any, Callable, Dict, Tuple, TYPE_CHECKING
 
 
 if TYPE_CHECKING:
