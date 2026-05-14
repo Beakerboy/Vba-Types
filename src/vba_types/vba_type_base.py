@@ -8,5 +8,5 @@ T = TypeVar('T', bound='VBATypeBase')
 class VBATypeBase(ABC):
     value: Any
     def __add__(self: T, other: T) -> T:
-        from vba_registry import registry
-        return registry.execute_binary_op("+", self, other)
+        from vba_registry import VBARegistry
+        return VBARegistry.execute_binary_op("+", self, other)
