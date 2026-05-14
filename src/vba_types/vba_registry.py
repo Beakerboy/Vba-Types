@@ -5,7 +5,7 @@ from typing import (
 
 
 if TYPE_CHECKING:
-    from vba_base import VBAValue
+    from vba_types.vba_type_base import VBATypeBase
 
 
 T = TypeVar('T', bound='VBARegistry')
