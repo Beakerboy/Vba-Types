@@ -87,7 +87,7 @@ class VBADouble(VBATypeBase):
 
     def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
         from vba_types.boolean import VBABoolean
-        return VBABoolean(self.value > float(other))
+        return VBABoolean(self.value > other.value)
 
     # --- Math Operators ---
     def __add__(self: T, other: VBACompatible) -> T:
