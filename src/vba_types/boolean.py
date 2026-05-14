@@ -3,7 +3,7 @@ from functools import total_ordering
 from typing import TypeVar
 from .exceptions import TypeMismatchError
 from .null import Null
-from .vba_type_base import VBATypeBase
+from .vba_type_base import VBAType, VBATypeBase
 
 
 T = TypeVar("T", bound="VBABoolean")
@@ -40,6 +40,9 @@ class VBABoolean(VBATypeBase):
                 return VBABoolean(self.value < 0)
             raise TypeMismatchError()
         return VBABoolean(self.value < other.value)
+
+    def type_name() -> VBAType:
+        return VBAType.BOOLEAN
 
     def vba_and(self: T, other: T) -> T:
         return VBABoolean(bool(self) and bool(other))
