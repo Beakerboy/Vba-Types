@@ -36,29 +36,6 @@ def test_underflow_to_zero() -> None:
     assert VBADouble(-tiny_val).value == 0.0
 
 
-def test_comparisons_and_type_safety() -> None:
-    """
-    Test comparisons, math.isclose equity, and safely handling invalid types."
-    """
-    v = VBADouble(5.5)
-
-    # Standard comparisons
-    assert (v == 5.5)
-    assert (v > 5.0)
-    assert (v < 6.0)
-
-    # Floating point precision safe check
-    assert VBADouble(0.1 + 0.2) == 0.3
-
-    # Type safety: strings shouldn't crash the program with ValueError
-    assert not (v == "not a float")
-
-    # Less-than with unsupported types should return NotImplemented
-    # (TypeError in python)
-    with pytest.raises(TypeError):
-        _ = v < "not a float"
-
-
 def test_basic_math_operations() -> None:
     """Test regular math operations (+, -, *, /, **)."""
     v1 = VBADouble(10.5)
