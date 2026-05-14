@@ -5,14 +5,16 @@ from enum import Enum, auto
 
 
 class VBAType(Enum):
+    ARRAY = auto()
     BYTE = auto()
+    CURRENCY = auto()
+    DATE = auto()
+    DOUBLE = auto()
+    EMPTY = auto()
     INTEGER = auto()
     LONG = auto()
     LONGLONG = auto()
-    DOUBLE = auto()
     STRING = auto()
-    CURRENCY = auto()
-    DATE = auto()
 
 
 T = TypeVar('T', bound='VBATypeBase')
