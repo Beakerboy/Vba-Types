@@ -1,4 +1,3 @@
-import vba_types
 from functools import total_ordering
 from typing import Any, Tuple, Type, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
@@ -65,7 +64,9 @@ class VBAArray(VBATypeBase):
             arr._data = arr._recursive_init(shape, empty)
             return arr
 
-    def _recursive_init(self: T, shape: Tuple[int, ...], empty: VBATypeBase) -> Any:
+    def _recursive_init(self: T,
+                        shape: Tuple[int, ...],
+                        empty: VBATypeBase) -> Any:
         if len(shape) == 1:
             return [empty] * shape[0]
         rng = range(shape[0])
