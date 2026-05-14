@@ -2,7 +2,7 @@ from functools import total_ordering
 from typing import Any, Tuple, Type, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
 from .exceptions import TypeMismatchError
-from .vba_type_base import VBATypeBase
+from .vba_type_base import VBAType, VBATypeBase
 
 
 T = TypeVar('T', bound='VBAArray')
