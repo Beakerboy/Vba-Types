@@ -1,6 +1,6 @@
 from .exceptions import DivisionByZeroError
 from .boolean import VBABoolean
-from .null import Null, VBANull
+from .null import Null
 from .vba_type_base import VBATypeBase
 import vba_types
 from functools import total_ordering
