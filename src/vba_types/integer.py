@@ -64,10 +64,15 @@ class VBAInteger(VBATypeBase):
             return Null
         return VBABoolean(self.value < int(other))
 
+    def __le__(self: T, other: VBATypeBase) -> VBABoolean:
+        if other is Null:
+            return Null
+        return VBABoolean(self.value <= other.value)
+
     def __ge__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
             return Null
-        return VBABoolean(self.value >= int(other))
+        return VBABoolean(self.value >= other.value)
 
     def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
