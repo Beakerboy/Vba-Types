@@ -46,8 +46,8 @@ class VBADouble(VBATypeBase):
         if math.isinf(value) or abs(value) > self.MAX_VALUE:
             raise OverflowError("Run-time error '6': Overflow")
 
-        # Handle Underflow: VBA rounds numbers closer to 0 than MIN_POSITIVE down
-        # to 0.0
+        # Handle Underflow: VBA rounds numbers closer to 0 than MIN_POSITIVE
+        # down to 0.0
         if 0.0 < abs(value) < self.MIN_POSITIVE:
             return 0.0
 
