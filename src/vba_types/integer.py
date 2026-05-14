@@ -99,4 +99,4 @@ class VBAInteger(VBATypeBase):
         return type(self)(self.value // other.value)
 
     def type_name() -> VBAType:
-        return VBAType.EMPTY
+        return VBAType.INTEGER
