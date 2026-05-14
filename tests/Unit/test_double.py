@@ -79,8 +79,12 @@ def test_reflected_math_operations():
 
 
 def test_vba_integer_division():
-    """Test that floor division mimics VBA's '\' behavior by dropping decimals first."""
-    # VBA drops decimals before dividing: 9.9 becomes 9, 2.9 becomes 2 -> 9 // 2 = 4
+    """
+    Test that floor division mimics VBA's '\' behavior by dropping decimals
+    first.
+    """
+    # VBA drops decimals before dividing:
+    # 9.9 becomes 9, 2.9 becomes 2 -> 9 // 2 = 4
     assert (VBADouble(9.9) // VBADouble(2.9)).value == 4.0
 
     # Check reflected floor division
@@ -88,7 +92,10 @@ def test_vba_integer_division():
 
 
 def test_division_by_zero():
-    """Test that both standard and integer division throw Custom DivisionByZeroError."""
+    """
+    Test that both standard and integer division throw Custom
+    DivisionByZeroError.
+    """
     v = VBADouble(5.0)
     zero = VBADouble(0.0)
 
