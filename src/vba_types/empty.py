@@ -1,5 +1,5 @@
 from .exceptions import TypeMismatchError
-from .vba_type_base import VBATypeBase
+from .vba_type_base import VBAType, VBATypeBase
 import vba_types
 from functools import total_ordering
 from typing import Any, Optional, Type, TypeVar
@@ -67,5 +67,8 @@ class VBAEmpty(VBATypeBase):
     def __truediv__(self: T, other: Any) -> Any:
         return type(other)(0 / other.value)
 
+    def type_name() -> VBAType:
+        return VBAType.EMPTY
+        
 
 Empty = VBAEmpty()
