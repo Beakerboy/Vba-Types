@@ -21,11 +21,12 @@ class VBADouble(VBATypeBase):
     MAX_VALUE: float = 1.7976931348623157e+308
     # Smallest positive subnormal value
     MIN_POSITIVE: float = 4.94065645841247e-324
-    
+
     value: float
 
     def __init__(self: T, value: VBACompatible = 0.0) -> None:
-        # Avoid double validation if we are already dealing with a verified float
+        # Avoid double validation if we are already dealing with a verified
+        # float
         if isinstance(value, float):
             raw_val = value
         elif hasattr(value, "value"):
@@ -40,11 +41,13 @@ class VBADouble(VBATypeBase):
 
     def _validate(self: T, value: float) -> float:
         # Handle Overflow: check if value exceeds absolute maximum limits
-        # Python floats turn into 'inf' if they exceed the 64-bit limit during math
+        # Python floats turn into 'inf' if they exceed the 64-bit limit during
+        # math
         if math.isinf(value) or abs(value) > self.MAX_VALUE:
             raise OverflowError("Run-time error '6': Overflow")
-  
-        # Handle Underflow: VBA rounds numbers closer to 0 than MIN_POSITIVE down to 0.0
+
+        # Handle Underflow: VBA rounds numbers closer to 0 than MIN_POSITIVE down
+        # to 0.0
         if 0.0 < abs(value) < self.MIN_POSITIVE:
             return 0.0
 
@@ -62,7 +65,7 @@ class VBADouble(VBATypeBase):
         # safer.
         return int(self.value)
 
-    def _safefloat(self, other: VBACompatible) -> float:
+    def _safefloat(self: T, other: VBACompatible) -> float:
         """Helper to extract a float safely or raise a TypeError."""
         if hasattr(other, "value"):
             return float(other.value)
@@ -71,7 +74,7 @@ class VBADouble(VBATypeBase):
     # --- Comparison Operators ---
     def __eq__(self: T, other: object) -> bool:
         try:
-            return math.isclose(self.value, self._safefloat(other)) # type: ignore
+            return math.isclose(self.value, self._safefloat(other))
         except (TypeError, ValueError):
             return False
 
