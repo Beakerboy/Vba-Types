@@ -141,5 +141,6 @@ class VBADouble(VBATypeBase):
             raise DivisionByZeroError()
         return type(self)(int(self._safefloat(other)) // int(self.value))
 
+    @property
     def type_name(self: T) -> VBAType:
         return VBAType.DOUBLE
