@@ -25,7 +25,7 @@ def test_base_1_initialization() -> None:
 
 
 def test_initialize_with_number() -> None:
-    arr = VBAArray.initialize(3)
+    arr = VBAArray.initialize(3, Empty)
     assert arr.lbound() == 0
     assert arr.ubound() == 3
     assert arr[0] is Empty
@@ -33,7 +33,7 @@ def test_initialize_with_number() -> None:
 
 
 def test_initialize_with_tuple() -> None:
-    arr = VBAArray.initialize((0, 3))
+    arr = VBAArray.initialize((0, 3), Empty)
     assert arr.lbound() == 0
     assert arr.ubound() == 3
     assert arr[0] is Empty
@@ -43,7 +43,7 @@ def test_initialize_with_tuple() -> None:
 def test_multidimensional_custom_bounds() -> None:
     """Tests Array(1 To 2, 1 To 6) style initialization."""
     # Rows: 1 to 2, Cols: 1 to 6
-    arr = VBAArray.initialize((1, 2), (1, 6))
+    arr = VBAArray.initialize((1, 2), (1, 6), Empty)
 
     # Set and Get
     arr[1, 1] = "Top-Left"
