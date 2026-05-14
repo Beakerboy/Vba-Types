@@ -25,7 +25,7 @@ class VBARegistry:
         handler = self._binary_ops.get(key)
         
         if not handler:
-            raise TypeError(self: T._get_vba_error_msg(op, left, right))
+            raise TypeError(self._get_vba_error_msg(op, left, right))
         return handler(left, right)
 
     def _get_vba_error_msg(self: T,
@@ -33,7 +33,7 @@ class VBARegistry:
                            left: VBAValue,
                            right: VBAValue) -> str:
         return (f"Run-time error '13': Type mismatch for "
-                f"{left.type_name} {op} {right.type_name}"
+                f"{left.type_name} {op} {right.type_name}")
 
 
 registry = VBARegistry()
