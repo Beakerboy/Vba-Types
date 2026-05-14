@@ -1,10 +1,10 @@
+from .exceptions import DivisionByZeroError
+from .boolean import VBABoolean
+from .null import Null, VBANull
+from .vba_type_base import VBATypeBase
 import vba_types
 from functools import total_ordering
 from typing import TypeVar
-from .exceptions import DivisionByZeroError
-from.boolean import VBABoolean
-from .null import Null, VBANull
-from .vba_type_base import VBATypeBase
 
 
 T = TypeVar("T", bound="VBAInteger")
@@ -64,7 +64,10 @@ class VBAInteger(VBATypeBase):
         return VBABoolean(self.value >= int(other))
 
     def __add__(self: T, other: VBATypeBase) -> VBATypeBase:
-        if isinstance(other, VBAInteger) or isinstance(other, vba_types.VBABoolean):
+        if (
+                isinstance(other, VBAInteger) or
+                isinstance(other, vba_types.VBABoolean)
+        ):
             return type(self)(self.value + int(other))
         else:
             return other + self
