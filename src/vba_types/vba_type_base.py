@@ -14,6 +14,7 @@ class VBAType(Enum):
     INTEGER = auto()
     LONG = auto()
     LONGLONG = auto()
+    NULL = auto()
     STRING = auto()
 
 
