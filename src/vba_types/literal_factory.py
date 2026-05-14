@@ -1,6 +1,7 @@
 import re
 from dateutil.parser import parse
 from typing import Any
+from .boolean import VBABoolean
 from .double import VBADouble
 from .integer import VBAInteger
 from .string import VBAString
@@ -33,7 +34,7 @@ def literal_from_string(value: str) -> Any:
     # time_pattern = "(" + time_pattern1 + "|" + time_pattern2 + ")"
     # date_pattern = date + "([ ]+" + time_pattern + ")?"
     if re.fullmatch(boolean_pattern, value.upper()):
-        return value.upper() == "TRUE"
+        return VBABoolean(value.upper() == "TRUE")
     if re.fullmatch(hex_pattern, value):
         return VBAInteger(int("0x" + value[2:], 16))
     if re.fullmatch(oct_pattern, value):
