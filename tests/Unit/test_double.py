@@ -3,7 +3,7 @@ from vba_types.exceptions import DivisionByZeroError
 from vba_types.double import VBADouble
 
 
-def test_initialization_and_value():
+def test_initialization_and_value() -> None:
     """Test basic initialization with ints, floats, and implicit casting."""
     assert VBADouble(10).value == 10.0
     assert VBADouble(10.5).value == 10.5
@@ -13,7 +13,7 @@ def test_initialization_and_value():
     assert VBADouble(vba_inner).value == 5.5
 
   
-def test_overflow_boundaries():
+def test_overflow_boundaries() -> None:
     """Test that values exceeding MAX_VALUE correctly raise OverflowError."""
     max_val = 1.7976931348623157e+308
 
@@ -28,7 +28,7 @@ def test_overflow_boundaries():
         VBADouble(-2e308)
 
 
-def test_underflow_to_zero():
+def test_underflow_to_zero() -> None:
     """Test that tiny subnormal values snap down to 0.0 like VBA."""
     # Value smaller than 4.94065645841247e-324
     tiny_val = 1e-325
@@ -36,7 +36,7 @@ def test_underflow_to_zero():
     assert VBADouble(-tiny_val).value == 0.0
 
 
-def test_comparisons_and_type_safety():
+def test_comparisons_and_type_safety() -> None:
     """Test comparisons, math.isclose equity, and safely handling invalid types."""
     v = VBADouble(5.5)
 
@@ -56,7 +56,7 @@ def test_comparisons_and_type_safety():
         _ = v < "not a float"
 
 
-def test_basic_math_operations():
+def test_basic_math_operations() -> None:
     """Test regular math operations (+, -, *, /, **)."""
     v1 = VBADouble(10.5)
 
@@ -67,7 +67,7 @@ def test_basic_math_operations():
     assert (VBADouble(2.0) ** 3).value == 8.0
 
 
-def test_reflected_math_operations():
+def test_reflected_math_operations() -> None:
     """Test right-side operations where native type is on the left."""
     v = VBADouble(4.0)
 
@@ -78,7 +78,7 @@ def test_reflected_math_operations():
     assert (2.0 ** v).value == 16.0
 
 
-def test_vba_integer_division():
+def test_vba_integer_division() -> None:
     """
     Test that floor division mimics VBA's '\' behavior by dropping decimals
     first.
@@ -91,7 +91,7 @@ def test_vba_integer_division():
     assert (9.9 // VBADouble(2.9)).value == 4.0
 
 
-def test_division_by_zero():
+def test_division_by_zero() -> None:
     """
     Test that both standard and integer division throw Custom
     DivisionByZeroError.
