@@ -62,7 +62,7 @@ def test_truediv_returns_float() -> None:
     """Test that '/' returns a float, matching VBA's 'Double' return type."""
     a = VBAInteger(10)
     res = a / VBAInteger(4)
-    assert bool(res == VBADouble(2.5))
+    assert bool(res == VBADouble(10 / 4))
     assert isinstance(res, VBADouble)
 
 
