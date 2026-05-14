@@ -50,17 +50,17 @@ class VBAInteger(VBATypeBase):
 
     def __eq__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
-             return Null
+            return Null
         return VBABoolean(self.value == other.value)
 
     def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
-             return Null
+            return Null
         return VBABoolean(self.value < int(other))
 
     def __ge__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
-             return Null
+            return Null
         return VBABoolean(self.value >= int(other))
 
     def __add__(self: T, other: VBATypeBase) -> VBATypeBase:
