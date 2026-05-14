@@ -98,5 +98,5 @@ class VBAInteger(VBATypeBase):
         # VBA '\' is integer division
         return type(self)(self.value // other.value)
 
-    def type_name() -> VBAType:
+    def type_name(self: T) -> VBAType:
         return VBAType.INTEGER
