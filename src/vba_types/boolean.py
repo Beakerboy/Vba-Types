@@ -40,5 +40,5 @@ class VBABoolean(VBATypeBase):
             raise TypeMismatchError()
         return VBABoolean(self.value < other.value)
 
-    def vba_and(self: T, other: T) -> T
+    def vba_and(self: T, other: T) -> T:
         return VBABoolean(bool(self) and bool(other))
