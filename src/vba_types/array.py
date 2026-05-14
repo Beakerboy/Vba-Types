@@ -51,10 +51,10 @@ class VBAArray(VBATypeBase):
     @classmethod
     def initialize(cls: Type[T],
                    *args: int | list[tuple[int, int]],
-                   empty: Any = vba_types.empty.Empty) -> T:
+                   empty: VBATypeBase) -> T:
         data = list(args)
         if len(data) == 1 and not isinstance(data[0], tuple):
-            input = [vba_types.empty.Empty] * (data[0] + 1)
+            input = [empty] * (data[0] + 1)
             return cls(*input)
         else:
             arr = cls.__new__(cls)
@@ -62,12 +62,12 @@ class VBAArray(VBATypeBase):
             shape = tuple(
                 max_idx - min_idx + 1 for min_idx, max_idx in arr._bounds
             )
-            arr._data = arr._recursive_init(shape)
+            arr._data = arr._recursive_init(shape, empty)
             return arr
 
-    def _recursive_init(self: T, shape: Tuple[int, ...]) -> Any:
+    def _recursive_init(self: T, shape: Tuple[int, ...], empty: VBATypeBase) -> Any:
         if len(shape) == 1:
-            return [vba_types.empty.Empty] * shape[0]
+            return [empty] * shape[0]
         return [self._recursive_init(shape[1:]) for _ in range(shape[0])]
 
     def _get_coords(self: T, indices: Tuple[int, ...]) -> Tuple[int, ...]:
