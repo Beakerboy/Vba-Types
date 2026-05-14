@@ -103,5 +103,6 @@ class VBAInteger(VBATypeBase):
         # VBA '\' is integer division
         return type(self)(self.value // other.value)
 
+    @property
     def type_name(self: T) -> VBAType:
         return VBAType.INTEGER
