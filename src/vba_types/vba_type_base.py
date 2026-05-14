@@ -28,7 +28,7 @@ class VBATypeBase(ABC):
     # In your base class:
     @property
     @abstractmethod
-    def type_name(self) -> VBAType:
+    def type_name(self: T) -> VBAType:
         pass
 
     def __add__(self: T, other: T) -> T:
