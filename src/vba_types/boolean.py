@@ -12,6 +12,7 @@ T = TypeVar("T", bound="VBABoolean")
 @total_ordering
 class VBABoolean(VBATypeBase):
     value: int
+
     def __init__(self: T, value: bool = False) -> None:
         self.value = -1 if value else 0
 
@@ -20,7 +21,7 @@ class VBABoolean(VBATypeBase):
 
     def __eq__(self: T, other: VBATypeBase) -> T | vba_types.null.VBANull:
         if other is Null:
-             return Null
+            return Null
         if isinstance(other, vba_types.string.VBAString):
             if other.value.lower() == "true":
                 return VBABoolean(self.value == -1)
@@ -31,7 +32,7 @@ class VBABoolean(VBATypeBase):
 
     def __lt__(self: T, other: VBATypeBase) -> T | vba_types.null.VBANull:
         if other is Null:
-             return Null
+            return Null
         if isinstance(other, vba_types.string.VBAString):
             if other.value.lower() == "true":
                 return VBABoolean(self.value < -1)
