@@ -79,7 +79,7 @@ class VBADouble(VBATypeBase):
     # --- Comparison Operators ---
     def __eq__(self: T, other: VBATypeBase) -> VBABoolean:
         from vba_types.boolean import VBABoolean
-        return VBABoolean(False)
+        return VBABoolean(self.value == other.value)
 
     def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
         from vba_types.boolean import VBABoolean
