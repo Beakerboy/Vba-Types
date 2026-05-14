@@ -67,7 +67,7 @@ class VBAInteger(VBATypeBase):
     def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
             return Null
-        return VBABoolean(self.value >= int(other))
+        return VBABoolean(self.value > int(other))
 
     def __add__(self: T, other: VBATypeBase) -> VBATypeBase:
         if (
