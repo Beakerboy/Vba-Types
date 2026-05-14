@@ -1,6 +1,6 @@
 import vba_types
 from functools import total_ordering
-from typing import Union, TypeVar
+from typing import TypeVar
 from .exceptions import DivisionByZeroError
 from.boolean import VBABoolean
 from .null import Null, VBANull
