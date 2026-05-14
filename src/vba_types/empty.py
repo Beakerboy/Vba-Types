@@ -69,6 +69,6 @@ class VBAEmpty(VBATypeBase):
 
     def type_name(self: T) -> VBAType:
         return VBAType.EMPTY
-        
+
 
 Empty = VBAEmpty()
