@@ -6,6 +6,7 @@ from enum import Enum, auto
 
 class VBAType(Enum):
     ARRAY = auto()
+    BOOLEAN = auto()
     BYTE = auto()
     CURRENCY = auto()
     DATE = auto()
