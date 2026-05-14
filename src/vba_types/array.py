@@ -93,5 +93,6 @@ class VBAArray(VBATypeBase):
     def __repr__(self: T) -> str:
         return f"<VBAArray: Bounds {self._bounds}>"
 
+    @property
     def type_name(self: T) -> VBAType:
         return VBAType.ARRAY
