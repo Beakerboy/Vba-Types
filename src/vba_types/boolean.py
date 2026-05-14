@@ -41,6 +41,7 @@ class VBABoolean(VBATypeBase):
             raise TypeMismatchError()
         return VBABoolean(self.value < other.value)
 
+    @property
     def type_name(self: T) -> VBAType:
         return VBAType.BOOLEAN
 
