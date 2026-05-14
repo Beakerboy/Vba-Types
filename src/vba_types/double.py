@@ -2,7 +2,7 @@ import math
 from functools import total_ordering
 from typing import Union, TypeVar
 from .exceptions import DivisionByZeroError
-from .vba_type_base import VBATypeBase
+from .vba_type_base import VBAType, VBATypeBase
 
 
 # Type alias for types that can interact with VBADouble
@@ -135,3 +135,6 @@ class VBADouble(VBATypeBase):
         if int(self.value) == 0:
             raise DivisionByZeroError()
         return type(self)(int(self._safefloat(other)) // int(self.value))
+
+    def type_name() -> VBAType:
+        return VBAType.DOUBLE
