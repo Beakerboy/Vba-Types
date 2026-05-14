@@ -12,5 +12,5 @@ class VBAString(VBATypeBase):
     def __str__(self: T) -> str:
         return self.value
 
-    def type_name() -> VBAType:
+    def type_name(self: T) -> VBAType:
         return VBAType.STRING
