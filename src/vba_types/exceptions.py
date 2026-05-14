@@ -1,4 +1,4 @@
-from typing import Type, TypeVar, Dict, Optional, Union
+from typing import TypeVar
 
 
 T = TypeVar('T', bound='VBAMetadata')
