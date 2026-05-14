@@ -55,10 +55,17 @@ class VBAEmpty(VBATypeBase):
         return vba_types.boolean.VBABoolean(0 < other.value)
 
     # Arithmetic behavior (Empty acts as 0)
-    def __add__(self: T, other: Any) -> Any: return type(other)(0 + other.value)
-    def __sub__(self: T, other: Any) -> Any: return type(other)(0 - other.value)
-    def __mul__(self: T, other: Any) -> Any: return type(other)(0 * other.value)
-    def __truediv__(self: T, other: Any) -> Any: return type(other)(0 / other.value)
+    def __add__(self: T, other: Any) -> Any: 
+        return type(other)(0 + other.value)
+        
+    def __sub__(self: T, other: Any) -> Any: 
+        return type(other)(0 - other.value)
+        
+    def __mul__(self: T, other: Any) -> Any:
+        return type(other)(0 * other.value)
+        
+    def __truediv__(self: T, other: Any) -> Any:
+        return type(other)(0 / other.value)
 
 
 Empty = VBAEmpty()
