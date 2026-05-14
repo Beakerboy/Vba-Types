@@ -136,5 +136,5 @@ class VBADouble(VBATypeBase):
             raise DivisionByZeroError()
         return type(self)(int(self._safefloat(other)) // int(self.value))
 
-    def type_name() -> VBAType:
+    def type_name(self: T) -> VBAType:
         return VBAType.DOUBLE
