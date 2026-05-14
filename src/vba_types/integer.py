@@ -2,7 +2,7 @@ from __future__ import annotations
 from .exceptions import DivisionByZeroError
 from .boolean import VBABoolean
 from .null import Null
-from .vba_type_base import VBATypeBase
+from .vba_type_base import VBAType, VBATypeBase
 import vba_types
 from functools import total_ordering
 from typing import TypeVar
@@ -97,3 +97,6 @@ class VBAInteger(VBATypeBase):
     def __floordiv__(self: T, other: VBATypeBase) -> T:
         # VBA '\' is integer division
         return type(self)(self.value // other.value)
+
+    def type_name() -> VBAType:
+        return VBAType.EMPTY
