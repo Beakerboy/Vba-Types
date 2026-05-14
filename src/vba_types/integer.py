@@ -20,7 +20,7 @@ class VBAInteger(VBATypeBase):
     MAX_VALUE: int = 32767
     value: int
 
-    def __init__(self: T, value: VBATypeBase = 0) -> None:
+    def __init__(self: T, value: int = 0) -> None:
         self.value = self._validate(value)
 
     def _validate(self: T, value: VBATypeBase) -> int:
