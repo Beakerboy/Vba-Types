@@ -77,17 +77,13 @@ class VBADouble(VBATypeBase):
         return float(other)  # type: ignore
 
     # --- Comparison Operators ---
-    def __eq__(self: T, other: object) -> bool:
-        try:
-            return math.isclose(self.value, self._safefloat(other))
-        except (TypeError, ValueError):
-            return False
+    def __eq__(self: T, other: VBATypeBase) -> VBABoolean:
+        from vba_types.boolean import VBABoolean
+        return VBABoolean(False)
 
-    def __lt__(self: T, other: VBACompatible) -> bool:
-        try:
-            return self.value < self._safefloat(other)
-        except (TypeError, ValueError):
-            return NotImplemented
+    def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
+        from vba_types.boolean import VBABoolean
+        return VBABoolean(self.value < other.value)
 
     def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
         from vba_types.boolean import VBABoolean
