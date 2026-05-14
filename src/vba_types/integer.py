@@ -1,3 +1,4 @@
+from __future__ import annotations
 from .exceptions import DivisionByZeroError
 from .boolean import VBABoolean
 from .null import Null
