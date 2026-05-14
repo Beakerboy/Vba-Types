@@ -62,7 +62,7 @@ class VBAInteger(VBATypeBase):
     def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
             return Null
-        return VBABoolean(self.value < other.value))
+        return VBABoolean(self.value < other.value)
 
     def __le__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
