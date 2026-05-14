@@ -68,7 +68,8 @@ class VBAArray(VBATypeBase):
     def _recursive_init(self: T, shape: Tuple[int, ...], empty: VBATypeBase) -> Any:
         if len(shape) == 1:
             return [empty] * shape[0]
-        return [self._recursive_init(shape[1:], empty) for _ in range(shape[0])]
+        rng = range(shape[0])
+        return [self._recursive_init(shape[1:], empty) for _ in rng]
 
     def _get_coords(self: T, indices: Tuple[int, ...]) -> Tuple[int, ...]:
         if len(indices) != len(self._bounds):
