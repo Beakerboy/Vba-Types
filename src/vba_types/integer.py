@@ -54,6 +54,11 @@ class VBAInteger(VBATypeBase):
             return Null
         return VBABoolean(self.value == other.value)
 
+    def __ne__(self: T, other: VBATypeBase) -> VBABoolean:
+        if other is Null:
+            return Null
+        return VBABoolean(self.value != other.value)
+
     def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
         if other is Null:
             return Null
