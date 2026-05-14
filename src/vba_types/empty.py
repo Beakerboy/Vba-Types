@@ -1,7 +1,6 @@
 import vba_types
 from functools import total_ordering
 from typing import Any, Optional, Type, TypeVar
-from .exceptions import DivisionByZeroError
 from .exceptions import TypeMismatchError
 from .vba_type_base import VBATypeBase
 
