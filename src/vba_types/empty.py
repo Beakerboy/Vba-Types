@@ -68,4 +68,4 @@ class VBAEmpty(VBATypeBase):
         return type(other)(0 / other.value)
 
 
-Empty = VBAEmpty()
+Empty = VBAEmpty(0)
