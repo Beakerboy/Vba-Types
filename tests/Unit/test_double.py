@@ -12,7 +12,7 @@ def test_initialization_and_value() -> None:
     vba_inner = VBADouble(5.5)
     assert VBADouble(vba_inner).value == 5.5
 
-  
+
 def test_overflow_boundaries() -> None:
     """Test that values exceeding MAX_VALUE correctly raise OverflowError."""
     max_val = 1.7976931348623157e+308
@@ -37,7 +37,9 @@ def test_underflow_to_zero() -> None:
 
 
 def test_comparisons_and_type_safety() -> None:
-    """Test comparisons, math.isclose equity, and safely handling invalid types."""
+    """
+    Test comparisons, math.isclose equity, and safely handling invalid types."
+    """
     v = VBADouble(5.5)
 
     # Standard comparisons
@@ -51,7 +53,8 @@ def test_comparisons_and_type_safety() -> None:
     # Type safety: strings shouldn't crash the program with ValueError
     assert not (v == "not a float")
 
-    # Less-than with unsupported types should return NotImplemented (TypeError in python)
+    # Less-than with unsupported types should return NotImplemented
+    # (TypeError in python)
     with pytest.raises(TypeError):
         _ = v < "not a float"
 
