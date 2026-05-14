@@ -1,8 +1,13 @@
+from __future__ import annotations
 import math
 from functools import total_ordering
-from typing import Union, TypeVar
+from typing import Union, TypeVar, 
 from .exceptions import DivisionByZeroError
-from .vba_type_base import VBAType, VBATypeBase
+from .vba_type_base import VBAType, VBATypeBase, TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+    from vba_types.boolean.VBABoolean import VBABoolean
 
 
 # Type alias for types that can interact with VBADouble
@@ -85,6 +90,7 @@ class VBADouble(VBATypeBase):
             return NotImplemented
 
     def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
+        from vba_types.boolean import VBABoolean
         return VBABoolean(self.value > float(other))
 
     # --- Math Operators ---
