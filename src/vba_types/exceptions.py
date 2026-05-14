@@ -127,28 +127,3 @@ class AutomationError(VBAException):
 class ApplicationDefinedError(VBAException):
     code = 1004
     message = "Application-defined or object-defined error"
-
-
-# --- Registry and Factory ---
-
-# Collect all exception classes that utilize the VBAMetadata mixin
-VBA_REGISTRY: Dict[int, Type[Union[VBAException, VBAMetadata]]] = {
-    cls.code: cls for cls in [*VBAException.__subclasses__(),
-                              OverflowException, SubscriptOutOfRangeError,
-                              DivisionByZeroError, TypeMismatchError,
-                              OutOfStackSpaceError, FileNotFoundException,
-                              PermissionDeniedError, PathNotFoundError,
-                              ObjectDoesntSupportPropertyOrMethodError]
-}
-
-
-def raise_vba_error(code: int, custom_message: Optional[str] = None) -> None:
-    """
-    Looks up and raises the corresponding VBA exception for a given error code.
-    If the code is unknown, raises ApplicationDefinedError (1004).
-    """
-    exc_class = VBA_REGISTRY.get(code, ApplicationDefinedError)
-    error_instance = exc_class()
-    if custom_message:
-        error_instance.message = custom_message
-    raise error_instance
