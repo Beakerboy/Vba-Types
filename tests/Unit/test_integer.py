@@ -1,5 +1,6 @@
 import pytest
 from vba_types.double import VBADouble
+from vba_types.exceptions import OverflowException
 from vba_types.integer import VBAInteger
 
 
@@ -23,12 +24,12 @@ def test_arithmetic_overflow() -> None:
     a = VBAInteger(30000)
     b = VBAInteger(3000)
 
-    with pytest.raises(OverflowError):
+    with pytest.raises(OverflowException):
         _ = a + b  # 33000 > 32767
 
     c = VBAInteger(-32000)
     d = VBAInteger(1000)
-    with pytest.raises(OverflowError):
+    with pytest.raises(OverflowException):
         _ = c - d  # -33000 < -32768
 
 
