@@ -65,8 +65,8 @@ class VBAInteger(VBAIntegralType):
         else:
             return other + self
 
-    def __sub__(self: T, other: VBATypeBase) -> vba_types.double.VBADouble:
-        return vba_types.double.VBADouble((self.value - other.value))
+    def __sub__(self: T, other: VBATypeBase) -> T:
+        return type(self)(self.value - other.value)
 
     def __mod__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value % int(other))
