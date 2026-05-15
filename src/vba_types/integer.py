@@ -4,7 +4,11 @@ from .boolean import VBABoolean
 from .null import Null
 from .integral_type import VBAIntegralType
 import vba_types
-from typing import TypeVar
+from typing import TypeVar, TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+    from vba_types.vba_type_base import VBATypeBase
 
 
 T = TypeVar("T", bound="VBAInteger")
