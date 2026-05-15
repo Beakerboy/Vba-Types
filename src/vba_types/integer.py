@@ -17,7 +17,6 @@ class VBAInteger(VBAIntegralType):
     """
     MIN_VALUE: int = -32768
     MAX_VALUE: int = 32767
-    value: int
 
     def __index__(self: T) -> int:
         """Allows the object to be used in slice indices or bin() functions."""
