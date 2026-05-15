@@ -3,7 +3,7 @@ import math
 from functools import total_ordering
 from typing import Union, TypeVar, TYPE_CHECKING
 from .exceptions import DivisionByZeroError
-from .vba_type_base import VBAType, VBATypeBase
+from .vba_type_base import VBATypeBase
 
 
 if TYPE_CHECKING:
@@ -140,7 +140,3 @@ class VBADouble(VBATypeBase):
         if int(self.value) == 0:
             raise DivisionByZeroError()
         return type(self)(int(self._safefloat(other)) // int(self.value))
-
-    @property
-    def type_name(self: T) -> VBAType:
-        return VBAType.DOUBLE
