@@ -21,3 +21,6 @@ class IntegralType(VBATypeBase):
     
     def __int__(self: T) -> int:
         return self.value
+
+    def __repr__(self: T) -> str:
+        return str(self.value)
