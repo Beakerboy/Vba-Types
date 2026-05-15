@@ -1,7 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Any, TypeVar
-from enum import Enum, auto
 
 
 T = TypeVar('T', bound='VBATypeBase')
