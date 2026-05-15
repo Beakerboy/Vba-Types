@@ -13,4 +13,4 @@ class VBAString(VBATypeBase):
         return self.value
 
     def __add__(self: T, other: VBATypeBase) -> T:
-        return VBAString(self.value + str(other.value))
+        return type(self)(self.value + str(other.value))
