@@ -14,9 +14,9 @@ class VBAIntegralType(VBATypeBase):
         self.value = self._validate(value)
 
     def _validate(self: T, value: int) -> int:
-        if not (self.MIN_VALUE <= final_val <= self.MAX_VALUE):
+        if not (self.MIN_VALUE <= value <= self.MAX_VALUE):
             raise OverflowError("Run-time error '6': Overflow")
-        return final_val
+        return value
     
     def __int__(self: T) -> int:
         return self.value
