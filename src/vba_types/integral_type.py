@@ -3,10 +3,10 @@ from .vba_type_base import VBATypeBase
 from typing import TypeVar
 
 
-T = TypeVar("T", bound="IntegralType")
+T = TypeVar("T", bound="VBAIntegralType")
 
 
-class IntegralType(VBATypeBase):
+class VBAIntegralType(VBATypeBase):
 
     value: int
 
