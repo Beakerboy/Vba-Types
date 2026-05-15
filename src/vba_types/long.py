@@ -1,4 +1,4 @@
-from .vba_type_base import VBAIntegralType
+from .integral_type import VBAIntegralType
 
 
 class VBALong(VBAIntegralType):
