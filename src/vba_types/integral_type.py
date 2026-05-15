@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .exceptions import OverflowException
 from .vba_type_base import VBATypeBase
 from typing import TypeVar
 
@@ -15,7 +16,7 @@ class VBAIntegralType(VBATypeBase):
 
     def _validate(self: T, value: int) -> int:
         if not (self.MIN_VALUE <= value <= self.MAX_VALUE):
-            raise OverflowError("Run-time error '6': Overflow")
+            raise OverflowException()
         return value
     
     def __int__(self: T) -> int:
