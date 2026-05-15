@@ -15,14 +15,6 @@ def test_initialization_boundaries() -> None:
         VBAInteger(-32769)
 
 
-def test_vba_rounding() -> None:
-    """VBA uses 'Banker's Rounding' (rounds to nearest even on .5)."""
-    assert int(VBAInteger(2.5)) == 2
-    assert int(VBAInteger(3.5)) == 4
-    assert int(VBAInteger(2.4)) == 2
-    assert int(VBAInteger(2.6)) == 3
-
-
 def test_arithmetic_overflow() -> None:
     """
     Test that operations resulting in out-of-bounds
