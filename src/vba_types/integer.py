@@ -19,27 +19,6 @@ class VBAInteger(VBAIntegralType):
     MAX_VALUE: int = 32767
     value: int
 
-    def __init__(self: T, value: int = 0) -> None:
-        self.value = self._validate(value)
-
-    def _validate(self: T, value: VBATypeBase) -> int:
-        # Extract raw numeric value
-        if isinstance(value, VBAInteger):
-            raw_val = float(value.value)
-        else:
-            raw_val = float(value)
-
-        # VBA uses 'Banker's Rounding'
-        # (rounds to nearest even number)
-        final_val: int = int(round(raw_val))
-
-        if not (self.MIN_VALUE <= final_val <= self.MAX_VALUE):
-            raise OverflowError("Run-time error '6': Overflow")
-        return final_val
-
-    def __repr__(self: T) -> str:
-        return str(self.value)
-
     def __index__(self: T) -> int:
         """Allows the object to be used in slice indices or bin() functions."""
         return self.value
