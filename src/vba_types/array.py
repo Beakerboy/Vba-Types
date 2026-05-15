@@ -2,7 +2,7 @@ from functools import total_ordering
 from typing import Any, Tuple, Type, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
 from .exceptions import TypeMismatchError
-from .vba_type_base import VBAType, VBATypeBase
+from .vba_type_base import VBATypeBase
 
 
 T = TypeVar('T', bound='VBAArray')
@@ -92,7 +92,3 @@ class VBAArray(VBATypeBase):
 
     def __repr__(self: T) -> str:
         return f"<VBAArray: Bounds {self._bounds}>"
-
-    @property
-    def type_name(self: T) -> VBAType:
-        return VBAType.ARRAY
