@@ -2,6 +2,9 @@ from .vba_type_base import VBATypeBase
 
 
 class IntegralType(VBATypeBase):
+
+    value: int
+
     def __init__(self: T, value: int = 0) -> None:
         self.value = self._validate(value)
 
