@@ -6,7 +6,6 @@ from typing import TypeVar
 T = TypeVar("T", bound="IntegralType")
 
 
-
 class IntegralType(VBATypeBase):
 
     value: int
