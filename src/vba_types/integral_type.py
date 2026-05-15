@@ -18,7 +18,7 @@ class VBAIntegralType(VBATypeBase):
         if not (self.MIN_VALUE <= value <= self.MAX_VALUE):
             raise OverflowException()
         return value
-    
+
     def __int__(self: T) -> int:
         return self.value
 
