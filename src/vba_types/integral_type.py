@@ -24,3 +24,7 @@ class VBAIntegralType(VBATypeBase):
 
     def __repr__(self: T) -> str:
         return str(self.value)
+
+    def __eq__(self: T, other: Any) -> VBABoolean:
+        from .boolean import VBABoolean
+        return VBABoolean(self.value == other.value)
