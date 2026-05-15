@@ -2,7 +2,7 @@ from __future__ import annotations
 from .exceptions import DivisionByZeroError
 from .boolean import VBABoolean
 from .null import Null
-from .vba_type_base import VBATypeBase
+from .integral_type import VBAIntegralType
 import vba_types
 from typing import TypeVar
 
@@ -10,7 +10,7 @@ from typing import TypeVar
 T = TypeVar("T", bound="VBAInteger")
 
 
-class VBAInteger(VBATypeBase):
+class VBAInteger(VBAIntegralType):
     """
     Simulates the VBA Integer data type (16-bit signed).
     Range: -32,768 to 32,767.
@@ -39,9 +39,6 @@ class VBAInteger(VBATypeBase):
 
     def __repr__(self: T) -> str:
         return str(self.value)
-
-    def __int__(self: T) -> int:
-        return self.value
 
     def __index__(self: T) -> int:
         """Allows the object to be used in slice indices or bin() functions."""
