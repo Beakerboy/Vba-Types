@@ -14,5 +14,6 @@ __all__ = [
     "VBAEmpty",
     "VBAInteger",
     "VBALong",
+    "VBATypeBase",
     "literal_from_string",
 ]
