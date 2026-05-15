@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .exceptions import OverflowException
 from .vba_type_base import VBATypeBase
-from typing import TypeVar
+from typing import Any, TypeVar
 
 
 T = TypeVar("T", bound="VBAIntegralType")
