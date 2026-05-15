@@ -15,7 +15,7 @@ class VBAIntegralType(VBATypeBase):
 
     def _validate(self: T, value: VBATypeBase) -> int:
         # Extract raw numeric value
-        if isinstance(value, VBAInteger):
+        if isinstance(value, VBATypeBase):
             raw_val = value.value
         else:
             raw_val = int(value)
