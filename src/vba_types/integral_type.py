@@ -11,6 +11,13 @@ class IntegralType(VBATypeBase):
             raw_val = value.value
         else:
             raw_val = int(value)
+        # VBA uses 'Banker's Rounding'
+        # (rounds to nearest even number)
+        final_val: int = int(round(raw_val))
 
+        if not (self.MIN_VALUE <= final_val <= self.MAX_VALUE):
+            raise OverflowError("Run-time error '6': Overflow")
+        return final_val
+    
     def __int__(self: T) -> int:
         return self.value
