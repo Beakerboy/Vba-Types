@@ -10,7 +10,7 @@ T = TypeVar('T', bound='VBAArray')
 
 @total_ordering
 class VBAArray(VBATypeBase):
-    def __init__(self: T, *args: Any, base: int = 0) -> None:
+    def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
         self._data = list(args)
         self._bounds = [(base, base + len(args) - 1)]
 
