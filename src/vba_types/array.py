@@ -33,6 +33,10 @@ class VBAArray(VBATypeBase):
             target = target[c]
         target[coords[-1]] = value
 
+    def __iter__(self: T) -> Iterator[Any]:
+        for item in self._data:
+            yield item
+
     def __eq__(self: T, other: VBATypeBase) -> None:
         raise TypeMismatchError()
 
