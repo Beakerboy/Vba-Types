@@ -1,6 +1,6 @@
 from __future__ import annotations
 from functools import total_ordering
-from typing import Any, Tuple, Type, TypeVar, Union
+from typing import Any, Iterator, Tuple, Type, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
 from .exceptions import TypeMismatchError
 from .vba_type_base import VBATypeBase
@@ -32,6 +32,10 @@ class VBAArray(VBATypeBase):
         for c in coords[:-1]:
             target = target[c]
         target[coords[-1]] = value
+
+    def __iter__(self: T) -> Iterator[Any]:
+        for item in self._data:
+            yield item
 
     def __eq__(self: T, other: VBATypeBase) -> None:
         raise TypeMismatchError()
