@@ -1,6 +1,5 @@
 from __future__ import annotations
 import math
-from functools import total_ordering
 from typing import Union, TypeVar, TYPE_CHECKING
 from .vba_type_base import VBATypeBase
 from .float_type import VBAFloatType
@@ -15,7 +14,6 @@ VBACompatible = Union[int, float, "VBATypeBase"]
 T = TypeVar("T", bound="VBADouble")
 
 
-@total_ordering
 class VBADouble(VBAFloatType):
     """
     Simulates the VBA Double data type (64-bit floating-point).
@@ -63,28 +61,3 @@ class VBADouble(VBAFloatType):
 
     def __float__(self: T) -> float:
         return self.value
-
-    def __int__(self: T) -> int:
-        # VBA converts Double to Integer/Long using Banker's rounding.
-        # However, for a generic __int__, casting via a helper math pattern is
-        # safer.
-        return int(self.value)
-
-    def _safefloat(self: T, other: VBACompatible) -> float:
-        """Helper to extract a float safely or raise a TypeError."""
-        if hasattr(other, "value"):
-            return float(other.value)
-        return float(other)  # type: ignore
-
-    # --- Comparison Operators ---
-    def __eq__(self: T, other: VBATypeBase) -> VBABoolean:
-        from vba_types.boolean import VBABoolean
-        return VBABoolean(self.value == other.value)
-
-    def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
-        from vba_types.boolean import VBABoolean
-        return VBABoolean(self.value < other.value)
-
-    def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
-        from vba_types.boolean import VBABoolean
-        return VBABoolean(self.value > other.value)
