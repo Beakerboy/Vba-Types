@@ -8,7 +8,6 @@ from .vba_type_base import VBATypeBase
 T = TypeVar('T', bound='VBAArray')
 
 
-@total_ordering
 class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
         self._data = list(args)
