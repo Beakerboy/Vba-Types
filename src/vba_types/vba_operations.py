@@ -6,6 +6,7 @@ from vba_types.double import VBADouble
 from vba_types.empty import VBAEmpty
 from vba_types.integer import VBAInteger
 from vba_types.integral_type import VBAIntegralType
+from .exceptions import DivisionByZeroError
 
 
 def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
@@ -18,6 +19,10 @@ def _add_promote_to_integer(left: VBATypeBase, right: VBATypeBase) -> VBAInteger
 
 def _sub_promote_to_integer(left: VBATypeBase, right: VBATypeBase) -> VBAInteger:
     return VBAInteger(left.value + right.value)
+
+
+def _mul_promote_to_integer(left: VBATypeBase, right: VBATypeBase) -> VBAInteger:
+    return VBAInteger(left.value * right.value)
 
 
 def _add_promote_to_double(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
@@ -60,3 +65,10 @@ registry.register("-", VBAIntegralType, VBADouble, _sub_promote_to_double)
 registry.register("-", VBAEmpty, VBADouble, _sub_promote_to_double)
 registry.register("-", VBADouble, VBAIntegralType, _sub_promote_to_double)
 registry.register("-", VBADouble, VBAEmpty, _sub_promote_to_double)
+
+registry.register("*", VBAInteger, VBAInteger, _mul_promote_to_integer)
+registry.register("*", VBABoolean, VBAInteger, _mul_promote_to_integer)
+registry.register("*", VBAInteger, VBABoolean, _mul_promote_to_integer)
+registry.register("*", VBAInteger, VBAEmpty, _mul_promote_to_integer)
+registry.register("*", VBAEmpty, VBAInteger, _mul_promote_to_integer)
+registry.register("*", VBAEmpty, VBAEmpty, _mul_promote_to_integer)
