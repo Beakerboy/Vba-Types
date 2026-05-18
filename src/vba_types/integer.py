@@ -23,33 +23,3 @@ class VBAInteger(VBAIntegralType):
     def __index__(self: T) -> int:
         """Allows the object to be used in slice indices or bin() functions."""
         return self.value
-
-    def __eq__(self: T, other: VBATypeBase) -> VBABoolean:
-        if other is Null:
-            return Null
-        return VBABoolean(self.value == other.value)
-
-    def __ne__(self: T, other: VBATypeBase) -> VBABoolean:
-        if other is Null:
-            return Null
-        return VBABoolean(self.value != other.value)
-
-    def __lt__(self: T, other: VBATypeBase) -> VBABoolean:
-        if other is Null:
-            return Null
-        return VBABoolean(self.value < other.value)
-
-    def __le__(self: T, other: VBATypeBase) -> VBABoolean:
-        if other is Null:
-            return Null
-        return VBABoolean(self.value <= other.value)
-
-    def __ge__(self: T, other: VBATypeBase) -> VBABoolean:
-        if other is Null:
-            return Null
-        return VBABoolean(self.value >= other.value)
-
-    def __gt__(self: T, other: VBATypeBase) -> VBABoolean:
-        if other is Null:
-            return Null
-        return VBABoolean(self.value > other.value)
