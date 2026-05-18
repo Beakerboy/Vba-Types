@@ -115,6 +115,7 @@ def _bool_string_equality(left: VBATypeBase,
         return VBABoolean(b.value == 0)
     raise TypeMismatchError()
 
+
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
 registry.register("-", VBANull, VBATypeBase, handle_null_propogation)
