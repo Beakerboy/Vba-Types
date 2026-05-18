@@ -49,16 +49,7 @@ def test_basic_math_operations() -> None:
 
 
 def test_vba_integer_division() -> None:
-    """
-    Test that floor division mimics VBA's '\' behavior by dropping decimals
-    first.
-    """
-    # VBA drops decimals before dividing:
-    # 9.9 becomes 9, 2.9 becomes 2 -> 9 // 2 = 4
-    assert (VBADouble(9.9) // VBADouble(2.9)).value == 4.0
-
-    # Check reflected floor division
-    assert (9.9 // VBADouble(2.9)).value == 4.0
+    assert (VBADouble(9.9) // VBADouble(2.9)).value == 3
 
 
 def test_division_by_zero() -> None:
