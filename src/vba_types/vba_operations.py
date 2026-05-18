@@ -42,6 +42,11 @@ def _mul_promote_to_double(left: VBATypeBase,
     return VBADouble(left.value * right.value)
 
 
+def _pow_promote_to_double(left: VBATypeBase,
+                           right: VBATypeBase) -> VBADouble:
+    return VBADouble(left.value ** right.value)
+
+
 def _truediv_promote_to_double(left: VBATypeBase,
                            right: VBATypeBase) -> VBADouble:
     if right.value == 0.0 or right is Empty:
@@ -117,3 +122,5 @@ registry.register("//", VBAIntegralType, VBAEmpty, _floordiv_promote_to_long)
 registry.register("//", VBAEmpty, VBAIntegralType, _floordiv_promote_to_long)
 registry.register("//", VBAIntegralType, VBADouble, _floordiv_promote_to_long)
 registry.register("//", VBADouble, VBADouble, _floordiv_promote_to_long)
+
+registry.register("**", VBADouble, VBADouble, _pow_promote_to_double)
