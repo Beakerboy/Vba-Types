@@ -56,18 +56,6 @@ class VBAInteger(VBAIntegralType):
             return Null
         return VBABoolean(self.value > other.value)
 
-    def __add__(self: T, other: VBATypeBase) -> VBATypeBase:
-        if (
-                isinstance(other, VBAInteger) or
-                isinstance(other, vba_types.VBABoolean)
-        ):
-            return type(self)(self.value + int(other))
-        else:
-            return other + self
-
-    def __sub__(self: T, other: VBATypeBase) -> T:
-        return type(self)(self.value - other.value)
-
     def __mod__(self: T, other: VBATypeBase) -> T:
         return type(self)(self.value % int(other))
 
