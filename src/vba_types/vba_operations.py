@@ -40,6 +40,12 @@ def _mul_promote_to_double(left: VBATypeBase,
                            right: VBATypeBase) -> VBAInteger:
     return VBADouble(left.value * right.value)
 
+def _truediv_promote_to_double(left: VBATypeBase,
+                           right: VBATypeBase) -> VBAInteger:
+    if right.value == 0.0:
+        raise DivisionByZeroError()
+    return VBADouble(left.value / right.value)
+
 
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
@@ -86,3 +92,7 @@ registry.register("*", VBAIntegralType, VBADouble, _mul_promote_to_double)
 registry.register("*", VBAEmpty, VBADouble, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAIntegralType, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAEmpty, _mul_promote_to_double)
+
+registry.register("/", VBAIntegralType, VBAIntegralType, _trudiv_promote_to_double)
+registry.register("/", VBAIntegralType, VBADouble, _trudiv_promote_to_double)
+registry.register("/", VBADouble, VBADouble, _trudiv_promote_to_double)
