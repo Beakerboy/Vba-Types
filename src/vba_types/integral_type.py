@@ -39,3 +39,8 @@ class VBAInteger(VBAIntegralType):
     """
     MIN_VALUE: int = -32768
     MAX_VALUE: int = 32767
+
+
+class VBALong(VBAIntegralType):
+    MIN_VALUE: int = -2147483648
+    MAX_VALUE: int = 2147486647
