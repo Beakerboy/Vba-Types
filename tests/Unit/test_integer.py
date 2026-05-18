@@ -52,7 +52,7 @@ def test_basic_math_operations() -> None:
 
     # Power
     val = b ** VBAInteger(2)
-    assert val == 9
+    assert val.value == 9
     assert isinstance(val, VBADouble)
 
 
