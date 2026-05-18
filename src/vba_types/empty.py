@@ -1,14 +1,11 @@
-from .exceptions import TypeMismatchError
+from __future__ import annotations
 from .vba_type_base import VBATypeBase
-import vba_types
-from functools import total_ordering
 from typing import Optional, Type, TypeVar
 
 
 T = TypeVar("T", bound="VBAEmpty")
 
 
-@total_ordering
 class VBAEmpty(VBATypeBase):
     """
     Represents the VBA 'Empty' type.
