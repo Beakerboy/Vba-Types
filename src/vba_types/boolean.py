@@ -22,17 +22,6 @@ class VBABoolean(VBAIntegralType):
     def __bool__(self: T) -> bool:
         return self.value == -1
 
-    def __eq__(self: T, other: VBATypeBase) -> T | vba_types.null.VBANull:
-        if other is Null:
-            return Null
-        if isinstance(other, vba_types.string.VBAString):
-            if other.value.lower() == "true":
-                return VBABoolean(self.value == -1)
-            if other.value.lower() == "false":
-                return VBABoolean(self.value == 0)
-            raise TypeMismatchError()
-        return VBABoolean(self.value == other.value)
-
     def __lt__(self: T, other: VBATypeBase) -> T | vba_types.null.VBANull:
         if other is Null:
             return Null
