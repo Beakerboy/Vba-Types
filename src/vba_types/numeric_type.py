@@ -1,6 +1,6 @@
 from __future__ import annotations
 from .vba_type_base import VBATypeBase
-from typing import Any, TypeVar, TYPE_CHECKING
+from typing import TypeVar
 
 
 T = TypeVar("T", bound="VBANumericType")
