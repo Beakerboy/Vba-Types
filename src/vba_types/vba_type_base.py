@@ -9,6 +9,6 @@ T = TypeVar('T', bound='VBATypeBase')
 class VBATypeBase(ABC):
     value: Any
 
-    def __add__(self: T, other: T) -> T:
+    def __add__(self: T, other: T) -> "VBATypeBase":
         from vba_types.vba_registry import registry
         return registry.execute("+", self, other)
