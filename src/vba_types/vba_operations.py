@@ -1,11 +1,11 @@
 from .vba_registry import registry
-from vba_types.null import Null, VBANull
 from vba_types.vba_type_base import VBATypeBase
 from vba_types.boolean import VBABoolean
 from vba_types.double import VBADouble
-from vba_types.empty import VBAEmpty
+from vba_types.empty import Empty, VBAEmpty
 from vba_types.integer import VBAInteger
 from vba_types.integral_type import VBAIntegralType
+from vba_types.null import Null, VBANull
 from .exceptions import DivisionByZeroError
 
 
@@ -42,7 +42,7 @@ def _mul_promote_to_double(left: VBATypeBase,
 
 def _truediv_promote_to_double(left: VBATypeBase,
                            right: VBATypeBase) -> VBAInteger:
-    if right.value == 0.0:
+    if right.value == 0.0 or right is Empty:
         raise DivisionByZeroError()
     return VBADouble(left.value / right.value)
 
@@ -94,5 +94,7 @@ registry.register("*", VBADouble, VBAIntegralType, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAEmpty, _mul_promote_to_double)
 
 registry.register("/", VBAIntegralType, VBAIntegralType, _truediv_promote_to_double)
+registry.register("/", VBAIntegralType, VBAEmpty, _truediv_promote_to_double)
+registry.register("/", VBAEmpty VBAIntegralType, _truediv_promote_to_double)
 registry.register("/", VBAIntegralType, VBADouble, _truediv_promote_to_double)
 registry.register("/", VBADouble, VBADouble, _truediv_promote_to_double)
