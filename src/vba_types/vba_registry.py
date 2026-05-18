@@ -38,7 +38,7 @@ class VBARegistry:
                     reg_op == op and
                     issubclass(left_cls, reg_left) and
                     issubclass(right_cls, reg_right)
-                ):
+               ):
                 return handler
         return None
 
