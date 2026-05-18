@@ -7,6 +7,8 @@ from .long import VBALong
 from .string import VBAString
 from .vba_type_base import VBATypeBase
 from .literal_factory import literal_from_string
+import vba_types.vba_operations
+
 
 __all__ = [
     "VBAArray",
