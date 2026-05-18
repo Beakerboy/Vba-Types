@@ -55,25 +55,3 @@ class VBAInteger(VBAIntegralType):
         if other is Null:
             return Null
         return VBABoolean(self.value > other.value)
-
-    def __mod__(self: T, other: VBATypeBase) -> T:
-        return type(self)(self.value % int(other))
-
-    def __mul__(self: T, other: VBATypeBase) -> T:
-        return type(self)(self.value * int(other))
-
-    def __rmul__(self: T, other: VBATypeBase) -> VBATypeBase:
-        return vba_types.double.VBADouble(self.value * other.value)
-
-    def __pow__(self: T, other: VBATypeBase) -> VBATypeBase:
-        return vba_types.double.VBADouble(self.value ** other.value)
-
-    def __truediv__(self: T, other: VBATypeBase) -> vba_types.double.VBADouble:
-        # VBA '/' always returns a Double (float in Python)
-        if other.value == 0:
-            raise DivisionByZeroError()
-        return vba_types.double.VBADouble(self.value / other.value)
-
-    def __floordiv__(self: T, other: VBATypeBase) -> T:
-        # VBA '\' is integer division
-        return type(self)(self.value // other.value)
