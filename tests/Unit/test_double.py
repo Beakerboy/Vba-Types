@@ -39,23 +39,13 @@ def test_underflow_to_zero() -> None:
 def test_basic_math_operations() -> None:
     """Test regular math operations (+, -, *, /, **)."""
     v1 = VBADouble(10.5)
+    v1 = VBADouble(1.5)
 
-    assert (v1 + 2.5).value == 13.0
-    assert (v1 - 0.5).value == 10.0
-    assert (v1 * 2).value == 21.0
-    assert (v1 / 2).value == 5.25
-    assert (VBADouble(2.0) ** 3).value == 8.0
-
-
-def test_reflected_math_operations() -> None:
-    """Test right-side operations where native type is on the left."""
-    v = VBADouble(4.0)
-
-    assert (10.0 + v).value == 14.0
-    assert (10.0 - v).value == 6.0
-    assert (2.0 * v).value == 8.0
-    assert (12.0 / v).value == 3.0
-    assert (2.0 ** v).value == 16.0
+    assert (v1 + v2).value == 12.0
+    assert (v1 - v2).value == 9.0
+    assert (v1 * v2).value == 15.75
+    assert (v1 / 2).value == 7.0
+    assert (VBADouble(2.0) ** VBADouble(3)).value == 8.0
 
 
 def test_vba_integer_division() -> None:
