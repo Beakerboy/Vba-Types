@@ -115,6 +115,20 @@ def _bool_string_equality(left: VBATypeBase,
         return VBABoolean(b.value == 0)
     raise TypeMismatchError()
 
+def _bool_string_inequality(left: VBATypeBase,
+                          right: VBATypeBase) -> VBABoolean:
+    if isinstance(left, VBAString):
+        s = left
+        b = right
+    else:
+        s = right
+        b = left
+    if s.value.lower() == "true":
+        return VBABoolean(b.value != -1)
+    if s.value.lower() == "false":
+        return VBABoolean(b.value != 0)
+    raise TypeMismatchError()
+
 
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
@@ -230,3 +244,5 @@ registry.register("<>", VBAString, VBAEmpty, _string_inequality)
 
 registry.register("==", VBABoolean, VBAString, _bool_string_equality)
 registry.register("==", VBAString, VBABoolean, _bool_string_equality)
+registry.register("<>", VBABoolean, VBAString, _bool_string_inequality)
+registry.register("<>", VBAString, VBABoolean, _bool_string_inequality)
