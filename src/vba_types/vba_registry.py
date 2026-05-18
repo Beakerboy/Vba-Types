@@ -19,11 +19,11 @@ class VBARegistry:
     def __init__(self: T) -> None:
         self._registry: dict[tuple[str, type, type], Callable] = {}
 
-    def register_binary(self: T,
-                        op: str,
-                        left_cls: type,
-                        right_cls: type,
-                        handler: Callable) -> None:
+    def register(self: T,
+                 op: str,
+                 left_cls: type,
+                 right_cls: type,
+                 handler: Callable) -> None:
         self._registry[(op, left_cls, right_cls)] = handler
 
     def _get_handler(self: T,
