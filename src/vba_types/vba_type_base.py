@@ -17,6 +17,10 @@ class VBATypeBase(ABC):
         from vba_types.vba_registry import registry
         return registry.execute("-", self, other)
 
+     def __mod__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("%", self, other)
+
     def __mul__(self: T, other: T) -> "VBATypeBase":
         from vba_types.vba_registry import registry
         return registry.execute("*", self, other)
