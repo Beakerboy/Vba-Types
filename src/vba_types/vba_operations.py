@@ -115,8 +115,9 @@ def _bool_string_equality(left: VBATypeBase,
         return VBABoolean(b.value == 0)
     raise TypeMismatchError()
 
+
 def _bool_string_inequality(left: VBATypeBase,
-                          right: VBATypeBase) -> VBABoolean:
+                            right: VBATypeBase) -> VBABoolean:
     if isinstance(left, VBAString):
         s = left
         b = right
