@@ -36,3 +36,7 @@ class VBATypeBase(ABC):
     def __floordiv__(self: T, other: T) -> "VBATypeBase":
         from vba_types.vba_registry import registry
         return registry.execute("//", self, other)
+
+    def __eq__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("==", self, other)
