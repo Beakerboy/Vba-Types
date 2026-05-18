@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import (
-    Any, Callable, TypeVar, TYPE_CHECKING
+    Any, Callable, Optional, TypeVar, TYPE_CHECKING
 )
 
 
@@ -29,7 +29,7 @@ class VBARegistry:
     def _get_handler(self: T,
                      op: str,
                      left_cls: type,
-                     right_cls: type) -> Callable:
+                     right_cls: type) -> Optional[Callable]:
         exact_key = (op, left_cls, right_cls)
         if exact_key in self._registry:
             return self._registry[exact_key]
