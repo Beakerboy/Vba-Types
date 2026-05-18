@@ -33,11 +33,11 @@ class VBARegistry:
         exact_key = (op, left_cls, right_cls)
         if exact_key in self._registry:
             return self._registry[exact_key]
-        for (reg_op, reg_left_cls, reg_right_cls), handler in self._registry.items():
+        for (reg_op, reg_left, reg_right), handler in self._registry.items():
             if (
                     reg_op == op and
-                    issubclass(left_cls, reg_left_cls) and
-                    issubclass(right_cls, reg_right_cls)
+                    issubclass(left_cls, reg_left) and
+                    issubclass(right_cls, reg_right)
                 ):
                 return handler
         return None
