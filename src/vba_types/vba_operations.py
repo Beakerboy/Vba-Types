@@ -8,21 +8,25 @@ from vba_types.integer import VBAInteger
 from vba_types.integral_type import VBAIntegralType
 
 
-
 def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
     return Null
+
 
 def _add_promote_to_integer(left: VBATypeBase, right: VBATypeBase) -> VBAInteger:
     return VBAInteger(left.value + right.value)
 
+
 def _sub_promote_to_integer(left: VBATypeBase, right: VBATypeBase) -> VBAInteger:
     return VBAInteger(left.value + right.value)
+
 
 def _add_promote_to_double(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
     return VBADouble(left.value + right.value)
 
+
 def _sub_promote_to_double(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
     return VBADouble(left.value - right.value)
+
 
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
