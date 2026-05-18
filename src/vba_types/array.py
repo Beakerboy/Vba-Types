@@ -37,21 +37,6 @@ class VBAArray(VBATypeBase):
         for item in self._data:
             yield item
 
-    def __eq__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __lt__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __add__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __sub__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __mul__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
     @classmethod
     def initialize(cls: Type[T],
                    *args: int | list[tuple[int, int]],
