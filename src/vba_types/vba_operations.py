@@ -92,12 +92,13 @@ def _numeric_le(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
     return VBABoolean(left.value <= right.val)
 
-def _numeric_equality(left: VBATypeBase,
+
+def _string_equality(left: VBATypeBase,
                            right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) == str(right))
 
 
-def _numeric_inequality(left: VBATypeBase,
+def _string_inequality(left: VBATypeBase,
                            right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) != str(right))
 
