@@ -8,6 +8,7 @@ from vba_types.integral_type import VBAIntegralType
 from vba_types.long import VBALong
 from vba_types.null import Null, VBANull
 from vba_types.numeric_type import VBANumericType
+from vba_types.string import VBAString
 from .exceptions import DivisionByZeroError
 
 
@@ -90,6 +91,15 @@ def _numeric_ge(left: VBATypeBase,
 def _numeric_le(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
     return VBABoolean(left.value <= right.val)
+
+def _numeric_equality(left: VBATypeBase,
+                           right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(str(left) == str(right))
+
+
+def _numeric_inequality(left: VBATypeBase,
+                           right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(str(left) != str(right))
 
 
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
@@ -190,3 +200,10 @@ registry.register(">", VBANumericType, VBAEmpty, _numeric_gt)
 registry.register("<", VBANumericType, VBAEmpty, _numeric_lt)
 registry.register("<=", VBANumericType, VBAEmpty, _numeric_le)
 registry.register("=>", VBANumericType, VBAEmpty, _numeric_ge)
+
+registry.register("==", VBAEmpty, VBAString, _string_equality)
+registry.register("==", VBAString, VBAEmpty, _string_equality)
+registry.register("==", VBAString, VBAString, _string_equality)
+registry.register("<>", VBAString, VBAString, _string_equality)
+registry.register("<>", VBAEmpty, VBAString, _string_equality)
+registry.register("<>", VBAString, VBAEmpty, _string_equality)
