@@ -37,7 +37,9 @@ class VBATypeBase(ABC):
         from vba_types.vba_registry import registry
         return registry.execute("//", self, other)
 
-    def __eq__(self: T, other: T) -> "VBATypeBase":
+    def __eq__(self: T, other: object) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("==", self, other)
 
