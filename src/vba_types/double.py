@@ -1,6 +1,6 @@
 from __future__ import annotations
 import math
-from typing import TypeVar, TYPE_CHECKING
+from typing import TypeVar
 from .float_type import VBAFloatType
 
 
