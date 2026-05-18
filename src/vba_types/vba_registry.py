@@ -12,7 +12,7 @@ T = TypeVar('T', bound='VBARegistry')
 
 
 # Maps: (operator, left_type, right_type) -> calculation function
-BinaryOpMap = Dict[Tuple[str, str, str], Callable[[Any, Any], 'VBATypeBase']]
+BinaryOpMap = dict[tuple[str, str, str], Callable[[Any, Any], 'VBATypeBase']]
 
 
 class VBARegistry:
