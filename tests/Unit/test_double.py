@@ -44,7 +44,7 @@ def test_basic_math_operations() -> None:
     assert (v1 + v2).value == 12.0
     assert (v1 - v2).value == 9.0
     assert (v1 * v2).value == 15.75
-    assert (v1 / 2).value == 7.0
+    assert (v1 / v2).value == 7.0
     assert (VBADouble(2.0) ** VBADouble(3)).value == 8.0
 
 
