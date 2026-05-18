@@ -16,3 +16,15 @@ class VBATypeBase(ABC):
     def __sub__(self: T, other: T) -> "VBATypeBase":
         from vba_types.vba_registry import registry
         return registry.execute("-", self, other)
+
+    def __mul__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("*", self, other)
+
+    def __pow__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("**", self, other)
+
+    def __truediv__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("/", self, other)
