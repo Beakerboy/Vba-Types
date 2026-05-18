@@ -11,7 +11,7 @@ from vba_types.string import VBAString
 from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
-def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VbaNull:
+def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
     return Null
 
 
