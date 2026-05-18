@@ -9,3 +9,9 @@ def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
 
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
+registry.register("-", VBANull, VBATypeBase, handle_null_propogation)
+registry.register("-", VBATypeBase, VBANull, handle_null_propogation)
+registry.register("*", VBANull, VBATypeBase, handle_null_propogation)
+registry.register("*", VBATypeBase, VBANull, handle_null_propogation)
+registry.register("/", VBANull, VBATypeBase, handle_null_propogation)
+registry.register("/", VBATypeBase, VBANull, handle_null_propogation)
