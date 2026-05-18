@@ -20,7 +20,7 @@ class VBADouble(VBAFloatType):
 
     value: float
 
-    def __init__(self: T, value: 0.0) -> None:
+    def __init__(self: T, value: float = 0.0) -> None:
         # Avoid double validation if we are already dealing with a verified
         # float
         if isinstance(value, float):
