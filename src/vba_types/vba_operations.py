@@ -7,7 +7,7 @@ from vba_types.integral_type import VBAIntegralType, VBAInteger, VBALong
 from vba_types.null import Null, VBANull
 from vba_types.numeric_type import VBANumericType
 from vba_types.string import VBAString
-from .exceptions import DivisionByZeroError
+from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
 def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
@@ -100,6 +100,20 @@ def _string_inequality(left: VBATypeBase,
                        right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) != str(right))
 
+
+def _bool_string_equality(left: VBATypeBase,
+                          right: VBATypeBase) -> VBABoolean:
+    if isinstance(left, VBAString):
+        s = left
+        b = right
+    else:
+        s = right
+        b = left
+    if s.value.lower() == "true":
+        return VBABoolean(b.value == -1)
+    if s.value.lower() == "false":
+        return VBABoolean(b.value == 0)
+    raise TypeMismatchError()
 
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
@@ -212,3 +226,6 @@ registry.register("==", VBAString, VBAString, _string_equality)
 registry.register("<>", VBAString, VBAString, _string_inequality)
 registry.register("<>", VBAEmpty, VBAString, _string_inequality)
 registry.register("<>", VBAString, VBAEmpty, _string_inequality)
+
+registry.register("==", VBABoolean, VBAString, _bool_string_equality)
+registry.register("==", VBAString, VBABoolean, _bool_string_equality)
