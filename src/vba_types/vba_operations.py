@@ -49,14 +49,14 @@ def _pow_promote_to_double(left: VBATypeBase,
 
 
 def _truediv_promote_to_double(left: VBATypeBase,
-                           right: VBATypeBase) -> VBADouble:
+                               right: VBATypeBase) -> VBADouble:
     if right.value == 0.0 or right is Empty:
         raise DivisionByZeroError()
     return VBADouble(left.value / right.value)
 
 
 def _floordiv_promote_to_long(left: VBATypeBase,
-                           right: VBATypeBase) -> VBALong:
+                              right: VBATypeBase) -> VBALong:
     if right.value == 0.0 or right is Empty:
         raise DivisionByZeroError()
     return VBALong(left.value // right.value)
@@ -112,13 +112,15 @@ registry.register("*", VBAEmpty, VBADouble, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAIntegralType, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAEmpty, _mul_promote_to_double)
 
-registry.register("/", VBAIntegralType, VBAIntegralType, _truediv_promote_to_double)
+registry.register("/", VBAIntegralType,
+                  VBAIntegralType, _truediv_promote_to_double)
 registry.register("/", VBAIntegralType, VBAEmpty, _truediv_promote_to_double)
 registry.register("/", VBAEmpty, VBAIntegralType, _truediv_promote_to_double)
 registry.register("/", VBAIntegralType, VBADouble, _truediv_promote_to_double)
 registry.register("/", VBADouble, VBADouble, _truediv_promote_to_double)
 
-registry.register("//", VBAIntegralType, VBAIntegralType, _floordiv_promote_to_long)
+registry.register("//", VBAIntegralType,
+                  VBAIntegralType, _floordiv_promote_to_long)
 registry.register("//", VBAIntegralType, VBAEmpty, _floordiv_promote_to_long)
 registry.register("//", VBAEmpty, VBAIntegralType, _floordiv_promote_to_long)
 registry.register("//", VBAIntegralType, VBADouble, _floordiv_promote_to_long)
