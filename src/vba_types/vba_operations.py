@@ -3,8 +3,7 @@ from vba_types.vba_type_base import VBATypeBase
 from vba_types.boolean import VBABoolean
 from vba_types.double import VBADouble
 from vba_types.empty import Empty, VBAEmpty
-from vba_types.integer import VBAInteger
-from vba_types.integral_type import VBAIntegralType
+from vba_types.integral_type import VBAIntegralType, VBAInteger
 from vba_types.long import VBALong
 from vba_types.null import Null, VBANull
 from vba_types.numeric_type import VBANumericType
