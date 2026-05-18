@@ -40,7 +40,7 @@ def _mod_promote_to_integer(left: VBATypeBase,
 
 
 def _mod_promote_to_long(left: VBATypeBase,
-                            right: VBATypeBase) -> VBALong:
+                         right: VBATypeBase) -> VBALong:
     return VBALong(left.value % right.value)
 
 
