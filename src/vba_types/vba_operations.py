@@ -1,4 +1,4 @@
-from .vba_registry import registry:
+from .vba_registry import registry
 from vba_types.null import Null, VBANull
 
 
