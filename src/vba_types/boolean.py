@@ -3,14 +3,16 @@ from functools import total_ordering
 from typing import TypeVar
 from .exceptions import TypeMismatchError
 from .null import Null
-from .vba_type_base import VBATypeBase
+from .integral_type import VBAIntegralType
 
 
 T = TypeVar("T", bound="VBABoolean")
 
 
 @total_ordering
-class VBABoolean(VBATypeBase):
+class VBABoolean(VBAIntegralType):
+    MIN_VALUE: int
+    MAX_VALUE: int
     value: int
 
     def __init__(self: T, value: bool = False) -> None:
