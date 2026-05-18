@@ -2,7 +2,6 @@ from __future__ import annotations
 import math
 from functools import total_ordering
 from typing import Union, TypeVar, TYPE_CHECKING
-from .exceptions import DivisionByZeroError
 from .vba_type_base import VBATypeBase
 
 
