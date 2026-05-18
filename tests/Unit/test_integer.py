@@ -51,7 +51,7 @@ def test_basic_math_operations() -> None:
     assert int(a * b) == 30
 
     # Power
-    assert int(b ^ VBAInteger(2)) == 9
+    assert int(b ** VBAInteger(2)) == 9
 
 
 def test_truediv_returns_float() -> None:
