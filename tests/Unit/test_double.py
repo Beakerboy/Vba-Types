@@ -76,4 +76,3 @@ def test_division_by_zero() -> None:
     # Floor division check
     with pytest.raises(DivisionByZeroError):
         _ = v // zero
-
