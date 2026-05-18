@@ -38,3 +38,12 @@ class VBAIntegralType(VBANumericType):
     def __index__(self: T) -> int:
         """Allows the object to be used in slice indices or bin() functions."""
         return self.value
+
+
+class VBAInteger(VBAIntegralType):
+    """
+    Simulates the VBA Integer data type (16-bit signed).
+    Range: -32,768 to 32,767.
+    """
+    MIN_VALUE: int = -32768
+    MAX_VALUE: int = 32767
