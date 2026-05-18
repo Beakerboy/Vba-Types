@@ -1,5 +1,6 @@
 from .vba_registry import registry
 from vba_types.vba_type_base import VBATypeBase
+from vba_types.array import VBAArray
 from vba_types.boolean import VBABoolean
 from vba_types.double import VBADouble
 from vba_types.empty import Empty, VBAEmpty
@@ -10,9 +11,11 @@ from vba_types.string import VBAString
 from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
-def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
-    return Null
+def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> None:
+    raise TypeMismatchError
 
+def type_mismatch(left: VBATypeBase, right: VBATypeBase) -> VBANull:
+    return Null
 
 def _add_promote_to_integer(left: VBATypeBase,
                             right: VBATypeBase) -> VBAInteger:
@@ -144,6 +147,19 @@ registry.register("//", VBATypeBase, VBANull, handle_null_propogation)
 registry.register("%", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("%", VBATypeBase, VBANull, handle_null_propogation)
 
+registry.register("+", VBAArray, VBATypeBase, type_mismatch)
+registry.register("+", VBATypeBase, VBAArray, type_mismatch)
+registry.register("-", VBAArray, VBATypeBase, type_mismatch)
+registry.register("-", VBATypeBase, VBAArray, type_mismatch)
+registry.register("*", VBAArray, VBATypeBase, type_mismatch)
+registry.register("*", VBATypeBase, VBAArray, type_mismatch)
+registry.register("/", VBAArray, VBATypeBase, type_mismatch)
+registry.register("/", VBATypeBase, VBAArray, type_mismatch)
+registry.register("//", VBAArray, VBATypeBase, type_mismatch)
+registry.register("//", VBATypeBase, VBAArray, type_mismatch)
+registry.register("%", VBAArray, VBATypeBase, type_mismatch)
+registry.register("%", VBATypeBase, VBAArray, type_mismatch)
+
 registry.register("+", VBAInteger, VBAInteger, _add_promote_to_integer)
 registry.register("+", VBABoolean, VBAInteger, _add_promote_to_integer)
 registry.register("+", VBAInteger, VBABoolean, _add_promote_to_integer)
@@ -209,6 +225,19 @@ registry.register("<", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("<", VBATypeBase, VBANull, handle_null_propogation)
 registry.register(">", VBANull, VBATypeBase, handle_null_propogation)
 registry.register(">", VBATypeBase, VBANull, handle_null_propogation)
+
+registry.register("==", VBAArray, VBATypeBase, type_mismatch)
+registry.register("==", VBATypeBase, VBAArray, type_mismatch)
+registry.register("<>", VBAArray, VBATypeBase, type_mismatch)
+registry.register("<>", VBATypeBase, VBAArray, type_mismatch)
+registry.register("=>", VBAArray, VBATypeBase, type_mismatch)
+registry.register("=>", VBATypeBase, VBAArray, type_mismatch)
+registry.register("<=", VBAArray, VBATypeBase, type_mismatch)
+registry.register("<=", VBATypeBase, VBAArray, type_mismatch)
+registry.register("<", VBAArray, VBATypeBase, type_mismatch)
+registry.register("<", VBATypeBase, VBAArray, type_mismatch)
+registry.register(">", VBAArray, VBATypeBase, type_mismatch)
+registry.register(">", VBATypeBase, VBAArray, type_mismatch)
 
 registry.register("==", VBANumericType, VBANumericType, _numeric_equality)
 registry.register("<>", VBANumericType, VBANumericType, _numeric_inequality)
