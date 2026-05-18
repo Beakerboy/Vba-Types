@@ -28,7 +28,6 @@ class VBANull:
         return False
 
     # Null Propagation: Any math with Null returns Null
-    def __add__(self: T, other: Any) -> 'VBANull': return self
     def __radd__(self: T, other: Any) -> 'VBANull': return self
     def __sub__(self: T, other: Any) -> 'VBANull': return self
     def __rsub__(self: T, other: Any) -> 'VBANull': return self
