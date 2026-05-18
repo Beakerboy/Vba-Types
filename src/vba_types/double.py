@@ -90,18 +90,6 @@ class VBADouble(VBATypeBase):
         return VBABoolean(self.value > other.value)
 
     # --- Math Operators ---
-    def __add__(self: T, other: VBACompatible) -> T:
-        return type(self)(self.value + self._safefloat(other))
-
-    def __radd__(self: T, other: VBACompatible) -> T:
-        return type(self)(self._safefloat(other) + self.value)
-
-    def __sub__(self: T, other: VBACompatible) -> T:
-        return type(self)(self.value - self._safefloat(other))
-
-    def __rsub__(self: T, other: VBACompatible) -> T:
-        return type(self)(self._safefloat(other) - self.value)
-
     def __mul__(self: T, other: VBACompatible) -> T:
         return type(self)(self.value * self._safefloat(other))
 
