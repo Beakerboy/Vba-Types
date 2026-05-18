@@ -3,7 +3,7 @@ from dateutil.parser import parse
 from typing import Any
 from .boolean import VBABoolean
 from .double import VBADouble
-from .integer import VBAInteger
+from .integral_type import VBAInteger
 from .string import VBAString
 
 
