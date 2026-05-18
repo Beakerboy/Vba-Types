@@ -5,10 +5,6 @@ from .integral_type import VBAIntegralType
 from typing import TypeVar, TYPE_CHECKING
 
 
-if TYPE_CHECKING:
-    from vba_types.vba_type_base import VBATypeBase
-
-
 T = TypeVar("T", bound="VBAInteger")
 
 
@@ -19,7 +15,3 @@ class VBAInteger(VBAIntegralType):
     """
     MIN_VALUE: int = -32768
     MAX_VALUE: int = 32767
-
-    def __index__(self: T) -> int:
-        """Allows the object to be used in slice indices or bin() functions."""
-        return self.value
