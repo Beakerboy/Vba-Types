@@ -3,6 +3,7 @@ import math
 from functools import total_ordering
 from typing import Union, TypeVar, TYPE_CHECKING
 from .vba_type_base import VBATypeBase
+from .float_type import VBAFloatType
 
 
 if TYPE_CHECKING:
@@ -15,7 +16,7 @@ T = TypeVar("T", bound="VBADouble")
 
 
 @total_ordering
-class VBADouble(VBATypeBase):
+class VBADouble(VBAFloatType):
     """
     Simulates the VBA Double data type (64-bit floating-point).
     Negative range: -1.7976931348623157E+308 to -4.94065645841247E-324
