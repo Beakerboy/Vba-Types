@@ -75,22 +75,22 @@ def _numeric_inequality(left: VBATypeBase,
 
 def _numeric_lt(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value < right.val)
+    return VBABoolean(left.value < right.value)
 
 
 def _numeric_gt(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value > right.val)
+    return VBABoolean(left.value > right.value)
 
 
 def _numeric_ge(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value >= right.val)
+    return VBABoolean(left.value >= right.value)
 
 
 def _numeric_le(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value <= right.val)
+    return VBABoolean(left.value <= right.value)
 
 
 def _string_equality(left: VBATypeBase,
