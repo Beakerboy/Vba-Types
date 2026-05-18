@@ -29,13 +29,6 @@ class VBANull(VBATypeBase):
         # depending on context, but it is effectively falsy in Python.
         return False
 
-    # Null Propagation: Any math with Null returns Null
-    def __sub__(self: T, other: Any) -> 'VBANull': return self
-    def __rsub__(self: T, other: Any) -> 'VBANull': return self
-    def __mul__(self: T, other: Any) -> 'VBANull': return self
-    def __rmul__(self: T, other: Any) -> 'VBANull': return self
-    def __truediv__(self: T, other: Any) -> 'VBANull': return self
-    def __rtruediv__(self: T, other: Any) -> 'VBANull': return self
 
     # VBA Comparison logic: Any comparison with Null returns Null
     # Note: In Python, __eq__ must return a boolean for dict/set keys to work.
