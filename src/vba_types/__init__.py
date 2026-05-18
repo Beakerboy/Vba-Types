@@ -2,7 +2,7 @@ from .array import VBAArray
 from .boolean import VBABoolean
 from .double import VBADouble
 from .empty import VBAEmpty
-from .integer import VBAInteger
+from .integral_type import VBAInteger
 from .long import VBALong
 from .string import VBAString
 from .vba_type_base import VBATypeBase
