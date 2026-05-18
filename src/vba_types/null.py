@@ -1,5 +1,5 @@
 from __future__ import annotations
-import vba_types.vba_type_base import VBATypeBase
+from vba_types.vba_type_base import VBATypeBase
 from typing import Any, Optional, Type, TypeVar
 
 
