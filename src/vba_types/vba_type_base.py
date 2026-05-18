@@ -12,3 +12,7 @@ class VBATypeBase(ABC):
     def __add__(self: T, other: T) -> "VBATypeBase":
         from vba_types.vba_registry import registry
         return registry.execute("+", self, other)
+
+    def __sub__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("-", self, other)
