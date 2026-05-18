@@ -17,11 +17,10 @@ def test_null_propagation_arithmetic() -> None:
 
 
 def test_vba_comparison_behavior() -> None:
-    """In VBA, Null = Null and Null = 0 are both NOT True."""
-    assert (Null == Null) is False
-    assert (Null == VBAInteger(0)) is False
-    assert (Null == "") is False
-    assert (Null != VBAInteger(10)) is True
+    assert (Null == Null) is Null
+    assert (Null == VBAInteger(0)) is Null
+    assert (Null == "") is Null
+    assert (Null != VBAInteger(10)) is Null
 
 
 def test_null_boolean() -> None:
