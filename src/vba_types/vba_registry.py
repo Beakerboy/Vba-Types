@@ -46,8 +46,7 @@ class VBARegistry:
                 op: str,
                 left: VBATypeBase,
                 right: VBATypeBase) -> VBATypeBase:
-        key = (op, type(left), type(right))
-        handler = self._get_handler(key)
+        handler = self._get_handler(op, type(left), type(right))
 
         if not handler:
             raise TypeError(self._get_vba_error_msg(op, left, right))
