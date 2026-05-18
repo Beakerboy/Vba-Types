@@ -2,7 +2,7 @@ from .exceptions import TypeMismatchError
 from .vba_type_base import VBATypeBase
 import vba_types
 from functools import total_ordering
-from typing import Any, Optional, Type, TypeVar
+from typing import Optional, Type, TypeVar
 
 
 T = TypeVar("T", bound="VBAEmpty")
