@@ -12,11 +12,12 @@ T = TypeVar("T", bound="VBABoolean")
 
 @total_ordering
 class VBABoolean(VBAIntegralType):
-    MIN_VALUE: int
-    MAX_VALUE: int
+    MIN_VALUE: int = -1
+    MAX_VALUE: int = 0
     value: int
 
     def __init__(self: T, value: bool = False) -> None:
+        
         self.value = -1 if value else 0
 
     def __bool__(self: T) -> bool:
