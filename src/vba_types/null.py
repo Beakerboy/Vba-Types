@@ -29,7 +29,6 @@ class VBANull(VBATypeBase):
         # depending on context, but it is effectively falsy in Python.
         return False
 
-
     # VBA Comparison logic: Any comparison with Null returns Null
     # Note: In Python, __eq__ must return a boolean for dict/set keys to work.
     # To mimic VBA's "If x = Null" always being False, we return False for
