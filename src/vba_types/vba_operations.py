@@ -64,12 +64,12 @@ def _floordiv_promote_to_long(left: VBATypeBase,
 
 
 def _numeric_equality(left: VBATypeBase,
-                           right: VBATypeBase) -> VBABoolean:
+                      right: VBATypeBase) -> VBABoolean:
     return VBABoolean(left.value == right.value)
 
 
 def _numeric_inequality(left: VBATypeBase,
-                           right: VBATypeBase) -> VBABoolean:
+                        right: VBATypeBase) -> VBABoolean:
     return VBABoolean(left.value != right.value)
 
 
@@ -94,12 +94,12 @@ def _numeric_le(left: VBATypeBase,
 
 
 def _string_equality(left: VBATypeBase,
-                           right: VBATypeBase) -> VBABoolean:
+                     right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) == str(right))
 
 
 def _string_inequality(left: VBATypeBase,
-                           right: VBATypeBase) -> VBABoolean:
+                       right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) != str(right))
 
 
