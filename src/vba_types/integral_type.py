@@ -34,3 +34,7 @@ class VBAIntegralType(VBANumericType):
     def __eq__(self: T, other: Any) -> VBABoolean:
         from .boolean import VBABoolean
         return VBABoolean(self.value == other.value)
+
+    def __index__(self: T) -> int:
+        """Allows the object to be used in slice indices or bin() functions."""
+        return self.value
