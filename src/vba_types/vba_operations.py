@@ -107,7 +107,7 @@ def _bool_string_equality(left: VBATypeBase,
         s = left
         b = right
     else:
-        s = right
+        s: VBAString = right
         b = left
     if s.value.lower() == "true":
         return VBABoolean(b.value == -1)
@@ -122,7 +122,7 @@ def _bool_string_inequality(left: VBATypeBase,
         s = left
         b = right
     else:
-        s = right
+        s: VBAString = right
         b = left
     if s.value.lower() == "true":
         return VBABoolean(b.value != -1)
