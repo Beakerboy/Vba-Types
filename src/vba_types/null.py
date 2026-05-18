@@ -1,6 +1,6 @@
 from __future__ import annotations
 from vba_types.vba_type_base import VBATypeBase
-from typing import Any, Optional, Type, TypeVar
+from typing import Optional, Type, TypeVar
 
 
 T = TypeVar('T', bound='VBANull')
