@@ -1,7 +1,6 @@
 from __future__ import annotations
 from typing import Any, Iterator, Tuple, Type, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
-from .exceptions import TypeMismatchError
 from .vba_type_base import VBATypeBase
 
 
