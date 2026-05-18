@@ -13,6 +13,8 @@ T = TypeVar("T", bound="VBAIntegralType")
 
 class VBAIntegralType(VBATypeBase):
 
+    MIN_VALUE: int
+    MAX_VALUE: int
     value: int
 
     def __init__(self: T, value: int = 0) -> None:
