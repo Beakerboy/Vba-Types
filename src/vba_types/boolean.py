@@ -1,4 +1,3 @@
-import vba_types
 from typing import TypeVar
 from .integral_type import VBAIntegralType
 
