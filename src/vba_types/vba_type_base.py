@@ -43,22 +43,32 @@ class VBATypeBase(ABC):
         from vba_types.vba_registry import registry
         return registry.execute("==", self, other)
 
-    def __ne__(self: T, other: T) -> "VBATypeBase":
+    def __ne__(self: T, other: object) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("<>", self, other)
 
-    def __lt__(self: T, other: T) -> "VBATypeBase":
+    def __lt__(self: T, other: object) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("<", self, other)
 
-    def __gt__(self: T, other: T) -> "VBATypeBase":
+    def __gt__(self: T, other: object) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute(">", self, other)
 
-    def __ge__(self: T, other: T) -> "VBATypeBase":
+    def __ge__(self: T, other: object) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("=>", self, other)
 
-    def __le__(self: T, other: T) -> "VBATypeBase":
+    def __le__(self: T, other: object) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("<=", self, other)
