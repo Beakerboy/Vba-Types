@@ -4,6 +4,7 @@ from typing import TypeVar
 from .exceptions import TypeMismatchError
 from .null import Null
 from .integral_type import VBAIntegralType
+from .vba_type_base import VBATypeBase
 
 
 T = TypeVar("T", bound="VBABoolean")
