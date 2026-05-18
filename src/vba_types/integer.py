@@ -3,7 +3,6 @@ from .exceptions import DivisionByZeroError
 from .boolean import VBABoolean
 from .null import Null
 from .integral_type import VBAIntegralType
-import vba_types
 from typing import TypeVar, TYPE_CHECKING
 
 
