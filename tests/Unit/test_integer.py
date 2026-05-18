@@ -50,6 +50,9 @@ def test_basic_math_operations() -> None:
     # Multiplication
     assert int(a * b) == 30
 
+    # Power
+    assert int(b ^ VBAInteger(2)) == 9
+
 
 def test_truediv_returns_float() -> None:
     """Test that '/' returns a float, matching VBA's 'Double' return type."""
