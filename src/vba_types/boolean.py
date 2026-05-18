@@ -17,7 +17,6 @@ class VBABoolean(VBAIntegralType):
     value: int
 
     def __init__(self: T, value: bool = False) -> None:
-        
         self.value = -1 if value else 0
 
     def __bool__(self: T) -> bool:
