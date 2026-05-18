@@ -41,7 +41,7 @@ class VBARegistry:
                 ):
                 return handler
         return None
-                        
+
     def execute(self: T,
                 op: str,
                 left: VBATypeBase,
