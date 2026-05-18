@@ -7,6 +7,7 @@ from vba_types.integer import VBAInteger
 from vba_types.integral_type import VBAIntegralType
 from vba_types.long import VBALong
 from vba_types.null import Null, VBANull
+from vba_types.numeric_type import VBANumericType
 from .exceptions import DivisionByZeroError
 
 
@@ -123,4 +124,4 @@ registry.register("//", VBAEmpty, VBAIntegralType, _floordiv_promote_to_long)
 registry.register("//", VBAIntegralType, VBADouble, _floordiv_promote_to_long)
 registry.register("//", VBADouble, VBADouble, _floordiv_promote_to_long)
 
-registry.register("**", VBADouble, VBADouble, _pow_promote_to_double)
+registry.register("**", VBANumericType, VBANumericType, _pow_promote_to_double)
