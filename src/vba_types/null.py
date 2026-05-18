@@ -1,10 +1,12 @@
-from typing import Any, Optional, Type, TypeVar
+from __future__ import annotations
+from vba_types.vba_type_base import VBATypeBase
+from typing import Optional, Type, TypeVar
 
 
 T = TypeVar('T', bound='VBANull')
 
 
-class VBANull:
+class VBANull(VBATypeBase):
     """
     Represents the VBA 'Null' type.
     Features 'Null Propagation': most operations with Null return Null.
@@ -26,28 +28,6 @@ class VBANull:
         # In VBA, 'If Null Then' results in an error or False-like behavior
         # depending on context, but it is effectively falsy in Python.
         return False
-
-    # Null Propagation: Any math with Null returns Null
-    def __add__(self: T, other: Any) -> 'VBANull': return self
-    def __radd__(self: T, other: Any) -> 'VBANull': return self
-    def __sub__(self: T, other: Any) -> 'VBANull': return self
-    def __rsub__(self: T, other: Any) -> 'VBANull': return self
-    def __mul__(self: T, other: Any) -> 'VBANull': return self
-    def __rmul__(self: T, other: Any) -> 'VBANull': return self
-    def __truediv__(self: T, other: Any) -> 'VBANull': return self
-    def __rtruediv__(self: T, other: Any) -> 'VBANull': return self
-
-    # VBA Comparison logic: Any comparison with Null returns Null
-    # Note: In Python, __eq__ must return a boolean for dict/set keys to work.
-    # To mimic VBA's "If x = Null" always being False, we return False for
-    # equality.
-    def __eq__(self: T, other: Any) -> bool:
-        # In VBA, Null = Null is False (use IsNull instead)
-        return False
-
-    def __ne__(self: T, other: Any) -> bool:
-        # In VBA, Null <> anything is also effectively handled as not-equal
-        return True
 
 
 Null = VBANull()

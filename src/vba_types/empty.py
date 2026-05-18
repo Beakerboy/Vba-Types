@@ -1,14 +1,11 @@
-from .exceptions import TypeMismatchError
+from __future__ import annotations
 from .vba_type_base import VBATypeBase
-import vba_types
-from functools import total_ordering
-from typing import Any, Optional, Type, TypeVar
+from typing import Optional, Type, TypeVar
 
 
 T = TypeVar("T", bound="VBAEmpty")
 
 
-@total_ordering
 class VBAEmpty(VBATypeBase):
     """
     Represents the VBA 'Empty' type.
@@ -37,35 +34,6 @@ class VBAEmpty(VBATypeBase):
     def __bool__(self: T) -> bool:
         # In VBA, Empty evaluates to False/0
         return False
-
-    def __eq__(self: T, other: VBATypeBase) -> vba_types.boolean.VBABoolean:
-        if isinstance(other, vba_types.array.VBAArray):
-            raise TypeMismatchError()
-        if other is Empty:
-            return vba_types.boolean.VBABoolean(True)
-        if isinstance(other, vba_types.string.VBAString):
-            return vba_types.boolean.VBABoolean("" == other.value)
-        return vba_types.boolean.VBABoolean(0 == other.value)
-
-    def __lt__(self: T, other: VBATypeBase) -> vba_types.boolean.VBABoolean:
-        if other is Empty:
-            return vba_types.boolean.VBABoolean(False)
-        if isinstance(other, vba_types.string.VBAString):
-            return vba_types.string.VBAString("") < other
-        return vba_types.boolean.VBABoolean(0 < other.value)
-
-    # Arithmetic behavior (Empty acts as 0)
-    def __add__(self: T, other: Any) -> Any:
-        return type(other)(0 + other.value)
-
-    def __sub__(self: T, other: Any) -> Any:
-        return type(other)(0 - other.value)
-
-    def __mul__(self: T, other: Any) -> Any:
-        return type(other)(0 * other.value)
-
-    def __truediv__(self: T, other: Any) -> Any:
-        return type(other)(0 / other.value)
 
 
 Empty = VBAEmpty()

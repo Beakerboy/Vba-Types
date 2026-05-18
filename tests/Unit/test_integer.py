@@ -1,7 +1,7 @@
 import pytest
 from vba_types.double import VBADouble
 from vba_types.exceptions import OverflowException
-from vba_types.integer import VBAInteger
+from vba_types.integral_type import VBAInteger
 
 
 def test_initialization_boundaries() -> None:
@@ -25,7 +25,7 @@ def test_arithmetic_overflow() -> None:
     b = VBAInteger(3000)
 
     with pytest.raises(OverflowException):
-        _ = a + b  # 33000 > 32767
+        a + b
 
     c = VBAInteger(-32000)
     d = VBAInteger(1000)
@@ -49,6 +49,11 @@ def test_basic_math_operations() -> None:
 
     # Multiplication
     assert int(a * b) == 30
+
+    # Power
+    val = b ** VBAInteger(2)
+    assert val.value == 9.0
+    assert isinstance(val, VBADouble)
 
 
 def test_truediv_returns_float() -> None:

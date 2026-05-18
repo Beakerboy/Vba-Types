@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import (
-    Any, Callable, Dict, Tuple, TypeVar, TYPE_CHECKING
+    Any, Callable, Optional, TypeVar, TYPE_CHECKING
 )
 
 
@@ -12,26 +12,41 @@ T = TypeVar('T', bound='VBARegistry')
 
 
 # Maps: (operator, left_type, right_type) -> calculation function
-BinaryOpMap = Dict[Tuple[str, str, str], Callable[[Any, Any], 'VBATypeBase']]
+BinaryOpMap = dict[tuple[str, str, str], Callable[[Any, Any], 'VBATypeBase']]
 
 
 class VBARegistry:
     def __init__(self: T) -> None:
-        self._binary_ops: BinaryOpMap = {}
+        self._registry: dict[tuple[str, type, type], Callable] = {}
 
-    def register_binary(self: T,
-                        op: str,
-                        type_left: str,
-                        type_right: str,
-                        handler: Callable) -> None:
-        self._binary_ops[(op, type_left, type_right)] = handler
+    def register(self: T,
+                 op: str,
+                 left_cls: type,
+                 right_cls: type,
+                 handler: Callable) -> None:
+        self._registry[(op, left_cls, right_cls)] = handler
 
-    def execute_binary_op(self: T,
-                          op: str,
-                          left: VBATypeBase,
-                          right: VBATypeBase) -> VBATypeBase:
-        key = (op, left.type_name, right.type_name)
-        handler = self._binary_ops.get(key)
+    def _get_handler(self: T,
+                     op: str,
+                     left_cls: type,
+                     right_cls: type) -> Optional[Callable]:
+        exact_key = (op, left_cls, right_cls)
+        if exact_key in self._registry:
+            return self._registry[exact_key]
+        for (reg_op, reg_left, reg_right), handler in self._registry.items():
+            if (
+                    reg_op == op and
+                    issubclass(left_cls, reg_left) and
+                    issubclass(right_cls, reg_right)
+               ):
+                return handler
+        return None
+
+    def execute(self: T,
+                op: str,
+                left: VBATypeBase,
+                right: VBATypeBase) -> VBATypeBase:
+        handler = self._get_handler(op, type(left), type(right))
 
         if not handler:
             raise TypeError(self._get_vba_error_msg(op, left, right))
@@ -42,7 +57,7 @@ class VBARegistry:
                            left: VBATypeBase,
                            right: VBATypeBase) -> str:
         return (f"Run-time error '13': Type mismatch for "
-                f"{left.type_name} {op} {right.type_name}")
+                f"{type(left)} {op} {type(right)}")
 
 
 registry = VBARegistry()

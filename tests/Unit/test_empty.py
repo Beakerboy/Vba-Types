@@ -1,6 +1,7 @@
 import pytest
 import vba_types
 from vba_types.empty import VBAEmpty, Empty
+from vba_types.integral_type import VBAInteger
 from vba_types.exceptions import DivisionByZeroError
 
 
@@ -27,12 +28,12 @@ def test_type_casting() -> None:
 def test_equality_comparisons() -> None:
     """Test equality logic against various types."""
     assert Empty == VBAEmpty()  # Identity/Type
-    assert Empty == vba_types.integer.VBAInteger(0)           # Integer context
+    assert Empty == VBAInteger(0)           # Integer context
     assert Empty == vba_types.double.VBADouble(0.0)         # Float context
     assert Empty == vba_types.string.VBAString("")          # String context
 
     # Non-equal cases
-    assert Empty != vba_types.integer.VBAInteger(1)
+    assert Empty != VBAInteger(1)
     assert Empty != vba_types.string.VBAString("0")
     assert Empty is not None    # Empty is distinct from None
 
@@ -40,23 +41,23 @@ def test_equality_comparisons() -> None:
 def test_arithmetic_operations() -> None:
     """Test that Empty behaves like 0 in math operations."""
     # Addition
-    int_ten = vba_types.integer.VBAInteger(10)
+    int_ten = VBAInteger(10)
     assert Empty + int_ten == int_ten
-    result = vba_types.integer.VBAInteger(5) + Empty
-    assert result == vba_types.integer.VBAInteger(5)
+    result = VBAInteger(5) + Empty
+    assert result == VBAInteger(5)
 
     # Subtraction
-    result = Empty - vba_types.integer.VBAInteger(5)
-    assert result == vba_types.integer.VBAInteger(-5)
+    result = Empty - VBAInteger(5)
+    assert result == VBAInteger(-5)
     assert int_ten - Empty == int_ten
 
     # Multiplication
-    int_zero = vba_types.integer.VBAInteger(0)
-    assert Empty * vba_types.integer.VBAInteger(100) == int_zero
-    assert vba_types.integer.VBAInteger(50) * Empty == int_zero
+    int_zero = VBAInteger(0)
+    assert Empty * VBAInteger(100) == int_zero
+    assert VBAInteger(50) * Empty == int_zero
 
     # Division
-    result = Empty / vba_types.integer.VBAInteger(2)
+    result = Empty / VBAInteger(2)
     assert result == vba_types.double.VBADouble(0.0)
     with pytest.raises(DivisionByZeroError):
         int_ten / Empty

@@ -1,18 +1,16 @@
 from __future__ import annotations
 from .exceptions import OverflowException
-from .vba_type_base import VBATypeBase
-from typing import Any, TypeVar, TYPE_CHECKING
-
-
-if TYPE_CHECKING:
-    from .boolean import VBABoolean
+from .numeric_type import VBANumericType
+from typing import TypeVar
 
 
 T = TypeVar("T", bound="VBAIntegralType")
 
 
-class VBAIntegralType(VBATypeBase):
+class VBAIntegralType(VBANumericType):
 
+    MIN_VALUE: int
+    MAX_VALUE: int
     value: int
 
     def __init__(self: T, value: int = 0) -> None:
@@ -29,6 +27,20 @@ class VBAIntegralType(VBATypeBase):
     def __repr__(self: T) -> str:
         return str(self.value)
 
-    def __eq__(self: T, other: Any) -> VBABoolean:
-        from .boolean import VBABoolean
-        return VBABoolean(self.value == other.value)
+    def __index__(self: T) -> int:
+        """Allows the object to be used in slice indices or bin() functions."""
+        return self.value
+
+
+class VBAInteger(VBAIntegralType):
+    """
+    Simulates the VBA Integer data type (16-bit signed).
+    Range: -32,768 to 32,767.
+    """
+    MIN_VALUE: int = -32768
+    MAX_VALUE: int = 32767
+
+
+class VBALong(VBAIntegralType):
+    MIN_VALUE: int = -2147483648
+    MAX_VALUE: int = 2147486647

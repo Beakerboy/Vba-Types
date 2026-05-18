@@ -1,15 +1,12 @@
 from __future__ import annotations
-from functools import total_ordering
 from typing import Any, Iterator, Tuple, Type, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
-from .exceptions import TypeMismatchError
 from .vba_type_base import VBATypeBase
 
 
 T = TypeVar('T', bound='VBAArray')
 
 
-@total_ordering
 class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
         self._data = list(args)
@@ -36,21 +33,6 @@ class VBAArray(VBATypeBase):
     def __iter__(self: T) -> Iterator[Any]:
         for item in self._data:
             yield item
-
-    def __eq__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __lt__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __add__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __sub__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
-
-    def __mul__(self: T, other: VBATypeBase) -> None:
-        raise TypeMismatchError()
 
     @classmethod
     def initialize(cls: Type[T],

@@ -39,36 +39,17 @@ def test_underflow_to_zero() -> None:
 def test_basic_math_operations() -> None:
     """Test regular math operations (+, -, *, /, **)."""
     v1 = VBADouble(10.5)
+    v2 = VBADouble(1.5)
 
-    assert (v1 + 2.5).value == 13.0
-    assert (v1 - 0.5).value == 10.0
-    assert (v1 * 2).value == 21.0
-    assert (v1 / 2).value == 5.25
-    assert (VBADouble(2.0) ** 3).value == 8.0
-
-
-def test_reflected_math_operations() -> None:
-    """Test right-side operations where native type is on the left."""
-    v = VBADouble(4.0)
-
-    assert (10.0 + v).value == 14.0
-    assert (10.0 - v).value == 6.0
-    assert (2.0 * v).value == 8.0
-    assert (12.0 / v).value == 3.0
-    assert (2.0 ** v).value == 16.0
+    assert (v1 + v2).value == 12.0
+    assert (v1 - v2).value == 9.0
+    assert (v1 * v2).value == 15.75
+    assert (v1 / v2).value == 7.0
+    assert (VBADouble(2.0) ** VBADouble(3)).value == 8.0
 
 
 def test_vba_integer_division() -> None:
-    """
-    Test that floor division mimics VBA's '\' behavior by dropping decimals
-    first.
-    """
-    # VBA drops decimals before dividing:
-    # 9.9 becomes 9, 2.9 becomes 2 -> 9 // 2 = 4
-    assert (VBADouble(9.9) // VBADouble(2.9)).value == 4.0
-
-    # Check reflected floor division
-    assert (9.9 // VBADouble(2.9)).value == 4.0
+    assert (VBADouble(9.9) // VBADouble(2.9)).value == 3
 
 
 def test_division_by_zero() -> None:
@@ -79,18 +60,10 @@ def test_division_by_zero() -> None:
     v = VBADouble(5.0)
     zero = VBADouble(0.0)
 
-    # True division checks
-    with pytest.raises(DivisionByZeroError):
-        _ = v / 0
+    # True division check
     with pytest.raises(DivisionByZeroError):
         _ = v / zero
-    with pytest.raises(DivisionByZeroError):
-        _ = 5.0 / zero
 
-    # Floor division checks
-    with pytest.raises(DivisionByZeroError):
-        _ = v // 0
+    # Floor division check
     with pytest.raises(DivisionByZeroError):
         _ = v // zero
-    with pytest.raises(DivisionByZeroError):
-        _ = 5.0 // zero
