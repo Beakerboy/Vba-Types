@@ -1,10 +1,11 @@
+import vba_types
 from typing import Any, Optional, Type, TypeVar
 
 
 T = TypeVar('T', bound='VBANull')
 
 
-class VBANull:
+class VBANull(vba_types.VBATypeBase):
     """
     Represents the VBA 'Null' type.
     Features 'Null Propagation': most operations with Null return Null.
@@ -28,7 +29,6 @@ class VBANull:
         return False
 
     # Null Propagation: Any math with Null returns Null
-    def __radd__(self: T, other: Any) -> 'VBANull': return self
     def __sub__(self: T, other: Any) -> 'VBANull': return self
     def __rsub__(self: T, other: Any) -> 'VBANull': return self
     def __mul__(self: T, other: Any) -> 'VBANull': return self
