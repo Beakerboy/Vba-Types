@@ -1,7 +1,7 @@
 import pytest
 from vba_types.double import VBADouble
 from vba_types.exceptions import OverflowException
-from vba_types.integer import VBAInteger
+from vba_types.integral_type import VBAInteger
 
 
 def test_initialization_boundaries() -> None:
