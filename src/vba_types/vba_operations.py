@@ -103,13 +103,11 @@ def _string_inequality(left: VBATypeBase,
 
 def _bool_string_equality(left: VBATypeBase,
                           right: VBATypeBase) -> VBABoolean:
-    s: VBAString
-    b: VBATypeBase
     if isinstance(left, VBAString):
         s = left
         b = right
-    else:
-        s: VBAString = right
+    elif isinstance(right, VBAString)::
+        s = right
         b = left
     if s.value.lower() == "true":
         return VBABoolean(b.value == -1)
