@@ -71,10 +71,6 @@ def _numeric_inequality(left: VBATypeBase,
                            right: VBATypeBase) -> VBABoolean:
     return VBABoolean(left.value != right.value)
 
-def _numeric_inequality(left: VBATypeBase,
-                        right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value != right.value)
-
 
 def _numeric_lt(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
