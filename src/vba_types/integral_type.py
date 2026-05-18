@@ -1,6 +1,6 @@
 from __future__ import annotations
 from .exceptions import OverflowException
-from .vba_type_base import VBATypeBase
+from .numeric_type import VBANumericType
 from typing import Any, TypeVar, TYPE_CHECKING
 
 
@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 T = TypeVar("T", bound="VBAIntegralType")
 
 
-class VBAIntegralType(VBATypeBase):
+class VBAIntegralType(VBANumericType):
 
     MIN_VALUE: int
     MAX_VALUE: int
