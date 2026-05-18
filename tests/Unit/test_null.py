@@ -1,5 +1,5 @@
 from vba_types.null import VBANull, Null
-from vba_types.integer import VBAInteger
+from vba_types.integral_type import VBAInteger
 from vba_types.string import VBAString
 
 
