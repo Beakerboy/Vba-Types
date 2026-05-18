@@ -6,7 +6,7 @@ from typing import Any, Optional, Type, TypeVar
 T = TypeVar('T', bound='VBANull')
 
 
-class VBANull(vba_types.VBATypeBase):
+class VBANull(VBATypeBase):
     """
     Represents the VBA 'Null' type.
     Features 'Null Propagation': most operations with Null return Null.
