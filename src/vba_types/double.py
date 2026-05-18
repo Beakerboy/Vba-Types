@@ -1,12 +1,7 @@
 from __future__ import annotations
 import math
 from typing import TypeVar, TYPE_CHECKING
-from .vba_type_base import VBATypeBase
 from .float_type import VBAFloatType
-
-
-if TYPE_CHECKING:
-    from vba_types.boolean.VBABoolean import VBABoolean
 
 
 T = TypeVar("T", bound="VBADouble")
