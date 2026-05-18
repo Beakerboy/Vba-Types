@@ -1,8 +1,6 @@
 from __future__ import annotations
-from .boolean import VBABoolean
-from .null import Null
 from .integral_type import VBAIntegralType
-from typing import TypeVar, TYPE_CHECKING
+from typing import TypeVar
 
 
 T = TypeVar("T", bound="VBAInteger")
