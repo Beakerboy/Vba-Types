@@ -40,3 +40,23 @@ class VBATypeBase(ABC):
     def __eq__(self: T, other: T) -> "VBATypeBase":
         from vba_types.vba_registry import registry
         return registry.execute("==", self, other)
+
+    def __ne__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("<>", self, other)
+
+    def __lt__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("<", self, other)
+
+    def __gt__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute(">", self, other)
+
+    def __ge__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("=>", self, other)
+
+    def __le__(self: T, other: T) -> "VBATypeBase":
+        from vba_types.vba_registry import registry
+        return registry.execute("<=", self, other)
