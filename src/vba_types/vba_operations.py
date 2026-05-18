@@ -36,7 +36,8 @@ def _sub_promote_to_double(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
     return VBADouble(left.value - right.value)
 
 
-def _mul_promote_to_double(left: VBATypeBase, right: VBATypeBase) -> VBAInteger:
+def _mul_promote_to_double(left: VBATypeBase,
+                           right: VBATypeBase) -> VBAInteger:
     return VBADouble(left.value * right.value)
 
 
