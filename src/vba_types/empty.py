@@ -38,21 +38,5 @@ class VBAEmpty(VBATypeBase):
         # In VBA, Empty evaluates to False/0
         return False
 
-    def __eq__(self: T, other: VBATypeBase) -> vba_types.boolean.VBABoolean:
-        if isinstance(other, vba_types.array.VBAArray):
-            raise TypeMismatchError()
-        if other is Empty:
-            return vba_types.boolean.VBABoolean(True)
-        if isinstance(other, vba_types.string.VBAString):
-            return vba_types.boolean.VBABoolean("" == other.value)
-        return vba_types.boolean.VBABoolean(0 == other.value)
-
-    def __lt__(self: T, other: VBATypeBase) -> vba_types.boolean.VBABoolean:
-        if other is Empty:
-            return vba_types.boolean.VBABoolean(False)
-        if isinstance(other, vba_types.string.VBAString):
-            return vba_types.string.VBAString("") < other
-        return vba_types.boolean.VBABoolean(0 < other.value)
-
 
 Empty = VBAEmpty()
