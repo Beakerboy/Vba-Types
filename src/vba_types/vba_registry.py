@@ -27,9 +27,9 @@ class VBARegistry:
         self._registry[(op, left_cls, right_cls)] = handler
 
     def _get_handler(self: T,
-                      op: str,
-                      left_cls: type,
-                      right_cls: type) -> Callable:
+                     op: str,
+                     left_cls: type,
+                     right_cls: type) -> Callable:
         exact_key = (op, left_cls, right_cls)
         if exact_key in self._registry:
             return self._registry[exact_key]
