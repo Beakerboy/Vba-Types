@@ -7,4 +7,4 @@ T = TypeVar("T", bound="VBANumericType")
 
 
 class VBANumericType(VBATypeBase):
-    value: int
+    value: int | float
