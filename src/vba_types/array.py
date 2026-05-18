@@ -1,5 +1,4 @@
 from __future__ import annotations
-from functools import total_ordering
 from typing import Any, Iterator, Tuple, Type, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
 from .exceptions import TypeMismatchError
