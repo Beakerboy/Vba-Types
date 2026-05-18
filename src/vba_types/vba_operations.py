@@ -22,7 +22,7 @@ def _add_promote_to_integer(left: VBATypeBase,
 
 def _sub_promote_to_integer(left: VBATypeBase,
                             right: VBATypeBase) -> VBAInteger:
-    return VBAInteger(left.value + right.value)
+    return VBAInteger(left.value - right.value)
 
 
 def _mul_promote_to_integer(left: VBATypeBase,
