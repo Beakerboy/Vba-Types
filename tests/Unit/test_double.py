@@ -39,7 +39,7 @@ def test_underflow_to_zero() -> None:
 def test_basic_math_operations() -> None:
     """Test regular math operations (+, -, *, /, **)."""
     v1 = VBADouble(10.5)
-    v1 = VBADouble(1.5)
+    v2 = VBADouble(1.5)
 
     assert (v1 + v2).value == 12.0
     assert (v1 - v2).value == 9.0
