@@ -62,6 +62,40 @@ def _floordiv_promote_to_long(left: VBATypeBase,
     return VBALong(left.value // right.value)
 
 
+def _numeric_equality(left: VBATypeBase,
+                           right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(left.value == right.value)
+
+
+def _numeric_inequality(left: VBATypeBase,
+                           right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(left.value != right.value)
+
+def _numeric_inequality(left: VBATypeBase,
+                        right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(left.value != right.value)
+
+
+def _numeric_lt(left: VBATypeBase,
+                right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(left.value < right.val
+
+
+def _numeric_gt(left: VBATypeBase,
+                right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(left.value > right.val
+
+
+def _numeric_ge(left: VBATypeBase,
+                right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(left.value >= right.val
+
+
+def _numeric_le(left: VBATypeBase,
+                right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(left.value <= right.val
+
+
 registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
 registry.register("-", VBANull, VBATypeBase, handle_null_propogation)
@@ -140,3 +174,10 @@ registry.register("<", VBANull, VBATypeBase, handle_null_propogation)
 registry.register(">", VBATypeBase, VBANull, handle_null_propogation)
 registry.register("=>", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("<>", VBATypeBase, VBANull, handle_null_propogation)
+
+registry.register("==", VBANumericType, VBANumericType, _numeric_equality)
+registry.register("<>", VBANumericType, VBANumericType, _numeric_inequality)
+registry.register(">", VBANumericType, VBANumericType, _numeric_gt)
+registry.register("<", VBANumericType, VBANumericType, _numeric_lt)
+registry.register("<=", VBANumericType, VBANumericType, _numeric_le)
+registry.register("=>", VBANumericType, VBANumericType, _numeric_ge)
