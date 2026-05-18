@@ -11,11 +11,11 @@ from vba_types.string import VBAString
 from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
-def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> None:
-    raise TypeMismatchError
-
-def type_mismatch(left: VBATypeBase, right: VBATypeBase) -> VBANull:
+def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VbaNull:
     return Null
+
+def type_mismatch(left: VBATypeBase, right: VBATypeBase) -> None:
+    raise TypeMismatchError
 
 def _add_promote_to_integer(left: VBATypeBase,
                             right: VBATypeBase) -> VBAInteger:
