@@ -17,4 +17,4 @@ class VBABoolean(VBAIntegralType):
         return self.value == -1
 
     def vba_and(self: T, other: T) -> T:
-        return VBABoolean(bool(self) and bool(other))
+        return type(self)(bool(self) and bool(other))
