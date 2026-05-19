@@ -18,8 +18,8 @@ class VBATypesRegistry:
         self._registry[(type_name, incoming_cls)] = handler
 
     def coerce(self: T,
-                type_name: str,
-                incoming: VBATypeBase) -> VBATypeBase:
+               type_name: str,
+               incoming: VBATypeBase) -> VBATypeBase:
         handler = self._get_handler(type_name, type(incoming))
 
         if not handler:
@@ -34,7 +34,7 @@ class VBATypesRegistry:
             return self._registry[exact_key]
         star_key = ("*", incoming_cls)
         if star_key in self._registry:
-                return self._registry[star_key]
+            return self._registry[star_key]
         return None
 
     def _get_vba_error_msg(self: T,
