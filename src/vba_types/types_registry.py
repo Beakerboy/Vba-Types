@@ -9,7 +9,8 @@ T = TypeVar('T', bound='VBATypesRegistry')
 class VBATypesRegistry:
 
     def coerce(self: T, incoming: VBATypeBase, declared_type: str) -> VBATypeBase:
-        pass
+        if declared_type == "Variant":
+            return incoming
 
 
 registry = VBATypesRegistry()
