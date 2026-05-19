@@ -32,7 +32,7 @@ class VBATypesRegistry:
         exact_key = (declared_name, incoming_cls)
         if exact_key in self._registry:
             return self._registry[exact_key]
-        exact_key = ("*", incoming_cls)
+        star_key = ("*", incoming_cls)
         if star_key in self._registry:
                 return self._registry[star_key]
         return None
