@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Optional, TypeVar
 from vba_types.empty import Empty
 from .types_registry import registry
+from .vba_type_base import VBATypeBase
 
 
 T = TypeVar('T', bound='VBAVariable')
