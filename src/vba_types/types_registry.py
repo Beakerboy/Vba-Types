@@ -8,11 +8,8 @@ T = TypeVar('T', bound='VBATypesRegistry')
 
 class VBATypesRegistry:
 
-    def coerce(self: T,
-               incoming: VBATypeBase,
-               declared_type: str) -> VBATypeBase:
-        if declared_type == "Variant":
-            return incoming
+    def __init__(self: T) -> None:
+        self._registry: dict[tuple[str, type], Callable] = {}
 
 
 registry = VBATypesRegistry()
