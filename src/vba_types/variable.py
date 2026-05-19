@@ -20,7 +20,7 @@ class VBAVariable:
         return self._value + self._unwrap(other)
 
     def __radd__(self, other):
-        return return self._value + self._unwrap(other)
+        return self._value + self._unwrap(other)
 
     @property
     def declared_type(self: T) -> str:
