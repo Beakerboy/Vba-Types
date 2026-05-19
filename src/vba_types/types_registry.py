@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Callable, TypeVar
+from typing import Callable, Optional, TypeVar
 from .vba_type_base import VBATypeBase
 
 
