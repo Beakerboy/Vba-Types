@@ -26,6 +26,17 @@ class VBATypesRegistry:
             raise TypeError(self._get_vba_error_msg(type_name, incoming))
         return handler(incoming)
 
+     def _get_handler(self: T,
+                     declared_name: str,
+                     incoming_cls: type) -> Optional[Callable]:
+        exact_key = (declared_name, incoming_cls)
+        if exact_key in self._registry:
+            return self._registry[exact_key]
+        exact_key = ("*", incoming_cls)
+        if star_key in self._registry:
+                return self._registry[star_key]
+        return None
+
     def _get_vba_error_msg(self: T,
                            type_name: str,
                            incoming: VBATypeBase) -> str:
