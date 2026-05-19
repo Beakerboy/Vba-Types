@@ -2,6 +2,7 @@ from __future__ import annotations
 from .exception import TypeMismatchError, InvalidNullError
 from .types_registry import registry
 from .null import VBANull
+from .vba_type_base import VBATypeBase
 
 
 def type_error(value: VBATypeBase) -> None:
