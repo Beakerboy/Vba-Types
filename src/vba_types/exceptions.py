@@ -112,6 +112,11 @@ class ObjectVariableNotSetError(VBAException):
     message = "Object variable or With block variable not set"
 
 
+class InvalidNullError(VBAException):
+    code = 94
+    message = "Invalid use of Null"
+
+
 class ActiveXComponentCantCreateObjectError(VBAException):
     code = 429
     message = "ActiveX component can't create object"
