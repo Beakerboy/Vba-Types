@@ -23,7 +23,7 @@ class VBAVariable:
     def __add__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value + self._unwrap(other)
 
-    def __radd__(self: T, other: T | VBATypeBase):
+    def __radd__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value + self._unwrap(other)
 
     @property
