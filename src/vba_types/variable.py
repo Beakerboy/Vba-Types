@@ -9,19 +9,21 @@ T = TypeVar('T', bound='VBAVariable')
 
 
 class VBAVariable:
-    def __init__(self: T, declared_type: str = "Variant", value: Optional[T | VBATypeBase] = None) -> None:
+    def __init__(self: T,
+                 declared_type: str = "Variant",
+                 value: Optional[T | VBATypeBase] = None) -> None:
         self._declared_type = declared_type
         if value is None:
             value = Empty
         self.value = value
 
-    def __repr__(self: T):
+    def __repr__(self: T) -> str:
         return f"VBAVariable({self.declared_type} = {repr(self._value)})"
 
     def __add__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value + self._unwrap(other)
 
-    def __radd__(self, other):
+    def __radd__(self: T, other: T | VBATypeBase):
         return self._value + self._unwrap(other)
 
     @property
@@ -37,7 +39,7 @@ class VBAVariable:
         # Unwrap incoming value if it is another variable container
         if isinstance(incoming, VBAVariable):
             incoming = incoming.value
-            
+
         # Let-coercion logic
         self._value = registry.coerce(incoming, self.declared_type)
 
