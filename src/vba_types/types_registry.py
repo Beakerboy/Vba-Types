@@ -1,6 +1,6 @@
 from __future__ import annotations
-from typing import TypeVar
-from .vba_type_base import Callable, VBATypeBase
+from typing import Callable, TypeVar
+from .vba_type_base import VBATypeBase
 
 
 T = TypeVar('T', bound='VBATypesRegistry')
