@@ -39,9 +39,11 @@ class VBAVariable:
         # Unwrap incoming value if it is another variable container
         if isinstance(incoming, VBAVariable):
             incoming = incoming.value
-
-        # Let-coercion logic
-        self._value = registry.coerce(self.declared_type, incoming)
+        if self._declared_type == Varient:
+            self._value = incoming
+        else:
+            # Let-coercion logic
+            self._value = registry.coerce(self.declared_type, incoming)
 
     def _unwrap(self: T, other: T | VBATypeBase) -> VBATypeBase:
         """Helper to extract the raw VBATypeBase value from a wrapper."""
