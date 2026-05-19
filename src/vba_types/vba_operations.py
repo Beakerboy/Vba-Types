@@ -301,7 +301,7 @@ registry.register("<>", VBAString, VBANumericType, _numeric_string_inequality)
 registry.register(">", VBAString, VBANumericType, _numeric_string_gt)
 registry.register("<", VBAString, VBANumericType, _numeric_string_lt)
 registry.register("<=", VBAString, VBANumericType, _numeric_string_le)
-registry.register("=>", VBAString, VBAStrVBANumericTypeing, _numeric_string_ge)
+registry.register("=>", VBAString, VBANumericType, _numeric_string_ge)
 
 registry.register("==", VBAEmpty, VBANumericType, _numeric_equality)
 registry.register("<>", VBAEmpty, VBANumericType, _numeric_inequality)
