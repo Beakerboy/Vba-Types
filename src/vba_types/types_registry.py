@@ -23,7 +23,14 @@ class VBATypesRegistry:
         handler = self._get_handler(type_name, type(incoming))
 
         if not handler:
-            raise TypeError(self._get_vba_error_msg(op, left, right))
+            raise TypeError(self._get_vba_error_msg(type_name, incoming))
         return handler(incoming)
+
+    def _get_vba_error_msg(self: T,
+                           type_name: str,
+                           incoming: VBATypeBase) -> str:
+        return (f"Run-time error '13': Type mismatch for "
+                f"{type_name} {type(incoming)}")
+
 
 registry = VBATypesRegistry()
