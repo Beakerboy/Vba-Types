@@ -15,5 +15,5 @@ def invalid_null(value: VBATypeBase) -> None:
 def return_self(value: VBATypeBase) -> VBATypeBase:
     return value
 
-registry.register("*", VBANull, invalid_null)
-registry.register("*", VBAArray, type_error)
+registry.register(("*", VBANull), invalid_null)
+registry.register(("Array", VBANull), type_error)
