@@ -107,32 +107,32 @@ def _numeric_le(left: VBATypeBase,
 
 
 def _numeric_string_equality(left: VBATypeBase,
-                      right: VBATypeBase) -> VBABoolean:
+                             right: VBATypeBase) -> VBABoolean:
     return VBABoolean(float(left.value) == float(right.value))
 
 
 def _numeric_string_inequality(left: VBATypeBase,
-                        right: VBATypeBase) -> VBABoolean:
+                               right: VBATypeBase) -> VBABoolean:
     return VBABoolean(float(left.value) != float(right.value))
 
 
 def _numeric_string_lt(left: VBATypeBase,
-                right: VBATypeBase) -> VBABoolean:
+                       right: VBATypeBase) -> VBABoolean:
     return VBABoolean(float(left.value) < float(right.value))
 
 
 def _numeric_string_gt(left: VBATypeBase,
-                right: VBATypeBase) -> VBABoolean:
+                       right: VBATypeBase) -> VBABoolean:
     return VBABoolean(float(left.value) > float(right.value))
 
 
 def _numeric_string_ge(left: VBATypeBase,
-                right: VBATypeBase) -> VBABoolean:
+                       right: VBATypeBase) -> VBABoolean:
     return VBABoolean(float(left.value) >= float(right.value))
 
 
 def _numeric_string_le(left: VBATypeBase,
-                right: VBATypeBase) -> VBABoolean:
+                       right: VBATypeBase) -> VBABoolean:
     return VBABoolean(float(left.value) <= float(right.value))
 
 
