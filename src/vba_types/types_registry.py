@@ -1,10 +1,14 @@
 from __future__ import annotations
+from typing import TypeVar
 from .vba_type_base import VBATypeBase
+
+
+T = TypeVar('T', bound='VBATypesRegistry')
 
 
 class VBATypesRegistry:
 
-    def coerce(incoming: VBATypeBase, declared_type: str) -> VBATypeBase:
+    def coerce(self: T, incoming: VBATypeBase, declared_type: str) -> VBATypeBase:
         pass
 
 
