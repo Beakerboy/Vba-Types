@@ -39,7 +39,7 @@ class VBAVariable:
         # Unwrap incoming value if it is another variable container
         if isinstance(incoming, VBAVariable):
             incoming = incoming.value
-        if self._declared_type == Varient:
+        if self._declared_type == "Variant":
             self._value = incoming
         else:
             # Let-coercion logic
