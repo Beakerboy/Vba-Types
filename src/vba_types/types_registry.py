@@ -17,4 +17,13 @@ class VBATypesRegistry:
                  handler: Callable) -> None:
         self._registry[(op, incoming_cls)] = handler
 
+    def coerce(self: T,
+                type: str,
+                incoming: VBATypeBase) -> VBATypeBase:
+        handler = self._get_handler(type, type(incoming)))
+
+        if not handler:
+            raise TypeError(self._get_vba_error_msg(op, left, right))
+        return handler(incoming)
+
 registry = VBATypesRegistry()
