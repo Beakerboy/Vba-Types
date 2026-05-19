@@ -5,7 +5,7 @@ from .variable import VBAVariable
 
 class VBATypesRegistry:
 
-    def coerce(incoming: T | VBATypeBase, declared_type: str) -> VBATypeBase:
+    def coerce(incoming: VBATypeBase, declared_type: str) -> VBATypeBase:
         pass
 
 
