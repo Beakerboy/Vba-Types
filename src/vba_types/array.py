@@ -18,7 +18,8 @@ class VBAArray(VBATypeBase):
         val = self._data
         for c in coords:
             val = val[c]
-        return val
+        result: VBATypeBase = val
+        return result
 
     def __setitem__(self: T,
                     key: Union[int, Tuple[int, ...]],
