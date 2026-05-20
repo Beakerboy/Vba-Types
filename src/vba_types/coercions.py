@@ -20,5 +20,5 @@ def zero(value: VBATypeBase) -> VBAInteger:
     return VBAInteger()
 
 registry.register("*", VBANull, invalid_null)
-registry.register("Array", VBANull, type_error)
-registry.register("Integer", VBAEmpty, zero)
+registry.register("array", VBANull, type_error)
+registry.register("integer", VBAEmpty, zero)
