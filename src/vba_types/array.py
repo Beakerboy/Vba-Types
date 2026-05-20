@@ -12,7 +12,7 @@ class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
         self._data: VBAArraySequence = list(args)
         ubound = base + len(args) - 1
-        self._bounds: list[tuple[int, int]] | list[int] = [(base, ubound)]
+        self._bounds: list[int| tuple[int, int]] = [(base, ubound)]
 
     def __getitem__(self: T, key: int | tuple[int, ...]) -> VBATypeBase:
         indices = key if isinstance(key, tuple) else (key,)
