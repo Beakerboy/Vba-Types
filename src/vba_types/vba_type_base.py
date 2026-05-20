@@ -22,6 +22,8 @@ class VBATypeBase(ABC):
         return registry.execute("%", self, other)
 
     def __mul__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            raise typeError()
         from vba_types.vba_registry import registry
         return registry.execute("*", self, other)
 
