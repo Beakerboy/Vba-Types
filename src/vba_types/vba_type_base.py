@@ -52,7 +52,7 @@ class VBATypeBase(ABC):
         return registry.execute("//", self, other)
 
     def __eq__(self: T,                                # type: ignore[override]
-               other: object) -> "VBABoolean":
+               other: object) -> "VBATypeBase":
         if not isinstance(other, VBATypeBase):
             return NotImplemented
         from vba_types.vba_registry import registry
