@@ -11,7 +11,7 @@ T = TypeVar('T', bound='VBAArray')
 class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
         self._data: VBAArraySequence = list(args)
-        self._bounds = [(base, base + len(args) - 1)]
+        self._bounds: list[tuple[int, int]] | list[int] = [(base, base + len(args) - 1)]
 
     def __getitem__(self: T, key: int | tuple[int, ...]) -> VBATypeBase:
         indices = key if isinstance(key, tuple) else (key,)
@@ -50,7 +50,7 @@ class VBAArray(VBATypeBase):
             return cls(*input)
         else:
             arr = cls.__new__(cls)
-            arr._bounds = args
+            arr._bounds = list(args)
             shape = tuple(
                 max_idx - min_idx + 1 for min_idx, max_idx in arr._bounds
             )
