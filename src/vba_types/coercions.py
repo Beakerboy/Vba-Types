@@ -2,7 +2,7 @@ from __future__ import annotations
 from .exceptions import TypeMismatchError, InvalidNullError
 from .types_registry import registry
 from .empty import VBAEmpty
-from .integral_types import VBAInteger
+from .integral_type import VBAInteger
 from .null import VBANull
 from .vba_type_base import VBATypeBase
 
