@@ -50,7 +50,7 @@ class VBAArray(VBATypeBase):
             return cls(*input)
         else:
             arr = cls.__new__(cls)
-            arr._bounds = list(args)
+            arr._bounds = args
             shape = tuple(
                 max_idx - min_idx + 1 for min_idx, max_idx in arr._bounds
             )
