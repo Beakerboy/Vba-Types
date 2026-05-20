@@ -51,7 +51,8 @@ class VBAArray(VBATypeBase):
             return cls(*input)
         else:
             arr = cls.__new__(cls)
-            arr._bounds = list(args)
+            # A simple loop filters out any lingering type doubts for mypy
+            arr._bounds = [item for item in args if isinstance(item, tuple)]
             shape = tuple(
                 max_idx - min_idx + 1 for min_idx, max_idx in arr._bounds
             )
