@@ -16,9 +16,11 @@ class VBAArray(VBATypeBase):
     def __getitem__(self: T, key: int | tuple[int, ...]) -> VBATypeBase:
         indices = key if isinstance(key, tuple) else (key,)
         coords = self._get_coords(indices)
-        val = self._data
+        val: Any = self._data
         for c in coords:
             val = val[c]
+        if isinstance(val, list):
+            raise SubscriptOutOfRangeError("Not enough indices provided.")
         output: VBATypeBase = val
         return output
 
