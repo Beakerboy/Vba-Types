@@ -26,6 +26,12 @@ class VBAVariable:
     def __radd__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value + self._unwrap(other)
 
+    def __sub__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        return self._value - self._unwrap(other)
+
+    def __rsub__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        return self._unwrap(other) - self._value
+
     @property
     def declared_type(self: T) -> str:
         return self._declared_type
