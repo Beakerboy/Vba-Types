@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Iterator, Type, TypeAlias, TypeVar, Union
+from typing import Any, Iterator, Type, TypeAlias, TypeVar
 from .exceptions import SubscriptOutOfRangeError
 from .vba_type_base import VBATypeBase
 
