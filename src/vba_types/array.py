@@ -29,9 +29,11 @@ class VBAArray(VBATypeBase):
                     value: Any) -> None:
         indices = key if isinstance(key, tuple) else (key,)
         coords = self._get_coords(indices)
-        target = self._data
+        target: Any = self._data
         for c in coords[:-1]:
             target = target[c]
+        if not isinstance(target, list):
+            raise SubscriptOutOfRangeError("Too many indices provided.")
         target[coords[-1]] = value
 
     def __iter__(self: T) -> Iterator[Any]:
