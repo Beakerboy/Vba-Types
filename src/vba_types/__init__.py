@@ -1,7 +1,7 @@
 from .array import VBAArray
 from .boolean import VBABoolean
 from .double import VBADouble
-from .empty import VBAEmpty
+from .empty import VBAEmpty, Empty
 from .integral_type import VBAInteger,  VBALong
 from .string import VBAString
 from .vba_type_base import VBATypeBase
@@ -11,6 +11,7 @@ import vba_types.vba_operations                                    # noqa: F401
 
 
 __all__ = [
+    "Empty",
     "VBAArray",
     "VBABoolean",
     "VBADouble",
