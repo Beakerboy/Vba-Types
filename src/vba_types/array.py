@@ -1,15 +1,16 @@
 from __future__ import annotations
-from typing import Any, Iterator, Tuple, Type, TypeVar, Union
+from typing import Any, Iterator, Tuple, Type, TypeAlias, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
 from .vba_type_base import VBATypeBase
 
 
+VBAArraySequence: TypeAlias = list[VBATypeBase] | list["VBAArraySequence"]
 T = TypeVar('T', bound='VBAArray')
 
 
 class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
-        self._data = list(args)
+        self._data: VBAArraySequence = list(args)
         self._bounds = [(base, base + len(args) - 1)]
 
     def __getitem__(self: T, key: Union[int, Tuple[int, ...]]) -> VBATypeBase:
@@ -18,8 +19,7 @@ class VBAArray(VBATypeBase):
         val = self._data
         for c in coords:
             val = val[c]
-        result: VBATypeBase = val
-        return result
+        return val
 
     def __setitem__(self: T,
                     key: Union[int, Tuple[int, ...]],
