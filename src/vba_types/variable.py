@@ -45,13 +45,13 @@ class VBAVariable:
     def __rpow__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._unwrap(other) ** self._value
 
-    def __eq__(self: T, other: T | VBATypeBase) -> VBABoolean:
+    def __eq__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value == self._unwrap(other)
 
-    def __gt__(self: T, other: T | VBATypeBase) -> VBABoolean:
+    def __gt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value > self._unwrap(other)
 
-    def __lt__(self: T, other: T | VBATypeBase) -> VBABoolean:
+    def __lt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value < self._unwrap(other)
 
     @property
