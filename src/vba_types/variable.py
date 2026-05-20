@@ -39,6 +39,12 @@ class VBAVariable:
     def __rmul__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value * self._unwrap(other)
 
+    def __pow__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        return self._value ** self._unwrap(other)
+
+    def __rpow__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        return self._unwrap(other) ** self._value
+
     def __eq__(self: T, other: T | VBATypeBase) -> VBABoolean:
         return self._value == self._unwrap(other)
 
