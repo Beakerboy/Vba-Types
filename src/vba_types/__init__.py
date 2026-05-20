@@ -6,6 +6,7 @@ from .integral_type import VBAInteger,  VBALong
 from .string import VBAString
 from .vba_type_base import VBATypeBase
 from .literal_factory import literal_from_string
+from .variable import VBAVariable
 import vba_types.vba_operations                                    # noqa: F401
 
 
@@ -18,5 +19,6 @@ __all__ = [
     "VBALong",
     "VBAString",
     "VBATypeBase",
+    "VBAVariable",
     "literal_from_string",
 ]
