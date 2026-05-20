@@ -41,7 +41,7 @@ class VBAArray(VBATypeBase):
                    *args: int | list[tuple[int, int]],
                    empty: VBATypeBase) -> T:
         data = list(args)
-        if len(data) == 1 and not isinstance(data[0], tuple):
+        if len(data) == 1 and isinstance(data[0], int):
             input = [empty] * (data[0] + 1)
             return cls(*input)
         else:
