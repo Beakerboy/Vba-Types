@@ -3,6 +3,7 @@ from typing import Optional, TypeVar
 from vba_types.empty import Empty
 from .types_registry import registry
 from .vba_type_base import VBATypeBase
+from .boolean import VBABoolean
 
 
 T = TypeVar('T', bound='VBAVariable')
