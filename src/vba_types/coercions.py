@@ -18,8 +18,10 @@ def invalid_null(value: VBATypeBase) -> None:
 def return_self(value: VBATypeBase) -> VBATypeBase:
     return value
 
+
 def zero(value: VBATypeBase) -> VBAInteger:
     return VBAInteger()
+
 
 registry.register("*", VBANull, invalid_null)
 registry.register("array", VBANull, type_error)
