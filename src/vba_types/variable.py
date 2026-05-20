@@ -54,6 +54,9 @@ class VBAVariable:
     def __lt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._value < self._unwrap(other)
 
+    def __le__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        return self._value <= self._unwrap(other)
+
     @property
     def declared_type(self: T) -> str:
         return self._declared_type
