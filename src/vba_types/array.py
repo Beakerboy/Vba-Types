@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Iterator, Tuple, Type, TypeAlias, TypeVar, Union
+from typing import Any, Iterator, Type, TypeAlias, TypeVar, Union
 from .exceptions import SubscriptOutOfRangeError
 from .vba_type_base import VBATypeBase
 
@@ -13,7 +13,7 @@ class VBAArray(VBATypeBase):
         self._data: VBAArraySequence = list(args)
         self._bounds = [(base, base + len(args) - 1)]
 
-    def __getitem__(self: T, key: Union[int, Tuple[int, ...]]) -> VBATypeBase:
+    def __getitem__(self: T, key: int | tuple[int, ...]) -> VBATypeBase:
         indices = key if isinstance(key, tuple) else (key,)
         coords = self._get_coords(indices)
         val = self._data
@@ -23,7 +23,7 @@ class VBAArray(VBATypeBase):
         return output
 
     def __setitem__(self: T,
-                    key: Union[int, Tuple[int, ...]],
+                    key: int | tuple[int, ...],
                     value: Any) -> None:
         indices = key if isinstance(key, tuple) else (key,)
         coords = self._get_coords(indices)
@@ -54,14 +54,14 @@ class VBAArray(VBATypeBase):
             return arr
 
     def _recursive_init(self: T,
-                        shape: Tuple[int, ...],
+                        shape: tuple[int, ...],
                         empty: VBATypeBase) -> Any:
         if len(shape) == 1:
             return [empty] * shape[0]
         rng = range(shape[0])
         return [self._recursive_init(shape[1:], empty) for _ in rng]
 
-    def _get_coords(self: T, indices: Tuple[int, ...]) -> Tuple[int, ...]:
+    def _get_coords(self: T, indices: tuple[int, ...]) -> tuple[int, ...]:
         if len(indices) != len(self._bounds):
             raise SubscriptOutOfRangeError()
 
