@@ -38,7 +38,7 @@ class VBAArray(VBATypeBase):
 
     @classmethod
     def initialize(cls: Type[T],
-                   *args: int | list[tuple[int, int]],
+                   *args: int | tuple[int, int],
                    empty: VBATypeBase) -> T:
         data = list(args)
         if len(data) == 1 and isinstance(data[0], int):
