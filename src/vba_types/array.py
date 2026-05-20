@@ -12,7 +12,7 @@ class VBAArray(VBATypeBase):
         self._data = list(args)
         self._bounds = [(base, base + len(args) - 1)]
 
-    def __getitem__(self: T, key: Union[int, Tuple[int, ...]]) -> Any:
+    def __getitem__(self: T, key: Union[int, Tuple[int, ...]]) -> VBATypeBase:
         indices = key if isinstance(key, tuple) else (key,)
         coords = self._get_coords(indices)
         val = self._data
