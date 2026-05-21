@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Optional, TypeVar
+from typing import Optional, TypeGuard, TypeVar
 from vba_types.empty import Empty
 from .types_registry import registry
 from .vba_type_base import VBATypeBase
@@ -49,7 +49,7 @@ class VBAVariable:
 
     def __eq__(self: T,                                # type: ignore[override]
                other: object) -> VBATypeBase:
-        if self._not_implemented(other):
+        if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
             return VBABoolean(False)
@@ -57,21 +57,21 @@ class VBAVariable:
 
     def __ne__(self: T,                                # type: ignore[override]
                other: object) -> VBATypeBase:
-        if self._not_implemented(other):
+        if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
             return VBABoolean(True)
         return self._value == self._unwrap(other)
 
     def __gt__(self: T, other: object) -> VBATypeBase:
-        if self._not_implemented(other):
+        if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBAString))
         return self._value > self._unwrap(other)
 
     def __lt__(self: T, other: object) -> VBATypeBase:
-        if self._not_implemented(other):
+        if not self._is_vba_type(other):
             return NotImplemented
         # If at least one is variant, and one argument is numeric, and one is a
         # string, the number is always smaller.
@@ -80,14 +80,14 @@ class VBAVariable:
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
-        if self._not_implemented(other):
+        if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBAString))
         return self._value >= self._unwrap(other)
 
     def __le__(self: T, other: object) -> VBATypeBase:
-        if self._not_implemented(other):
+        if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBANumericType))
@@ -137,8 +137,5 @@ class VBAVariable:
             )
         )
 
-    def _not_implemented(self: T, other: object) -> bool:
-        return not (
-                isinstance(other, VBAVariable) or
-                isinstance(other, VBATypeBase)
-        )
+    def _is_vba_type(self: T, other: object) ->TypeGuard['VBAVariable' | VBATypeBase]:
+        return isinstance(other, VBAVariable) or isinstance(other, VBATypeBase)
