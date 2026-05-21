@@ -80,7 +80,7 @@ class VBAVariable:
             # Let-coercion logic
             self._value = registry.coerce(self.declared_type, incoming)
 
-    def _unwrap(self: T, other: T | VBATypeBase) -> VBATypeBase:
+    def _unwrap(self: T, other: 'VBAVariable' | VBATypeBase) -> VBATypeBase:
         """Helper to extract the raw VBATypeBase value from a wrapper."""
         if isinstance(other, VBAVariable):
             return other.value
