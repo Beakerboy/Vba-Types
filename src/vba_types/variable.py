@@ -102,7 +102,7 @@ class VBAVariable:
                     issubclass(other._value, VBAString)
                 )
         ):
-            return VBABoolean(issubclass(self._value, VBAString)
+            return VBABoolean(issubclass(self._value, VBAString))
         return self._value > self._unwrap(other)
 
     def __lt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
@@ -120,7 +120,7 @@ class VBAVariable:
                     issubclass(other._value, VBAString)
                 )
         ):
-            return VBABoolean(issubclass(self._value, VBANumericType)
+            return VBABoolean(issubclass(self._value, VBANumericType))
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: T | VBATypeBase) -> VBATypeBase:
@@ -136,7 +136,7 @@ class VBAVariable:
                     issubclass(other._value, VBAString)
                 )
         ):
-            return VBABoolean(issubclass(self._value, VBAString)
+            return VBABoolean(issubclass(self._value, VBAString))
         return self._value >= self._unwrap(other)
 
     def __le__(self: T, other: T | VBATypeBase) -> VBATypeBase:
@@ -152,7 +152,7 @@ class VBAVariable:
                     issubclass(other._value, VBAString)
                 )
         ):
-            return VBABoolean(issubclass(self._value, VBANumericType)
+            return VBABoolean(issubclass(self._value, VBANumericType))
         return self._value <= self._unwrap(other)
 
     @property
