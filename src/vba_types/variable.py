@@ -118,7 +118,7 @@ class VBAVariable:
             return other.value
         return other
 
-    def _string_numeric_case(self: T, other: T | VBATypeBase) -> bool:
+    def _string_numeric_case(self: T, other: object) -> bool:
         """
         If both are variant, and one argument is numeric, and one is a
         string, the number is always smaller.
