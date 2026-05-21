@@ -10,7 +10,7 @@ class VBAString(VBATypeBase):
         self.value = value
 
     def __int__(self: T) -> int:
-        int(self.value)
+        return int(self.value)
 
     def __str__(self: T) -> str:
         return self.value
