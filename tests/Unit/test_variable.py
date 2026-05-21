@@ -1,5 +1,5 @@
-import pytest
 from __future__ import annotations
+import pytest
 from vba_types.variable import VBAVariable
 from vba_types.integral_type import VBAInteger
 from vba_types.string import VBAString
