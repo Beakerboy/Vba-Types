@@ -47,6 +47,12 @@ class VBAVariable:
     def __rpow__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._unwrap(other) ** self._value
 
+    def __truediv__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        return  self._value / self._unwrap(other)
+
+    def __rtruediv__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        return  self._unwrap(other) / self._value
+
     def __eq__(self: T,                                # type: ignore[override]
                other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
