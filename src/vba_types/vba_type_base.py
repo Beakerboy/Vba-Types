@@ -10,40 +10,56 @@ class VBATypeBase(ABC):
     value: Any
 
     def __add__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("+", self, other)
 
     def __sub__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("-", self, other)
 
     def __mod__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("%", self, other)
 
     def __mul__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("*", self, other)
 
     def __pow__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("**", self, other)
 
     def __truediv__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("/", self, other)
 
     def __floordiv__(self: T, other: T) -> "VBATypeBase":
+        if not isinstance(other, VBATypeBase):
+            return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("//", self, other)
 
-    def __eq__(self: T, other: object) -> "VBATypeBase":
+    def __eq__(self: T,                                # type: ignore[override]
+               other: object) -> "VBATypeBase":
         if not isinstance(other, VBATypeBase):
             return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("==", self, other)
 
-    def __ne__(self: T, other: object) -> "VBATypeBase":
+    def __ne__(self: T,                                # type: ignore[override]
+               other: object) -> "VBATypeBase":
         if not isinstance(other, VBATypeBase):
             return NotImplemented
         from vba_types.vba_registry import registry

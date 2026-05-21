@@ -106,6 +106,36 @@ def _numeric_le(left: VBATypeBase,
     return VBABoolean(left.value <= right.value)
 
 
+def _numeric_string_equality(left: VBATypeBase,
+                             right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(float(left.value) == float(right.value))
+
+
+def _numeric_string_inequality(left: VBATypeBase,
+                               right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(float(left.value) != float(right.value))
+
+
+def _numeric_string_lt(left: VBATypeBase,
+                       right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(float(left.value) < float(right.value))
+
+
+def _numeric_string_gt(left: VBATypeBase,
+                       right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(float(left.value) > float(right.value))
+
+
+def _numeric_string_ge(left: VBATypeBase,
+                       right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(float(left.value) >= float(right.value))
+
+
+def _numeric_string_le(left: VBATypeBase,
+                       right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(float(left.value) <= float(right.value))
+
+
 def _string_equality(left: VBATypeBase,
                      right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) == str(right))
@@ -259,6 +289,19 @@ registry.register(">", VBANumericType, VBANumericType, _numeric_gt)
 registry.register("<", VBANumericType, VBANumericType, _numeric_lt)
 registry.register("<=", VBANumericType, VBANumericType, _numeric_le)
 registry.register("=>", VBANumericType, VBANumericType, _numeric_ge)
+
+registry.register("==", VBANumericType, VBAString, _numeric_string_equality)
+registry.register("<>", VBANumericType, VBAString, _numeric_string_inequality)
+registry.register(">", VBANumericType, VBAString, _numeric_string_gt)
+registry.register("<", VBANumericType, VBAString, _numeric_string_lt)
+registry.register("<=", VBANumericType, VBAString, _numeric_string_le)
+registry.register("=>", VBANumericType, VBAString, _numeric_string_ge)
+registry.register("==", VBAString, VBANumericType, _numeric_string_equality)
+registry.register("<>", VBAString, VBANumericType, _numeric_string_inequality)
+registry.register(">", VBAString, VBANumericType, _numeric_string_gt)
+registry.register("<", VBAString, VBANumericType, _numeric_string_lt)
+registry.register("<=", VBAString, VBANumericType, _numeric_string_le)
+registry.register("=>", VBAString, VBANumericType, _numeric_string_ge)
 
 registry.register("==", VBAEmpty, VBANumericType, _numeric_equality)
 registry.register("<>", VBAEmpty, VBANumericType, _numeric_inequality)

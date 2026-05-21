@@ -1,33 +1,40 @@
 from __future__ import annotations
-from typing import Any, Iterator, Tuple, Type, TypeVar, Union
+from typing import Any, Iterator, Type, TypeAlias, TypeVar
 from .exceptions import SubscriptOutOfRangeError
 from .vba_type_base import VBATypeBase
 
 
+VBAArraySequence: TypeAlias = list[VBATypeBase] | list["VBAArraySequence"]
 T = TypeVar('T', bound='VBAArray')
 
 
 class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
-        self._data = list(args)
-        self._bounds = [(base, base + len(args) - 1)]
+        self._data: VBAArraySequence = list(args)
+        ubound = base + len(args) - 1
+        self._bounds = [(base, ubound)]
 
-    def __getitem__(self: T, key: Union[int, Tuple[int, ...]]) -> Any:
+    def __getitem__(self: T, key: int | tuple[int, ...]) -> VBATypeBase:
         indices = key if isinstance(key, tuple) else (key,)
         coords = self._get_coords(indices)
-        val = self._data
+        val: Any = self._data
         for c in coords:
             val = val[c]
-        return val
+        if isinstance(val, list):
+            raise SubscriptOutOfRangeError("Not enough indices provided.")
+        output: VBATypeBase = val
+        return output
 
     def __setitem__(self: T,
-                    key: Union[int, Tuple[int, ...]],
+                    key: int | tuple[int, ...],
                     value: Any) -> None:
         indices = key if isinstance(key, tuple) else (key,)
         coords = self._get_coords(indices)
-        target = self._data
+        target: Any = self._data
         for c in coords[:-1]:
             target = target[c]
+        if not isinstance(target, list):
+            raise SubscriptOutOfRangeError("Too many indices provided.")
         target[coords[-1]] = value
 
     def __iter__(self: T) -> Iterator[Any]:
@@ -36,15 +43,16 @@ class VBAArray(VBATypeBase):
 
     @classmethod
     def initialize(cls: Type[T],
-                   *args: int | list[tuple[int, int]],
+                   *args: int | tuple[int, int],
                    empty: VBATypeBase) -> T:
         data = list(args)
-        if len(data) == 1 and not isinstance(data[0], tuple):
+        if isinstance(data[0], int):
             input = [empty] * (data[0] + 1)
             return cls(*input)
         else:
             arr = cls.__new__(cls)
-            arr._bounds = list(args)
+            # A simple loop filters out any lingering type doubts for mypy
+            arr._bounds = [item for item in args if isinstance(item, tuple)]
             shape = tuple(
                 max_idx - min_idx + 1 for min_idx, max_idx in arr._bounds
             )
@@ -52,14 +60,14 @@ class VBAArray(VBATypeBase):
             return arr
 
     def _recursive_init(self: T,
-                        shape: Tuple[int, ...],
+                        shape: tuple[int, ...],
                         empty: VBATypeBase) -> Any:
         if len(shape) == 1:
             return [empty] * shape[0]
         rng = range(shape[0])
         return [self._recursive_init(shape[1:], empty) for _ in rng]
 
-    def _get_coords(self: T, indices: Tuple[int, ...]) -> Tuple[int, ...]:
+    def _get_coords(self: T, indices: tuple[int, ...]) -> tuple[int, ...]:
         if len(indices) != len(self._bounds):
             raise SubscriptOutOfRangeError()
 
