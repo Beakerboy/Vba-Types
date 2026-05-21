@@ -89,14 +89,15 @@ class VBAVariable:
         if self._is_number_and_string(other):
             if self._declared_type == "variant":
                 try:
-                    registry.coerce(other._declared_type, self._value) < other
+                    result = registry.coerce(other._declared_type, self._value) < other
                 except Exception:
-                    self < registry.coerce("integer", other._value)
+                    result = self < registry.coerce("integer", other._value)
             else:
                 try:
-                    self < registry.coerce(self._declared_type, other._value)
+                    result = self < registry.coerce(self._declared_type, other._value)
                 except Exception:
-                    registry.coerce("integer", self._value) < other
+                    result = registry.coerce("integer", self._value) < other
+            return result
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
