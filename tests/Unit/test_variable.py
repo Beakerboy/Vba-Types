@@ -1,7 +1,7 @@
 import pytest
 from __future__ import annotations
 from vba_types.variable import VBAVariable
-from vba_types.integral_types import VBAInteger
+from vba_types.integral_type import VBAInteger
 from vba_types.string import VBAString
 from vba_types.empty import Empty
 
