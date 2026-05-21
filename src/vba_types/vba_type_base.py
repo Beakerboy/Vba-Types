@@ -9,9 +9,6 @@ T = TypeVar('T', bound='VBATypeBase')
 class VBATypeBase(ABC):
     value: Any
 
-    def int(self: T) -> int:
-        return int(self.value)
-
     def __add__(self: T, other: T) -> "VBATypeBase":
         if not isinstance(other, VBATypeBase):
             return NotImplemented
