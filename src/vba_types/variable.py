@@ -56,14 +56,14 @@ class VBAVariable:
         if self._is_number_and_string(other):
             if self._declared_type == "variant":
                 try:
-                    registry.coerce(other._declared_type, self) == other
+                    registry.coerce(other._declared_type, self._value) == other
                 except Exception:
-                    self == registry.coerce(self._declared_type, other)
+                    self == registry.coerce(self._declared_type, other._value)
             else:
                 try:
-                    self == registry.coerce(self._declared_type, other)
+                    self == registry.coerce(self._declared_type, other._value)
                 except Exception:
-                    registry.coerce(other._declared_type, self) == other
+                    registry.coerce(other._declared_type, self._value) == other
         return self._value == self._unwrap(other)
 
     def __ne__(self: T,                                # type: ignore[override]
@@ -89,14 +89,14 @@ class VBAVariable:
         if self._is_number_and_string(other):
             if self._declared_type == "variant":
                 try:
-                    registry.coerce(other._declared_type, self) < other
+                    registry.coerce(other._declared_type, self._value) < other
                 except Exception:
-                    self < registry.coerce(self._declared_type, other)
+                    self < registry.coerce(self._declared_type, other._value)
             else:
                 try:
-                    self < registry.coerce(self._declared_type, other)
+                    self < registry.coerce(self._declared_type, other._value)
                 except Exception:
-                    registry.coerce(other._declared_type, self) < other
+                    registry.coerce(other._declared_type, self._value) < other
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
