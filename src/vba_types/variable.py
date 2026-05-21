@@ -101,7 +101,7 @@ class VBAVariable:
                     result = self < coerce
                 except Exception:
                     result = registry.coerce("integer", self._value) < other
-            return VBABoolean(result)
+            return result
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
