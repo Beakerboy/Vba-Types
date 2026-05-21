@@ -58,4 +58,4 @@ def test_constructor() -> None:
 def test_variant_string_relation(one: VBAVariable,
                                  two: VBAVariable | VBAString,
                                  expected: bool) -> None:
-    assert (one < two) == expected
+    assert bool(one < two) == expected
