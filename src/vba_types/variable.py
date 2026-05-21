@@ -3,6 +3,7 @@ from typing import Optional, TypeVar
 from vba_types.empty import Empty
 from .types_registry import registry
 from .vba_type_base import VBATypeBase
+from .boolean import VBABoolean
 
 
 T = TypeVar('T', bound='VBAVariable')
@@ -10,9 +11,9 @@ T = TypeVar('T', bound='VBAVariable')
 
 class VBAVariable:
     def __init__(self: T,
-                 declared_type: str = "Variant",
+                 declared_type: str = "variant",
                  value: Optional[T | VBATypeBase] = None) -> None:
-        self._declared_type = declared_type
+        self._declared_type = declared_type.lower()
         if value is None:
             value = Empty
         self.value = value
@@ -51,15 +52,107 @@ class VBAVariable:
                 isinstance(other, VBATypeBase)
         ):
             return NotImplemented
+        if (
+                self._declared_type == "variant" and
+                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
+                (
+                    issubclass(self._value, VBANumericType) or
+                    issubclass(other._value, VBANumericType)
+                ) and
+                (
+                    issubclass(self._value, VBAString) or
+                    issubclass(other._value, VBAString)
+                )
+        ):
+            return VBABoolean(False)
         return self._value == self._unwrap(other)
 
+    def __ne__(self: T,                                # type: ignore[override]
+               other: object) -> VBATypeBase:
+        if not (
+                isinstance(other, VBAVariable) or
+                isinstance(other, VBATypeBase)
+        ):
+            return NotImplemented
+        if (
+                self._declared_type == "variant" and
+                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
+                (
+                    issubclass(self._value, VBANumericType) or
+                    issubclass(other._value, VBANumericType)
+                ) and
+                (
+                    issubclass(self._value, VBAString) or
+                    issubclass(other._value, VBAString)
+                )
+        ):
+            return VBABoolean(True)
+        return self._value == self._unwrap(other)
+    
     def __gt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+         if (
+                self._declared_type == "variant" and
+                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
+                (
+                    issubclass(self._value, VBANumericType) or
+                    issubclass(other._value, VBANumericType)
+                ) and
+                (
+                    issubclass(self._value, VBAString) or
+                    issubclass(other._value, VBAString)
+                )
+        ):
+            return VBABoolean(issubclass(self._value, VBAString)
         return self._value > self._unwrap(other)
 
     def __lt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        # If at least one is variant, and one argument is numeric, and one is a
+        # string, the number is always smaller.
+        if (
+                self._declared_type == "variant" and
+                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
+                (
+                    issubclass(self._value, VBANumericType) or
+                    issubclass(other._value, VBANumericType)
+                ) and
+                (
+                    issubclass(self._value, VBAString) or
+                    issubclass(other._value, VBAString)
+                )
+        ):
+            return VBABoolean(issubclass(self._value, VBANumericType)
         return self._value < self._unwrap(other)
 
+    def __ge__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+         if (
+                self._declared_type == "variant" and
+                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
+                (
+                    issubclass(self._value, VBANumericType) or
+                    issubclass(other._value, VBANumericType)
+                ) and
+                (
+                    issubclass(self._value, VBAString) or
+                    issubclass(other._value, VBAString)
+                )
+        ):
+            return VBABoolean(issubclass(self._value, VBAString)
+        return self._value >= self._unwrap(other)
+
     def __le__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+        if (
+                self._declared_type == "variant" and
+                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
+                (
+                    issubclass(self._value, VBANumericType) or
+                    issubclass(other._value, VBANumericType)
+                ) and
+                (
+                    issubclass(self._value, VBAString) or
+                    issubclass(other._value, VBAString)
+                )
+        ):
+            return VBABoolean(issubclass(self._value, VBANumericType)
         return self._value <= self._unwrap(other)
 
     @property
