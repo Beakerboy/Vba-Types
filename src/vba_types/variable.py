@@ -78,7 +78,7 @@ class VBAVariable:
         return VBABoolean(not bool(self == other))
 
     def __gt__(self: T, other: object) -> VBATypeBase:
-        return VBABoolean(not bool(self >= other))
+        return VBABoolean(not bool(self <= other))
 
     def __lt__(self: T, other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
