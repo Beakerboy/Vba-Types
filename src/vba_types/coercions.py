@@ -4,6 +4,7 @@ from .types_registry import registry
 from .empty import VBAEmpty
 from .integral_type import VBAInteger, VBALong
 from .null import VBANull
+from .string import VBAString
 from .vba_type_base import VBATypeBase
 
 
