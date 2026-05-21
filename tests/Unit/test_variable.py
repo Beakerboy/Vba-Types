@@ -1,4 +1,5 @@
 import pytest
+from __future__ import annotations
 from vba_types.variable import VBAVariable
 from vba_types.integral_types import VBAInteger
 from vba_types.string import VBAString
@@ -22,7 +23,9 @@ def test_constructor() -> None:
             VBAVariable(value=VBAInteger(10)),
             VBAString(),
             True
-        ),    
-])
-def test_variant_string_relation(one, two, expected: bool) -> None:
+        ),   
+    ])
+def test_variant_string_relation(one: VBAVariable,
+                                 two: VBAVariable | VBAString,
+                                 expected: bool) -> None:
     assert (one < two) == expected
