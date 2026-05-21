@@ -62,7 +62,7 @@ class VBAVariable:
         if self._string_numeric_case(other):
             return VBABoolean(True)
         return self._value == self._unwrap(other)
-    
+
     def __gt__(self: T, other: object) -> VBATypeBase:
         if self._not_implemented(other):
             return NotImplemented
