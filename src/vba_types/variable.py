@@ -47,111 +47,47 @@ class VBAVariable:
 
     def __eq__(self: T,                                # type: ignore[override]
                other: object) -> VBATypeBase:
-        if not (
-                isinstance(other, VBAVariable) or
-                isinstance(other, VBATypeBase)
-        ):
+        if _not_implemented(other):
             return NotImplemented
-        if (
-                self._declared_type == "variant" and
-                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
-                (
-                    issubclass(self._value, VBANumericType) or
-                    issubclass(other._value, VBANumericType)
-                ) and
-                (
-                    issubclass(self._value, VBAString) or
-                    issubclass(other._value, VBAString)
-                )
-        ):
+        if _string_numeric_case(other):
             return VBABoolean(False)
         return self._value == self._unwrap(other)
 
     def __ne__(self: T,                                # type: ignore[override]
                other: object) -> VBATypeBase:
-        if not (
-                isinstance(other, VBAVariable) or
-                isinstance(other, VBATypeBase)
-        ):
+        if _not_implemented(other):
             return NotImplemented
-        if (
-                self._declared_type == "variant" and
-                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
-                (
-                    issubclass(self._value, VBANumericType) or
-                    issubclass(other._value, VBANumericType)
-                ) and
-                (
-                    issubclass(self._value, VBAString) or
-                    issubclass(other._value, VBAString)
-                )
-        ):
+       if _string_numeric_case(other):
             return VBABoolean(True)
         return self._value == self._unwrap(other)
     
-    def __gt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
-         if (
-                self._declared_type == "variant" and
-                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
-                (
-                    issubclass(self._value, VBANumericType) or
-                    issubclass(other._value, VBANumericType)
-                ) and
-                (
-                    issubclass(self._value, VBAString) or
-                    issubclass(other._value, VBAString)
-                )
-        ):
+    def __gt__(self: T, other: object) -> VBATypeBase:
+        if _not_implemented(other):
+            return NotImplemented
+        if _string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBAString))
         return self._value > self._unwrap(other)
 
-    def __lt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+    def __lt__(self: T, other: object) -> VBATypeBase:
+        if _not_implemented(other):
+            return NotImplemented
         # If at least one is variant, and one argument is numeric, and one is a
         # string, the number is always smaller.
-        if (
-                self._declared_type == "variant" and
-                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
-                (
-                    issubclass(self._value, VBANumericType) or
-                    issubclass(other._value, VBANumericType)
-                ) and
-                (
-                    issubclass(self._value, VBAString) or
-                    issubclass(other._value, VBAString)
-                )
-        ):
+       if _string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBANumericType))
         return self._value < self._unwrap(other)
 
-    def __ge__(self: T, other: T | VBATypeBase) -> VBATypeBase:
-         if (
-                self._declared_type == "variant" and
-                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
-                (
-                    issubclass(self._value, VBANumericType) or
-                    issubclass(other._value, VBANumericType)
-                ) and
-                (
-                    issubclass(self._value, VBAString) or
-                    issubclass(other._value, VBAString)
-                )
-        ):
+    def __ge__(self: T, other: object) -> VBATypeBase:
+        if _not_implemented(other):
+            return NotImplemented
+        if _string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBAString))
         return self._value >= self._unwrap(other)
 
-    def __le__(self: T, other: T | VBATypeBase) -> VBATypeBase:
-        if (
-                self._declared_type == "variant" and
-                (isinstance(other, VBAVariable) and other._declared_type == "variant") and
-                (
-                    issubclass(self._value, VBANumericType) or
-                    issubclass(other._value, VBANumericType)
-                ) and
-                (
-                    issubclass(self._value, VBAString) or
-                    issubclass(other._value, VBAString)
-                )
-        ):
+    def __le__(self: T, other: object) -> VBATypeBase:
+        if _not_implemented(other):
+            return NotImplemented
+        if _string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBANumericType))
         return self._value <= self._unwrap(other)
 
@@ -179,3 +115,28 @@ class VBAVariable:
         if isinstance(other, VBAVariable):
             return other.value
         return other
+
+    def _string_numeric_case(self: T, other: T | VBATypeBase) -> bool:
+        """
+        If both are variant, and one argument is numeric, and one is a
+        string, the number is always smaller.
+        """
+        return (
+            self._declared_type == "variant" and
+            isinstance(other, VBAVariable) and
+            other._declared_type == "variant") and
+            (
+                issubclass(self._value, VBANumericType) or
+                issubclass(other._value, VBANumericType)
+            ) and
+            (
+                issubclass(self._value, VBAString) or
+                issubclass(other._value, VBAString)
+            )
+        )
+
+    def _not_implemented(self: T, other: object) -> bool:
+        return not (
+                isinstance(other, VBAVariable) or
+                isinstance(other, VBATypeBase)
+        )
