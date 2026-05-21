@@ -57,7 +57,7 @@ class VBAVariable:
                other: object) -> VBATypeBase:
         if _not_implemented(other):
             return NotImplemented
-       if _string_numeric_case(other):
+        if _string_numeric_case(other):
             return VBABoolean(True)
         return self._value == self._unwrap(other)
     
@@ -73,7 +73,7 @@ class VBAVariable:
             return NotImplemented
         # If at least one is variant, and one argument is numeric, and one is a
         # string, the number is always smaller.
-       if _string_numeric_case(other):
+        if _string_numeric_case(other):
             return VBABoolean(issubclass(self._value, VBANumericType))
         return self._value < self._unwrap(other)
 
