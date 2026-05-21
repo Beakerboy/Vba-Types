@@ -53,6 +53,17 @@ class VBAVariable:
             return NotImplemented
         if self._string_numeric_case(other):
             return VBABoolean(False)
+        if self._is_number_and_string(other):
+                if self._declared_type == "variant":
+                    try:
+                        registry.coerce(other._declared_type, self) == other
+                    except:
+                        pass
+                else:
+                    try:
+                        self == registry.coerce(self._declared_type, other)
+                    except:
+                        pass
         return self._value == self._unwrap(other)
 
     def __ne__(self: T,                                # type: ignore[override]
@@ -73,10 +84,19 @@ class VBAVariable:
     def __lt__(self: T, other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
             return NotImplemented
-        # If at least one is variant, and one argument is numeric, and one is a
-        # string, the number is always smaller.
         if self._string_numeric_case(other):
             return VBABoolean(issubclass(type(self._value), VBANumericType))
+        if self._is_number_and_string(other):
+                if self._declared_type == "variant":
+                    try:
+                        registry.coerce(other._declared_type, self) < other
+                    except:
+                        self < registry.coerce(self._declared_type, other)
+                else:
+                    try:
+                        self < registry.coerce(self._declared_type, other)
+                    except:
+                        registry.coerce(other._declared_type, self) < other
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
@@ -117,6 +137,19 @@ class VBAVariable:
         if isinstance(other, VBAVariable):
             return other.value
         return other
+
+    def _is_number_and_string(self: T, other: object) -> bool:
+        return (
+            isinstance(other, VBAVariable) and
+            (
+                issubclass(type(self._value), VBANumericType) or
+                issubclass(type(other._value), VBANumericType)
+            ) and
+            (
+                isinstance(self._value, VBAString) or
+                isinstance(other._value, VBAString)
+            )
+        )
 
     def _string_numeric_case(self: T, other: object) -> bool:
         """
