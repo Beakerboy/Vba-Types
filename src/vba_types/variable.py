@@ -137,5 +137,6 @@ class VBAVariable:
             )
         )
 
-    def _is_vba_type(self: T, other: object) ->TypeGuard['VBAVariable' | VBATypeBase]:
+    def _is_vba_type(self: T,
+                     other: object) -> TypeGuard['VBAVariable' | VBATypeBase]:
         return isinstance(other, VBAVariable) or isinstance(other, VBATypeBase)
