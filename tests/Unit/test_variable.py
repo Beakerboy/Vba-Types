@@ -1,6 +1,6 @@
 import pytest
 from vba_types.variable import VBAVariable
-from vba_types.integer import VBAInteger
+from vba_types.integral_types import VBAInteger
 from vba_types.string import VBAString
 from vba_types.empty import Empty
 
