@@ -146,6 +146,11 @@ def _string_inequality(left: VBATypeBase,
     return VBABoolean(str(left) != str(right))
 
 
+def _string_gt(left: VBATypeBase,
+                       right: VBATypeBase) -> VBABoolean:
+    return VBABoolean(str(left) > str(right))
+
+
 def _bool_string_equality(left: VBATypeBase,
                           right: VBATypeBase) -> VBABoolean:
     if isinstance(left, VBAString):
@@ -328,6 +333,7 @@ registry.register("==", VBAString, VBAString, _string_equality)
 registry.register("<>", VBAString, VBAString, _string_inequality)
 registry.register("<>", VBAEmpty, VBAString, _string_inequality)
 registry.register("<>", VBAString, VBAEmpty, _string_inequality)
+registry.register(">", VBAString, VBAString, _string_gt)
 
 registry.register("==", VBABoolean, VBAString, _bool_string_equality)
 registry.register("==", VBAString, VBABoolean, _bool_string_equality)
