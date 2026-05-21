@@ -89,12 +89,14 @@ class VBAVariable:
         if self._is_number_and_string(other):
             if self._declared_type == "variant":
                 try:
-                    result = registry.coerce(other._declared_type, self._value) < other
+                    coerce = registry.coerce(other._declared_type, self._value)
+                    result = coerce < other
                 except Exception:
                     result = self < registry.coerce("integer", other._value)
             else:
                 try:
-                    result = self < registry.coerce(self._declared_type, other._value)
+                    coerce = registry.coerce(self._declared_type, other._value)
+                    result = self < coerce
                 except Exception:
                     result = registry.coerce("integer", self._value) < other
             return result
