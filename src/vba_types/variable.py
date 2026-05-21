@@ -68,11 +68,7 @@ class VBAVariable:
 
     def __ne__(self: T,                                # type: ignore[override]
                other: object) -> VBATypeBase:
-        if not self._is_vba_type(other):
-            return NotImplemented
-        if self._string_numeric_case(other):
-            return VBABoolean(True)
-        return self._value == self._unwrap(other)
+        return VBABoolean(not bool(self == other))
 
     def __gt__(self: T, other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
