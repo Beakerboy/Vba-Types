@@ -132,8 +132,8 @@ class VBAVariable:
                 issubclass(type(other._value), VBANumericType)
             ) and
             (
-                issubclass(type(self._value), VBAString) or
-                issubclass(type(other._value), VBAString)
+                isinstance(self._value, VBAString) or
+                isinstance(other._value, VBAString)
             )
         )
 
