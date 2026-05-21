@@ -8,7 +8,7 @@ from vba_types.empty import Empty
 
 def test_constructor() -> None:
     var = VBAVariable()
-    assert var.declared_type == "Variant"
+    assert var.declared_type == "variant"
     assert var.value is Empty
 
 
