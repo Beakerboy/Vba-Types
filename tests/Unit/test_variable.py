@@ -1,3 +1,4 @@
+import pytest
 from vba_types.variable import VBAVariable
 from vba_types.integer import VBAInteger
 from vba_types.string import VBAString
@@ -10,6 +11,18 @@ def test_constructor() -> None:
     assert var.value is Empty
 
 
-def test_variant_string_relation() -> None:
-    foo = VBAVariable(value=VBAInteger(10))
-    assert foo < VBAString()
+@pytest.mark.parametrize(
+    "one, two, expected", [
+        (
+            VBAVariable("Integer", VBAInteger(10))),
+            VBAVariable("String", VBAString()),
+            True
+        ),
+        (
+            VBAVariable(value=VBAInteger(10)),
+            VBAString(),
+            True
+        ),    
+])
+def test_variant_string_relation(one, two, expected: bool) -> None:
+    assert (one < two) == expected
