@@ -67,7 +67,7 @@ class VBAVariable:
         if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
-            return VBABoolean(issubclass(self._value, VBAString))
+            return VBABoolean(isinstance(self._value, VBAString))
         return self._value > self._unwrap(other)
 
     def __lt__(self: T, other: object) -> VBATypeBase:
@@ -76,21 +76,21 @@ class VBAVariable:
         # If at least one is variant, and one argument is numeric, and one is a
         # string, the number is always smaller.
         if self._string_numeric_case(other):
-            return VBABoolean(issubclass(self._value, VBANumericType))
+            return VBABoolean(issubclass(type(self._value), VBANumericType))
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
-            return VBABoolean(issubclass(self._value, VBAString))
+            return VBABoolean(isinstance(self._value, VBAString))
         return self._value >= self._unwrap(other)
 
     def __le__(self: T, other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
             return NotImplemented
         if self._string_numeric_case(other):
-            return VBABoolean(issubclass(self._value, VBANumericType))
+            return VBABoolean(issubclass(type(self._value), VBANumericType))
         return self._value <= self._unwrap(other)
 
     @property
