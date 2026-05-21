@@ -44,7 +44,9 @@ class VBAVariable:
     def __rpow__(self: T, other: T | VBATypeBase) -> VBATypeBase:
         return self._unwrap(other) ** self._value
 
-    def __eq__(self: T, other: T | VBATypeBase) -> VBATypeBase:
+    def __eq__(self: T, other: object) -> VBATypeBase:
+        if not (isinstance(other, VBAVariable) or isinstance(other, VBAVariable)):
+            return NotImplemented
         return self._value == self._unwrap(other)
 
     def __gt__(self: T, other: T | VBATypeBase) -> VBATypeBase:
