@@ -20,13 +20,22 @@ def return_self(value: VBATypeBase) -> VBATypeBase:
     return value
 
 
-def zero(value: VBATypeBase) -> VBAInteger:
-    return VBAInteger()
+def str_self(value: VBATypeBase) -> VBATypeBase:
+    return VBAString(str(value))
 
+
+def int_self(value: VBATypeBase) -> VBAInteger:
+    return VBAInteger(int(value))
+
+
+def lon_self(value: VBATypeBase) -> VBAInteger:
+    return VBALong(int(value))
 
 registry.register("*", VBANull, invalid_null)
 registry.register("array", VBANull, type_error)
-registry.register("integer", VBAEmpty, zero)
+registry.register("integer", VBAEmpty, int_self)
+registry.register("long", VBAEmpty, lon_self)
+registry.register("string", VBAEmpty, str_self)
 registry.register("integer", VBAInteger, return_self)
 registry.register("long", VBALong, return_self)
 registry.register("string", VBAString, return_self)
