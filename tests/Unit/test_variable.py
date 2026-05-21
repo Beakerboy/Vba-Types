@@ -15,7 +15,7 @@ def test_constructor() -> None:
     "one, two, expected", [
         (
             VBAVariable("Integer", VBAInteger(10))),
-            VBAVariable("String", VBAString()),
+            VBAVariable(value=VBAString()),
             True
         ),
         (
