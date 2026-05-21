@@ -128,12 +128,12 @@ class VBAVariable:
             isinstance(other, VBAVariable) and
             other._declared_type == "variant" and
             (
-                issubclass(self._value, VBANumericType) or
-                issubclass(other._value, VBANumericType)
+                issubclass(type(self._value), VBANumericType) or
+                issubclass(type(other._value), VBANumericType)
             ) and
             (
-                issubclass(self._value, VBAString) or
-                issubclass(other._value, VBAString)
+                issubclass(type(self._value), VBAString) or
+                issubclass(type(other._value), VBAString)
             )
         )
 
