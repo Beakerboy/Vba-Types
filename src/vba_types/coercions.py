@@ -35,6 +35,7 @@ def lon_self(value: VBATypeBase) -> VBAInteger:
 registry.register("*", VBANull, invalid_null)
 registry.register("array", VBANull, type_error)
 registry.register("integer", VBAEmpty, int_self)
+registry.register("integer", VBAString, int_self)
 registry.register("long", VBAEmpty, lon_self)
 registry.register("string", VBAEmpty, str_self)
 registry.register("integer", VBAInteger, return_self)
