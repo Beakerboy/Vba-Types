@@ -147,7 +147,7 @@ def _string_inequality(left: VBATypeBase,
 
 
 def _string_gt(left: VBATypeBase,
-                       right: VBATypeBase) -> VBABoolean:
+               right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) > str(right))
 
 
