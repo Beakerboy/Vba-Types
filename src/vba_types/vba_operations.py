@@ -251,8 +251,8 @@ registry.register("*", VBAEmpty, VBADouble, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAIntegralType, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAEmpty, _mul_promote_to_double)
 
-registry.register("/", VBAIntegralType,
-                  VBAIntegralType, _truediv_promote_to_double)
+registry.register("/", VBANumericType,
+                  VBANumericType, _truediv_promote_to_double)
 registry.register("/", VBAIntegralType, VBAEmpty, _truediv_promote_to_double)
 registry.register("/", VBAEmpty, VBAIntegralType, _truediv_promote_to_double)
 registry.register("/", VBAIntegralType, VBADouble, _truediv_promote_to_double)
