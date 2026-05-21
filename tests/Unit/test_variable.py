@@ -21,7 +21,37 @@ def test_constructor() -> None:
         ),
         (
             VBAVariable(value=VBAInteger(10)),
-            VBAString(),
+            VBAVariable(value=VBAString()),
+            True
+        ),
+        (
+            VBAVariable(value=VBAInteger(10)),
+            VBAVariable("String", VBAString()),
+            False
+        ),
+        (
+            VBAVariable(value=VBAInteger(10)),
+            VBAVariable("String", VBAString("foo")),
+            True
+        ),
+        (
+            VBAVariable(value=VBAInteger(10)),
+            VBAVariable("String", VBAString("0")),
+            False
+        ),
+        (
+            VBAVariable("Integer", VBAInteger(10)),
+            VBAVariable(value=VBAString("0")),
+            False
+        ),
+        (
+            VBAVariable("Integer", VBAInteger(10)),
+            VBAVariable("String", VBAString("0")),
+            False
+        ),
+        (
+            VBAVariable(value=VBAInteger(10)),
+            VBAVariable(value=VBAString("0")),
             True
         ),
     ])
