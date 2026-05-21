@@ -108,7 +108,6 @@ class VBAVariable:
 
     def __le__(self: T, other: object) -> VBATypeBase:
         return VBABoolean(bool(self < other) or bool(self == other))
-            
 
     @property
     def declared_type(self: T) -> str:
