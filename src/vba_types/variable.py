@@ -143,7 +143,8 @@ class VBAVariable:
             return other.value
         return other
 
-    def _is_number_and_string(self: T, other: object) -> TypeGuard['VBAVariable']:
+    def _is_number_and_string(self: T,
+                              other: object) -> TypeGuard['VBAVariable']:
         return (
             isinstance(other, VBAVariable) and
             (
