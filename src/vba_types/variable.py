@@ -76,11 +76,7 @@ class VBAVariable:
         return VBABoolean(not bool(self == other))
 
     def __gt__(self: T, other: object) -> VBATypeBase:
-        if not self._is_vba_type(other):
-            return NotImplemented
-        if self._string_numeric_case(other):
-            return VBABoolean(isinstance(self._value, VBAString))
-        return self._value > self._unwrap(other)
+        return VBABoolean(not bool(self >= other))
 
     def __lt__(self: T, other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
@@ -106,18 +102,11 @@ class VBAVariable:
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
-        if not self._is_vba_type(other):
-            return NotImplemented
-        if self._string_numeric_case(other):
-            return VBABoolean(isinstance(self._value, VBAString))
-        return self._value >= self._unwrap(other)
+        return VBABoolean(not bool(self < other))
 
     def __le__(self: T, other: object) -> VBATypeBase:
-        if not self._is_vba_type(other):
-            return NotImplemented
-        if self._string_numeric_case(other):
-            return VBABoolean(issubclass(type(self._value), VBANumericType))
-        return self._value <= self._unwrap(other)
+        return VBABoolean(bool(self < other) or bool(self == other))
+            
 
     @property
     def declared_type(self: T) -> str:
