@@ -14,7 +14,7 @@ def test_constructor() -> None:
 @pytest.mark.parametrize(
     "one, two, expected", [
         (
-            VBAVariable("Integer", VBAInteger(10))),
+            VBAVariable("Integer", VBAInteger(10)),
             VBAVariable(value=VBAString()),
             True
         ),
