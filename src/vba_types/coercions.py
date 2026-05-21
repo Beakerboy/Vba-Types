@@ -4,6 +4,7 @@ from .types_registry import registry
 from .empty import VBAEmpty
 from .integral_type import VBAInteger, VBALong
 from .null import VBANull
+from .numeric_type import VBANumericType
 from .string import VBAString
 from .vba_type_base import VBATypeBase
 
@@ -24,7 +25,7 @@ def str_self(value: VBATypeBase) -> VBATypeBase:
     return VBAString(str(value))
 
 
-def int_self(value: VBATypeBase) -> VBAInteger:
+def int_self(value: VBANumericType) -> VBAInteger:
     return VBAInteger(int(value))
 
 
