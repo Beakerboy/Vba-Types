@@ -8,3 +8,6 @@ T = TypeVar("T", bound="VBANumericType")
 
 class VBANumericType(VBATypeBase):
     value: int | float
+
+    def int(self: T) -> int:
+        return int(self.value)
