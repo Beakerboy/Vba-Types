@@ -62,6 +62,8 @@ class VBAVariable:
                     coerce = registry.coerce(self._declared_type, other._value)
                     result = self == coerce
             else:
+                if str(other._value) == "":
+                    return VBABoolean(False)
                 try:
                     coerce = registry.coerce(self._declared_type, other._value)
                     result = self == coerce
