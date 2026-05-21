@@ -124,7 +124,7 @@ class VBAVariable:
         return (
             self._declared_type == "variant" and
             isinstance(other, VBAVariable) and
-            other._declared_type == "variant") and
+            other._declared_type == "variant" and
             (
                 issubclass(self._value, VBANumericType) or
                 issubclass(other._value, VBANumericType)
