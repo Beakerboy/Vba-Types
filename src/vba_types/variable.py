@@ -106,7 +106,7 @@ class VBAVariable:
         # Unwrap incoming value if it is another variable container
         if isinstance(incoming, VBAVariable):
             incoming = incoming.value
-        if self._declared_type == "Variant":
+        if self._declared_type == "variant":
             self._value = incoming
         else:
             # Let-coercion logic
