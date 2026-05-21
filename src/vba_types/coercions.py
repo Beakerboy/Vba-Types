@@ -29,7 +29,7 @@ def int_self(value: VBANumericType) -> VBAInteger:
     return VBAInteger(int(value))
 
 
-def lon_self(value: VBATypeBase) -> VBALong:
+def lon_self(value: VBANumericType) -> VBALong:
     return VBALong(int(value))
 
 
