@@ -1,0 +1,2 @@
+class VbaFixedPoint:
+    pass
