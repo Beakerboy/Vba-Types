@@ -235,7 +235,6 @@ registry.register("<", VBANumericType, VBAEmpty, _numeric_lt)
 registry.register("==", VBAEmpty, VBAEmpty, _numeric_equality)
 registry.register("<", VBAEmpty, VBAEmpty, _numeric_lt)
 
-
 registry.register("==", VBAEmpty, VBAString, _string_equality)
 registry.register("==", VBAString, VBAEmpty, _string_equality)
 registry.register("==", VBAString, VBAString, _string_equality)
