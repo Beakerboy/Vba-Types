@@ -126,6 +126,7 @@ class VBAVariable:
 
     def __gt__(self: T, other: object) -> VBATypeBase:
         return VBABoolean(not bool(self <= other))
+
     def __ge__(self: T, other: object) -> VBATypeBase:
         return VBABoolean(not bool(self < other))
 
