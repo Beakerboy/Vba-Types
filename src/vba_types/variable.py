@@ -77,14 +77,16 @@ class VBAVariable:
                     coerce = registry.coerce(other._declared_type, self._value)
                     result = coerce == other
             return result
+        if (
+                isinstance(other, VBAString) and
+                issubclass(type(self._value), VBANumericType) and
+                self._declared_type == "variant"
+        ):
+            # A naked string behaves like an explictly declared string
+            # variable. If self is variant, coerce it into a string.
+            coerce = registry.coerce("string", self._value)
+            return coerce == other
         return self._value == self._unwrap(other)
-
-    def __ne__(self: T,                                # type: ignore[override]
-               other: object) -> VBATypeBase:
-        return VBABoolean(not bool(self == other))
-
-    def __gt__(self: T, other: object) -> VBATypeBase:
-        return VBABoolean(not bool(self <= other))
 
     def __lt__(self: T, other: object) -> VBATypeBase:
         if not self._is_vba_type(other):
@@ -107,7 +109,23 @@ class VBAVariable:
                 except Exception:
                     result = registry.coerce("integer", self._value) < other
             return result
+        if (
+                isinstance(other, VBAString) and
+                issubclass(type(self._value), VBANumericType) and
+                self._declared_type == "variant"
+        ):
+            # A naked string behaves like an explictly declared string
+            # variable. If self is variant, coerce it into a string.
+            coerce = registry.coerce("string", self._value)
+            return coerce < other
         return self._value < self._unwrap(other)
+
+    def __ne__(self: T,                                # type: ignore[override]
+               other: object) -> VBATypeBase:
+        return VBABoolean(not bool(self == other))
+
+    def __gt__(self: T, other: object) -> VBATypeBase:
+        return VBABoolean(not bool(self <= other))
 
     def __ge__(self: T, other: object) -> VBATypeBase:
         return VBABoolean(not bool(self < other))
@@ -142,6 +160,9 @@ class VBAVariable:
 
     def _is_number_and_string(self: T,
                               other: object) -> TypeGuard['VBAVariable']:
+        """
+        Do we have a number variable and a string variable.
+        """
         return (
             isinstance(other, VBAVariable) and
             (

@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import (
     Any, Callable, Optional, TypeVar, TYPE_CHECKING
 )
+from .exceptions import TypeMismatchError
+from .boolean import VBABoolean
 
 
 if TYPE_CHECKING:
@@ -49,7 +51,18 @@ class VBARegistry:
         handler = self._get_handler(op, type(left), type(right))
 
         if not handler:
-            raise TypeError(self._get_vba_error_msg(op, left, right))
+            if op == "<>":
+                return VBABoolean(not bool(self.execute("==", left, right)))
+            if op == "=>":
+                return VBABoolean(not bool(self.execute("<", left, right)))
+            if op == "<=":
+                return VBABoolean(
+                    bool(self.execute("<", left, right)) or
+                    bool(self.execute("==", left, right))
+                )
+            if op == ">":
+                return VBABoolean(not bool(self.execute("<=", left, right)))
+            raise TypeMismatchError()
         return handler(left, right)
 
     def _get_vba_error_msg(self: T,

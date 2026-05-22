@@ -64,6 +64,11 @@ def test_constructor() -> None:
             VBAVariable("String", VBAString("0100")),
             True
         ),
+        (
+            VBAVariable(value=VBAInteger(10)),
+            VBAString(""),
+            False
+        ),
     ])
 def test_variant_string_relation(one: VBAVariable,
                                  two: VBAVariable | VBAString,
