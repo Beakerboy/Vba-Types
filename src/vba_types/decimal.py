@@ -1,6 +1,6 @@
 from __future import annotations
-from .fixed_point_type import VbaFixedPoint
+from .fixed_point_type import VBAFixedPointType
 
 
-class VBADecimal(VBAFixedPoint):
+class VBADecimal(VBAFixedPointType):
     pass
