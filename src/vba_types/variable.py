@@ -112,8 +112,8 @@ class VBAVariable:
                 issubclass(type(self._value), VBANumericType) and
                 self._declared_type == "variant"
         ):
-            # A naked string behaves like an explictly declared string variable.
-            # If self is variant, coerce it into a string.
+            # A naked string behaves like an explictly declared string
+            # variable. If self is variant, coerce it into a string.
             coerce = registry.coerce("string", self._value)
             return coerce < other
         return self._value < self._unwrap(other)
@@ -153,7 +153,7 @@ class VBAVariable:
                               other: object) -> TypeGuard['VBAVariable']:
         """
         Do we have a number variable and a string variable.
-        """                       
+        """
         return (
             isinstance(other, VBAVariable) and
             (
