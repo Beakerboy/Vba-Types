@@ -4,6 +4,7 @@ from vba_types.variable import VBAVariable
 from vba_types.integral_type import VBAInteger
 from vba_types.string import VBAString
 from vba_types.empty import Empty
+from vba_types.string import String
 
 
 def test_constructor() -> None:
@@ -63,6 +64,11 @@ def test_constructor() -> None:
             VBAVariable("Integer", VBAInteger(10)),
             VBAVariable("String", VBAString("0100")),
             True
+        ),
+        (
+            VBAVariable(value=VBAInteger(10)),
+            VBAString(""),
+            False
         ),
     ])
 def test_variant_string_relation(one: VBAVariable,
