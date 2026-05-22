@@ -107,6 +107,15 @@ class VBAVariable:
                 except Exception:
                     result = registry.coerce("integer", self._value) < other
             return result
+        if (
+                isinstance(other, VBAString) and
+                issubclass(type(self._value), VBANumericType) and
+                self._declared_type == "variant"
+        ):
+            # A naked string behaves like an explictly declared string variable.
+            # If self is variant, coerce it into a string.
+            coerce = registry.coerce("string", self._value)
+            return coerce < other
         return self._value < self._unwrap(other)
 
     def __ge__(self: T, other: object) -> VBATypeBase:
@@ -142,6 +151,9 @@ class VBAVariable:
 
     def _is_number_and_string(self: T,
                               other: object) -> TypeGuard['VBAVariable']:
+        """
+        Do we have a number variable and a string variable.
+        """                       
         return (
             isinstance(other, VBAVariable) and
             (
