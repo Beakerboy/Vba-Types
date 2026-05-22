@@ -81,29 +81,9 @@ def _numeric_equality(left: VBATypeBase,
     return VBABoolean(left.value == right.value)
 
 
-def _numeric_inequality(left: VBATypeBase,
-                        right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value != right.value)
-
-
 def _numeric_lt(left: VBATypeBase,
                 right: VBATypeBase) -> VBABoolean:
     return VBABoolean(left.value < right.value)
-
-
-def _numeric_gt(left: VBATypeBase,
-                right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value > right.value)
-
-
-def _numeric_ge(left: VBATypeBase,
-                right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value >= right.value)
-
-
-def _numeric_le(left: VBATypeBase,
-                right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(left.value <= right.value)
 
 
 def _numeric_string_equality(left: VBATypeBase,
@@ -111,44 +91,14 @@ def _numeric_string_equality(left: VBATypeBase,
     return VBABoolean(float(left.value) == float(right.value))
 
 
-def _numeric_string_inequality(left: VBATypeBase,
-                               right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(float(left.value) != float(right.value))
-
-
 def _numeric_string_lt(left: VBATypeBase,
                        right: VBATypeBase) -> VBABoolean:
     return VBABoolean(float(left.value) < float(right.value))
 
 
-def _numeric_string_gt(left: VBATypeBase,
-                       right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(float(left.value) > float(right.value))
-
-
-def _numeric_string_ge(left: VBATypeBase,
-                       right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(float(left.value) >= float(right.value))
-
-
-def _numeric_string_le(left: VBATypeBase,
-                       right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(float(left.value) <= float(right.value))
-
-
 def _string_equality(left: VBATypeBase,
                      right: VBATypeBase) -> VBABoolean:
     return VBABoolean(str(left) == str(right))
-
-
-def _string_inequality(left: VBATypeBase,
-                       right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(str(left) != str(right))
-
-
-def _string_gt(left: VBATypeBase,
-               right: VBATypeBase) -> VBABoolean:
-    return VBABoolean(str(left) > str(right))
 
 
 def _string_lt(left: VBATypeBase,
@@ -168,21 +118,6 @@ def _bool_string_equality(left: VBATypeBase,
         return VBABoolean(b.value == -1)
     if s.value.lower() == "false":
         return VBABoolean(b.value == 0)
-    raise TypeMismatchError()
-
-
-def _bool_string_inequality(left: VBATypeBase,
-                            right: VBATypeBase) -> VBABoolean:
-    if isinstance(left, VBAString):
-        s = left
-        b = right
-    elif isinstance(right, VBAString):
-        s = right
-        b = left
-    if s.value.lower() == "true":
-        return VBABoolean(b.value != -1)
-    if s.value.lower() == "false":
-        return VBABoolean(b.value != 0)
     raise TypeMismatchError()
 
 
@@ -269,79 +204,34 @@ registry.register("**", VBANumericType, VBANumericType, _pow_promote_to_double)
 
 registry.register("==", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("==", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("<>", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("<>", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("=>", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("=>", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("<=", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("<=", VBATypeBase, VBANull, handle_null_propogation)
 registry.register("<", VBANull, VBATypeBase, handle_null_propogation)
 registry.register("<", VBATypeBase, VBANull, handle_null_propogation)
-registry.register(">", VBANull, VBATypeBase, handle_null_propogation)
-registry.register(">", VBATypeBase, VBANull, handle_null_propogation)
 
 registry.register("==", VBAArray, VBATypeBase, type_mismatch)
 registry.register("==", VBATypeBase, VBAArray, type_mismatch)
-registry.register("<>", VBAArray, VBATypeBase, type_mismatch)
-registry.register("<>", VBATypeBase, VBAArray, type_mismatch)
-registry.register("=>", VBAArray, VBATypeBase, type_mismatch)
-registry.register("=>", VBATypeBase, VBAArray, type_mismatch)
-registry.register("<=", VBAArray, VBATypeBase, type_mismatch)
-registry.register("<=", VBATypeBase, VBAArray, type_mismatch)
 registry.register("<", VBAArray, VBATypeBase, type_mismatch)
 registry.register("<", VBATypeBase, VBAArray, type_mismatch)
-registry.register(">", VBAArray, VBATypeBase, type_mismatch)
-registry.register(">", VBATypeBase, VBAArray, type_mismatch)
 
 registry.register("==", VBANumericType, VBANumericType, _numeric_equality)
-registry.register("<>", VBANumericType, VBANumericType, _numeric_inequality)
-registry.register(">", VBANumericType, VBANumericType, _numeric_gt)
 registry.register("<", VBANumericType, VBANumericType, _numeric_lt)
-registry.register("<=", VBANumericType, VBANumericType, _numeric_le)
-registry.register("=>", VBANumericType, VBANumericType, _numeric_ge)
 
 registry.register("==", VBANumericType, VBAString, _numeric_string_equality)
-registry.register("<>", VBANumericType, VBAString, _numeric_string_inequality)
-registry.register(">", VBANumericType, VBAString, _numeric_string_gt)
 registry.register("<", VBANumericType, VBAString, _numeric_string_lt)
-registry.register("<=", VBANumericType, VBAString, _numeric_string_le)
-registry.register("=>", VBANumericType, VBAString, _numeric_string_ge)
 registry.register("==", VBAString, VBANumericType, _numeric_string_equality)
-registry.register("<>", VBAString, VBANumericType, _numeric_string_inequality)
-registry.register(">", VBAString, VBANumericType, _numeric_string_gt)
 registry.register("<", VBAString, VBANumericType, _numeric_string_lt)
-registry.register("<=", VBAString, VBANumericType, _numeric_string_le)
-registry.register("=>", VBAString, VBANumericType, _numeric_string_ge)
 
 registry.register("==", VBAEmpty, VBANumericType, _numeric_equality)
-registry.register("<>", VBAEmpty, VBANumericType, _numeric_inequality)
-registry.register(">", VBAEmpty, VBANumericType, _numeric_gt)
 registry.register("<", VBAEmpty, VBANumericType, _numeric_lt)
-registry.register("<=", VBAEmpty, VBANumericType, _numeric_le)
-registry.register("=>", VBAEmpty, VBANumericType, _numeric_ge)
 registry.register("==", VBANumericType, VBAEmpty, _numeric_equality)
-registry.register("<>", VBANumericType, VBAEmpty, _numeric_inequality)
-registry.register(">", VBANumericType, VBAEmpty, _numeric_gt)
 registry.register("<", VBANumericType, VBAEmpty, _numeric_lt)
-registry.register("<=", VBANumericType, VBAEmpty, _numeric_le)
-registry.register("=>", VBANumericType, VBAEmpty, _numeric_ge)
 registry.register("==", VBAEmpty, VBAEmpty, _numeric_equality)
-registry.register("<>", VBAEmpty, VBAEmpty, _numeric_inequality)
-registry.register(">", VBAEmpty, VBAEmpty, _numeric_gt)
 registry.register("<", VBAEmpty, VBAEmpty, _numeric_lt)
-registry.register("<=", VBAEmpty, VBAEmpty, _numeric_le)
-registry.register("=>", VBAEmpty, VBAEmpty, _numeric_ge)
+
 
 registry.register("==", VBAEmpty, VBAString, _string_equality)
 registry.register("==", VBAString, VBAEmpty, _string_equality)
 registry.register("==", VBAString, VBAString, _string_equality)
-registry.register("<>", VBAString, VBAString, _string_inequality)
-registry.register("<>", VBAEmpty, VBAString, _string_inequality)
-registry.register("<>", VBAString, VBAEmpty, _string_inequality)
-registry.register(">", VBAString, VBAString, _string_gt)
 registry.register("<", VBAString, VBAString, _string_lt)
 
 registry.register("==", VBABoolean, VBAString, _bool_string_equality)
 registry.register("==", VBAString, VBABoolean, _bool_string_equality)
-registry.register("<>", VBABoolean, VBAString, _bool_string_inequality)
-registry.register("<>", VBAString, VBABoolean, _bool_string_inequality)
