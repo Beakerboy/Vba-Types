@@ -4,7 +4,7 @@ from vba_types.variable import VBAVariable
 from vba_types.integral_type import VBAInteger
 from vba_types.string import VBAString
 from vba_types.empty import Empty
-from vba_types.string import String
+from vba_types.string import VBAString
 
 
 def test_constructor() -> None:
