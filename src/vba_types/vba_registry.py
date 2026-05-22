@@ -61,7 +61,7 @@ class VBARegistry:
                     bool(self.execute("==", left, right))
                 )
             if op == ">":
-                return VBABoolean( not bool(self.execute("<=", left, right)))
+                return VBABoolean(not bool(self.execute("<=", left, right)))
             raise TypeMismatchError()
         return handler(left, right)
 
