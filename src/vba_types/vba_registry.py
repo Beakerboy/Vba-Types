@@ -3,6 +3,7 @@ from typing import (
     Any, Callable, Optional, TypeVar, TYPE_CHECKING
 )
 from .exceptions import TypeMismatchError
+from .boolean import VBABoolean
 
 
 if TYPE_CHECKING:
