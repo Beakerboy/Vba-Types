@@ -79,13 +79,13 @@ class VBAArray(VBATypeBase):
             internal.append(idx - low)
         return tuple(internal)
 
-    def lbound(self: T, dimension: VBATypeBase = None) -> VBAInteger:
+    def lbound(self: T, dimension: VBATypeBase = None) -> VBATypeBase:
         from .integral_types import VBAInteger
         if dimension is None:
             dimension = VBAInteger(1)
         return VBAInteger(self._bounds[dimension.value - 1][0])
 
-    def ubound(self: T, dimension: VBATypeBase = None) -> VBAInteger:
+    def ubound(self: T, dimension: VBATypeBase = None) -> VBATypeBase:
         from .integral_types import VBAInteger
         if dimension is None:
             dimension = VBAInteger(1)
