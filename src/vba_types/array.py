@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Iterator, Optional, Type, TypeAlias, TypeVar
+from typing import Any, Iterator, Type, TypeAlias, TypeVar
 from .exceptions import SubscriptOutOfRangeError
 from .vba_type_base import VBATypeBase
 
@@ -80,14 +80,14 @@ class VBAArray(VBATypeBase):
         return tuple(internal)
 
     @staticmethod
-    def lbound(arr: T, dimension: Optional[VBATypeBase] = None) -> VBATypeBase:
+    def lbound(arr: T, dimension: VBATypeBase | None = None) -> VBATypeBase:
         from .integral_type import VBALong
         if dimension is None:
             dimension = VBALong(1)
         return VBALong(arr._bounds[dimension.value - 1][0])
 
     @staticmethod
-    def ubound(arr: T, dimension: Optional[VBATypeBase] = None) -> VBATypeBase:
+    def ubound(arr: T, dimension: VBATypeBase | None = None) -> VBATypeBase:
         from .integral_type import VBALong
         if dimension is None:
             dimension = VBALong(1)
