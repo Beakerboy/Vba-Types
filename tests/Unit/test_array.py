@@ -34,8 +34,8 @@ def test_initialize_with_number() -> None:
 
 def test_initialize_with_tuple() -> None:
     arr = VBAArray.initialize((0, 3), empty=Empty)
-    assert VBAArray.lbound(arr) == 0
-    assert VBAArray.ubound(arr) == 3
+    assert VBAArray.lbound(arr).value == 0
+    assert VBAArray.ubound(arr).value == 3
     assert arr[0] is Empty
     assert arr[3] is Empty
 
@@ -55,10 +55,10 @@ def test_multidimensional_custom_bounds() -> None:
     assert arr[1, 4] == "Middleish"
 
     # Check bounds
-    assert VBAArray.lbound(arr, 1) == 1
-    assert VBAArray.ubound(arr, 1) == 2
-    assert VBAArray.lbound(arr, 2) == 1
-    assert VBAArray.ubound(arr, 2) == 6
+    assert VBAArray.lbound(arr, 1).value == 1
+    assert VBAArray.ubound(arr, 1).value == 2
+    assert VBAArray.lbound(arr, 2).value == 1
+    assert VBAArray.ubound(arr, 2).value == 6
 
 
 def test_out_of_bounds_raises_error() -> None:
