@@ -10,8 +10,8 @@ def test_base_0_initialization() -> None:
     assert arr[0] == "apple"
     assert arr[1] == "banana"
     assert arr[2] == "cherry"
-    assert VBAArray.lbound(arr) == 0
-    assert VBAArray.ubound(arr) == 2
+    assert VBAArray.lbound(arr).value == 0
+    assert VBAArray.ubound(arr).value == 2
 
 
 def test_base_1_initialization() -> None:
@@ -20,14 +20,14 @@ def test_base_1_initialization() -> None:
     assert arr[1] == 100
     assert arr[2] == 200
     assert arr[3] == 300
-    assert VBAArray.lbound(arr) == 1
-    assert VBAArray.ubound(arr) == 3
+    assert VBAArray.lbound(arr).value == 1
+    assert VBAArray.ubound(arr).value == 3
 
 
 def test_initialize_with_number() -> None:
     arr = VBAArray.initialize(3, empty=Empty)
-    assert VBAArray.lbound(arr) == 0
-    assert VBAArray.ubound(arr) == 3
+    assert VBAArray.lbound(arr).value == 0
+    assert VBAArray.ubound(arr).value == 3
     assert arr[0] is Empty
     assert arr[3] is Empty
 
