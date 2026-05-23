@@ -1,5 +1,6 @@
 import pytest
 from vba_types.array import VBAArray
+feom vba_types.integral_type import VBAInteger
 from vba_types.empty import Empty
 from vba_types.exceptions import SubscriptOutOfRangeError
 
@@ -55,10 +56,10 @@ def test_multidimensional_custom_bounds() -> None:
     assert arr[1, 4] == "Middleish"
 
     # Check bounds
-    assert VBAArray.lbound(arr, 1).value == 1
-    assert VBAArray.ubound(arr, 1).value == 2
-    assert VBAArray.lbound(arr, 2).value == 1
-    assert VBAArray.ubound(arr, 2).value == 6
+    assert VBAArray.lbound(arr, VBAInteger(1)).value == 1
+    assert VBAArray.ubound(arr, VBAInteger(1)).value == 2
+    assert VBAArray.lbound(arr, VBAInteger(2)).value == 1
+    assert VBAArray.ubound(arr, VBAInteger(2)).value == 6
 
 
 def test_out_of_bounds_raises_error() -> None:
