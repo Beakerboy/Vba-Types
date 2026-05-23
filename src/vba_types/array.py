@@ -84,14 +84,14 @@ class VBAArray(VBATypeBase):
         from .integral_types import VBALong
         if dimension is None:
             dimension = VBALong(1)
-        return VBAInteger(arr._bounds[dimension.value - 1][0])
+        return VBALong(arr._bounds[dimension.value - 1][0])
 
     @staticmethod
     def ubound(arr: T, dimension: VBATypeBase = None) -> VBATypeBase:
         from .integral_types import VBALong
         if dimension is None:
             dimension = VBALong(1)
-        return VBAInteger(arr._bounds[dimension.value - 1][1])
+        return VBALong(arr._bounds[dimension.value - 1][1])
 
     def __repr__(self: T) -> str:
         return f"<VBAArray: Bounds {self._bounds}>"
