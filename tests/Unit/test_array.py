@@ -1,6 +1,6 @@
 import pytest
 from vba_types.array import VBAArray
-feom vba_types.integral_type import VBAInteger
+from vba_types.integral_type import VBAInteger
 from vba_types.empty import Empty
 from vba_types.exceptions import SubscriptOutOfRangeError
 
