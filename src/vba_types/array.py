@@ -81,14 +81,14 @@ class VBAArray(VBATypeBase):
 
     @staticmethod
     def lbound(arr: T, dimension: VBATypeBase = None) -> VBATypeBase:
-        from .integral_types import VBALong
+        from .integral_type import VBALong
         if dimension is None:
             dimension = VBALong(1)
         return VBALong(arr._bounds[dimension.value - 1][0])
 
     @staticmethod
     def ubound(arr: T, dimension: VBATypeBase = None) -> VBATypeBase:
-        from .integral_types import VBALong
+        from .integral_type import VBALong
         if dimension is None:
             dimension = VBALong(1)
         return VBALong(arr._bounds[dimension.value - 1][1])
