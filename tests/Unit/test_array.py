@@ -10,8 +10,8 @@ def test_base_0_initialization() -> None:
     assert arr[0] == "apple"
     assert arr[1] == "banana"
     assert arr[2] == "cherry"
-    assert arr.lbound() == 0
-    assert arr.ubound() == 2
+    assert VBAArray.lbound(arr) == 0
+    assert VBAArray.ubound(arr) == 2
 
 
 def test_base_1_initialization() -> None:
@@ -20,22 +20,22 @@ def test_base_1_initialization() -> None:
     assert arr[1] == 100
     assert arr[2] == 200
     assert arr[3] == 300
-    assert arr.lbound() == 1
-    assert arr.ubound() == 3
+    assert VBAArray.lbound(arr) == 1
+    assert VBAArray.ubound(arr) == 3
 
 
 def test_initialize_with_number() -> None:
     arr = VBAArray.initialize(3, empty=Empty)
-    assert arr.lbound() == 0
-    assert arr.ubound() == 3
+    assert VBAArray.lbound(arr) == 0
+    assert VBAArray.ubound(arr) == 3
     assert arr[0] is Empty
     assert arr[3] is Empty
 
 
 def test_initialize_with_tuple() -> None:
     arr = VBAArray.initialize((0, 3), empty=Empty)
-    assert arr.lbound() == 0
-    assert arr.ubound() == 3
+    assert VBAArray.lbound(arr) == 0
+    assert VBAArray.ubound(arr) == 3
     assert arr[0] is Empty
     assert arr[3] is Empty
 
@@ -55,10 +55,10 @@ def test_multidimensional_custom_bounds() -> None:
     assert arr[1, 4] == "Middleish"
 
     # Check bounds
-    assert arr.lbound(1) == 1
-    assert arr.ubound(1) == 2
-    assert arr.lbound(2) == 1
-    assert arr.ubound(2) == 6
+    assert VBAArray.lbound(arr, 1) == 1
+    assert VBAArray.ubound(arr, 1) == 2
+    assert VBAArray.lbound(arr, 2) == 1
+    assert VBAArray.ubound(arr, 2) == 6
 
 
 def test_out_of_bounds_raises_error() -> None:
