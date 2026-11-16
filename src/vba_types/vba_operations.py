@@ -34,6 +34,11 @@ def _mul_promote_to_integer(left: VBATypeBase,
     return VBAInteger(left.value * right.value)
 
 
+def _mul_promote_to_long(left: VBATypeBase,
+                         right: VBATypeBase) -> VBALong:
+    return VBALong(left.value * right.value)
+
+
 def _mod_promote_to_integer(left: VBATypeBase,
                             right: VBATypeBase) -> VBAInteger:
     return VBAInteger(left.value % right.value)
@@ -177,6 +182,11 @@ registry.register("*", VBAInteger, VBABoolean, _mul_promote_to_integer)
 registry.register("*", VBAInteger, VBAEmpty, _mul_promote_to_integer)
 registry.register("*", VBAEmpty, VBAInteger, _mul_promote_to_integer)
 registry.register("*", VBAEmpty, VBAEmpty, _mul_promote_to_integer)
+registry.register("*", VBALong, VBAInteger, _mul_promote_to_long)
+registry.register("*", VBAInteger, VBALong, _mul_promote_to_long)
+registry.register("*", VBALong, VBALong, _mul_promote_to_long)
+registry.register("*", VBALong, VBABoolean, _mul_promote_to_long)
+registry.register("*", VBABoolean, VBALong, _mul_promote_to_long)
 registry.register("%", VBAInteger, VBADouble, _mod_promote_to_integer)
 registry.register("%", VBAInteger, VBAInteger, _mod_promote_to_long)
 
