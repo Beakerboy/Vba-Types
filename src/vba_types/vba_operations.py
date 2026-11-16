@@ -35,7 +35,7 @@ def _mul_promote_to_integer(left: VBATypeBase,
 
 
 def _mul_promote_to_long(left: VBATypeBase,
-                            right: VBATypeBase) -> VBAInteger:
+                         right: VBATypeBase) -> VBAInteger:
     return VBALong(left.value * right.value)
 
 
