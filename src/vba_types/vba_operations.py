@@ -17,14 +17,14 @@ from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
 def register_multiple(operator_handlers: dict,
-                      *type_sets: Iterable[VBATypeBase]) -> None:
+                      type_set1: list, type_set2: list) -> None:
     """
     Register all combinations of operators and types, and associate if the type
     are dissimilar
     """
     for op, handler in operator_handlers.items():
-        for types in product(*type_sets):
-            registry.register(op, *types, handler)
+        for types in product(type_set1, type_set2):
+            registry.register(op, types[0], types[1], handler)
 
             # Add reversed signature if different
             if len(types) == 2 and types[0] != types[1]:
