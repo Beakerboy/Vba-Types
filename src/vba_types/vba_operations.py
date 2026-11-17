@@ -15,7 +15,7 @@ from vba_types.string import VBAString
 from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
-def register_multiple(operator_handlers: dict, *type_sets):
+def register_multiple(operator_handlers: dict, *type_sets: Iterable[VBATypeBase]):
     """
     Register all combinations of operators and types, and associate if the type
     are dissimilar
@@ -29,13 +29,13 @@ def register_multiple(operator_handlers: dict, *type_sets):
                 registry.register(op, types[1], types[0], handler)
 
 
-def register_against_all(operators: tuple, type, handler):
+def register_against_all(operators: tuple, type_: type[VBATypeBase], handler: Callable):
     """
     Register a type with all types
     """
     for op in operators:
-        registry.register(op, type, VBATypeBase, handler)
-        registry.register(op, VBATypeBase, type, handler)
+        registry.register(op, type_, VBATypeBase, handler)
+        registry.register(op, VBATypeBase, type_, handler)
 
 
 def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
