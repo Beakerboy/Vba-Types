@@ -12,6 +12,29 @@ from vba_types.string import VBAString
 from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
+def register_multiple(operator_handlers, *type_sets):
+    """
+    Register all combinations of operators and types, and associate if the type
+    are dissimilar
+    """
+    for op, handler in operator_handlers.items():
+        for types in product(*type_sets):
+            registry.register(op, *types, handler)
+
+            # Add reversed signature if different
+            if len(types) == 2 and types[0] != types[1]:
+                registry.register(op, types[1], types[0], handler)
+
+
+def register_against_all(operators, type, handler):
+    """
+    Register a type with all types
+    """
+    for op in operator_handlers:
+        registry.register(op, type, VBATypeBase, VBAhandler)
+        registry.register(op, VBATypeBase, type, handler)    
+
+
 def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
     return Null
 
@@ -248,26 +271,3 @@ registry.register("<", VBAString, VBAString, _string_lt)
 
 registry.register("==", VBABoolean, VBAString, _bool_string_equality)
 registry.register("==", VBAString, VBABoolean, _bool_string_equality)
-
-
-def register_multiple(operator_handlers, *type_sets):
-    """
-    Register all combinations of operators and types, and associate if the type
-    are dissimilar
-    """
-    for op, handler in operator_handlers.items():
-        for types in product(*type_sets):
-            registry.register(op, *types, handler)
-
-            # Add reversed signature if different
-            if len(types) == 2 and types[0] != types[1]:
-                registry.register(op, types[1], types[0], handler)
-
-
-def register_against_all(operators, type, handler):
-    """
-    Register a type with all types
-    """
-    for op in operator_handlers:
-        registry.register(op, type, VBATypeBase, VBAhandler)
-        registry.register(op, VBATypeBase, type, handler)    
