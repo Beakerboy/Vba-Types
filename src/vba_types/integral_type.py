@@ -29,6 +29,15 @@ class VBAIntegralType(VBANumericType):
         return self.value
 
 
+class VBAByte(VBAIntegralType):
+    """
+    Simulates the VBA Integer data type (16-bit signed).
+    Range: -32,768 to 32,767.
+    """
+    MIN_VALUE: int = 0
+    MAX_VALUE: int = 255
+
+
 class VBAInteger(VBAIntegralType):
     """
     Simulates the VBA Integer data type (16-bit signed).
@@ -41,3 +50,8 @@ class VBAInteger(VBAIntegralType):
 class VBALong(VBAIntegralType):
     MIN_VALUE: int = -2147483648
     MAX_VALUE: int = 2147486647
+
+
+class VBALongLong(VBAIntegralType):
+    MIN_VALUE: int = -9223372036854775808
+    MAX_VALUE: int = 9223372036854775807
