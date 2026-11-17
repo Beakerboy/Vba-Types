@@ -47,17 +47,17 @@ def type_mismatch(left: VBATypeBase, right: VBATypeBase) -> None:
 
 
 def _add_promote_to_byte(left: VBATypeBase,
-                            right: VBATypeBase) -> VBAByte:
+                         right: VBATypeBase) -> VBAByte:
     return VBAByte(left.value + right.value)
 
 
 def _sub_promote_to_byte(left: VBATypeBase,
-                            right: VBATypeBase) -> VBAByte:
+                         right: VBATypeBase) -> VBAByte:
     return VBAByte(left.value - right.value)
 
 
 def _mul_promote_to_byte(left: VBATypeBase,
-                            right: VBATypeBase) -> VBAByte:
+                         right: VBATypeBase) -> VBAByte:
     return VBAByte(left.value * right.value)
 
 
@@ -82,17 +82,17 @@ def _add_promote_to_long(left: VBATypeBase,
 
 
 def _add_promote_to_longlong(left: VBATypeBase,
-                         right: VBATypeBase) -> VBALongLong:
+                             right: VBATypeBase) -> VBALongLong:
     return VBALongLong(left.value + right.value)
 
 
 def _sub_promote_to_longlong(left: VBATypeBase,
-                         right: VBATypeBase) -> VBALongLong:
+                             right: VBATypeBase) -> VBALongLong:
     return VBALongLong(left.value - right.value)
 
 
 def _mul_promote_to_longlong(left: VBATypeBase,
-                         right: VBATypeBase) -> VBALongLong:
+                             right: VBATypeBase) -> VBALongLong:
     return VBALongLong(left.value * right.value)
 
 
