@@ -147,6 +147,13 @@ def _floordiv_promote_to_long(left: VBATypeBase,
     return VBALong(left.value // right.value)
 
 
+def _floordiv_promote_to_integer(left: VBATypeBase,
+                              right: VBATypeBase) -> VBAInteger:
+    if right.value == 0.0 or right is Empty:
+        raise DivisionByZeroError()
+    return VBAInteger(left.value // right.value)
+
+
 def _numeric_equality(left: VBATypeBase,
                       right: VBATypeBase) -> VBABoolean:
     return VBABoolean(left.value == right.value)
