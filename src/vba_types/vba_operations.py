@@ -130,8 +130,8 @@ def _bool_string_equality(left: VBATypeBase,
         return VBABoolean(b.value == 0)
     raise TypeMismatchError()
 
-register_multiple_not_equal(("+", "-", "*", "/", "//", "%"), VBANull, handle_null_propogation)
-register_multiple_not_equal(("+", "-", "*", "/", "//", "%"), VBAArray, type_mismatch)
+register_against_all(("+", "-", "*", "/", "//", "%"), VBANull, handle_null_propogation)
+register_against_all(("+", "-", "*", "/", "//", "%"), VBAArray, type_mismatch)
 register_multiple(
     {
         '+': _add_promote_to_integer,
@@ -248,7 +248,7 @@ def register_multiple(operator_handlers, *type_sets):
                 registry.register(op, types[1], types[0], handler)
 
 
-def register_multiple_not_equal(operators, type, handler):
+def register_against_all(operators, type, handler):
     """
     Register a type with all types
     """
