@@ -6,7 +6,8 @@ from vba_types.boolean import VBABoolean
 from vba_types.double import VBADouble
 from vba_types.empty import Empty, VBAEmpty
 from .float_type import VBAFloatType
-from vba_types.integral_type import VBAIntegralType, VBAByte, VBAInteger, VBALong
+from vba_types.integral_type import 
+    VBAIntegralType, VBAByte, VBAInteger, VBALong, VBALongLong
 from vba_types.null import Null, VBANull
 from vba_types.numeric_type import VBANumericType
 from vba_types.string import VBAString
@@ -44,17 +45,17 @@ def type_mismatch(left: VBATypeBase, right: VBATypeBase) -> None:
     raise TypeMismatchError
 
 
-def _add_promote_to_integer(left: VBATypeBase,
+def _add_promote_to_byte(left: VBATypeBase,
                             right: VBATypeBase) -> VBAByte:
     return VBAByte(left.value + right.value)
 
 
-def _sub_promote_to_integer(left: VBATypeBase,
+def _sub_promote_to_byte(left: VBATypeBase,
                             right: VBATypeBase) -> VBAByte:
     return VBAByte(left.value - right.value)
 
 
-def _mul_promote_to_integer(left: VBATypeBase,
+def _mul_promote_to_ibyte(left: VBATypeBase,
                             right: VBATypeBase) -> VBAByte:
     return VBAByte(left.value * right.value)
 
