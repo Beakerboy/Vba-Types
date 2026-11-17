@@ -134,6 +134,15 @@ register_against_all(("+", "-", "*", "/", "//", "%"), VBANull, handle_null_propo
 register_against_all(("+", "-", "*", "/", "//", "%"), VBAArray, type_mismatch)
 register_multiple(
     {
+        '+': _add_promote_to_byte,
+        '-': _sub_promote_to_byte,
+        '*': _mul_promote_to_byte,
+    },
+    [VBAByte, VBAEmpty],
+    [VBAByte]
+)
+register_multiple(
+    {
         '+': _add_promote_to_integer,
         '-': _sub_promote_to_integer,
         '*': _mul_promote_to_integer,
@@ -151,7 +160,6 @@ register_multiple(
         '%': _mod_promote_to_integer,
     }, [VBAEmpty], [VBAEmpty]
 )
-
 register_multiple(
     {
         '+': _add_promote_to_long,
@@ -161,7 +169,15 @@ register_multiple(
     [VBABoolean, VBAInteger, VBALong, VBAEmpty],
     [VBALong]
 )
-
+register_multiple(
+    {
+        '+': _add_promote_to_longlong,
+        '-': _sub_promote_to_longlong,
+        '*': _mul_promote_to_longlong,
+    },
+    [VBAIntegralType, VBAEmpty],
+    [VBALongLong]
+)
 register_multiple(
     {
         '+': _add_promote_to_double,
