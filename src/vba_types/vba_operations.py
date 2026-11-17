@@ -6,8 +6,9 @@ from vba_types.boolean import VBABoolean
 from vba_types.double import VBADouble
 from vba_types.empty import Empty, VBAEmpty
 from .float_type import VBAFloatType
-from vba_types.integral_type import 
+from vba_types.integral_type import (
     VBAIntegralType, VBAByte, VBAInteger, VBALong, VBALongLong
+)
 from vba_types.null import Null, VBANull
 from vba_types.numeric_type import VBANumericType
 from vba_types.string import VBAString
