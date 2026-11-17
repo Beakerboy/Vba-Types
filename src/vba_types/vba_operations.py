@@ -202,7 +202,7 @@ def _bool_string_equality(left: VBATypeBase,
     raise TypeMismatchError()
 
 
-register_against_all(("+", "-", "*", "/", "//", "%"),
+register_against_all(("+", "-", "*", "/", "//", "%", "==", "<", ">", "<>", "<=", "=>"),
                      VBANull, handle_null_propogation)
 register_against_all(("+", "-", "*", "/", "//", "%"), VBAArray, type_mismatch)
 register_multiple(
@@ -280,19 +280,6 @@ registry.register("//", VBAIntegralType, VBADouble, _floordiv_promote_to_long)
 registry.register("//", VBADouble, VBADouble, _floordiv_promote_to_long)
 
 registry.register("**", VBANumericType, VBANumericType, _pow_promote_to_double)
-
-registry.register("==", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("==", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("<", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("<", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("<>", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("<>", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("<=", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("<=", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("=>", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("=>", VBATypeBase, VBANull, handle_null_propogation)
-registry.register(">", VBANull, VBATypeBase, handle_null_propogation)
-registry.register(">", VBATypeBase, VBANull, handle_null_propogation)
 
 registry.register("==", VBAArray, VBATypeBase, type_mismatch)
 registry.register("==", VBATypeBase, VBAArray, type_mismatch)
