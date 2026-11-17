@@ -56,7 +56,7 @@ def _sub_promote_to_byte(left: VBATypeBase,
     return VBAByte(left.value - right.value)
 
 
-def _mul_promote_to_ibyte(left: VBATypeBase,
+def _mul_promote_to_byte(left: VBATypeBase,
                             right: VBATypeBase) -> VBAByte:
     return VBAByte(left.value * right.value)
 
@@ -74,6 +74,26 @@ def _sub_promote_to_integer(left: VBATypeBase,
 def _mul_promote_to_integer(left: VBATypeBase,
                             right: VBATypeBase) -> VBAInteger:
     return VBAInteger(left.value * right.value)
+
+
+def _add_promote_to_long(left: VBATypeBase,
+                         right: VBATypeBase) -> VBALong:
+    return VBALong(left.value + right.value)
+
+
+def _add_promote_to_longlong(left: VBATypeBase,
+                         right: VBATypeBase) -> VBALongLong:
+    return VBALongLong(left.value + right.value)
+
+
+def _sub_promote_to_longlong(left: VBATypeBase,
+                         right: VBATypeBase) -> VBALongLong:
+    return VBALongLong(left.value - right.value)
+
+
+def _mul_promote_to_longlong(left: VBATypeBase,
+                         right: VBATypeBase) -> VBALongLong:
+    return VBALongLong(left.value * right.value)
 
 
 def _mul_promote_to_long(left: VBATypeBase,
