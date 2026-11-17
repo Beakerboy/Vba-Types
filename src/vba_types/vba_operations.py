@@ -1,18 +1,18 @@
 from collections.abc import Callable, Iterable
 from itertools import product
 from .vba_registry import registry
-from vba_types.vba_type_base import VBATypeBase
-from vba_types.array import VBAArray
-from vba_types.boolean import VBABoolean
-from vba_types.double import VBADouble
-from vba_types.empty import Empty, VBAEmpty
+from .vba_type_base import VBATypeBase
+from .array import VBAArray
+from .boolean import VBABoolean
+from .double import VBADouble
+from .empty import Empty, VBAEmpty
 from .float_type import VBAFloatType
-from vba_types.integral_type import (
+from .integral_type import (
     VBAIntegralType, VBAByte, VBAInteger, VBALong, VBALongLong
 )
-from vba_types.null import Null, VBANull
-from vba_types.numeric_type import VBANumericType
-from vba_types.string import VBAString
+from .null import Null, VBANull
+from .numeric_type import VBANumericType
+from .string import VBAString
 from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
