@@ -206,7 +206,10 @@ register_against_all(
     ("+", "-", "*", "/", "//", "%", "==", "<", ">", "<>", "<=", "=>"),
     VBANull, handle_null_propogation
 )
-register_against_all(("+", "-", "*", "/", "//", "%", "==", "<"), VBAArray, type_mismatch)
+register_against_all(
+    ("+", "-", "*", "/", "//", "%", "==", "<"),
+    VBAArray, type_mismatch
+)
 register_multiple(
     {
         '+': _add_promote_to_byte,
