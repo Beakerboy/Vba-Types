@@ -1,4 +1,4 @@
-from collections.abc import Callable, Iterable
+from collections.abc import Callable
 from itertools import product
 from .vba_registry import registry
 from .vba_type_base import VBATypeBase
