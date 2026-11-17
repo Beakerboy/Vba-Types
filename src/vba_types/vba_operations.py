@@ -148,7 +148,7 @@ def _floordiv_promote_to_long(left: VBATypeBase,
 
 
 def _floordiv_promote_to_integer(left: VBATypeBase,
-                              right: VBATypeBase) -> VBAInteger:
+                                 right: VBATypeBase) -> VBAInteger:
     if right.value == 0.0 or right is Empty:
         raise DivisionByZeroError()
     return VBAInteger(left.value // right.value)
@@ -198,7 +198,9 @@ def _bool_string_equality(left: VBATypeBase,
         return VBABoolean(b.value == 0)
     raise TypeMismatchError()
 
-register_against_all(("+", "-", "*", "/", "//", "%"), VBANull, handle_null_propogation)
+
+register_against_all(("+", "-", "*", "/", "//", "%"),
+                     VBANull, handle_null_propogation)
 register_against_all(("+", "-", "*", "/", "//", "%"), VBAArray, type_mismatch)
 register_multiple(
     {
