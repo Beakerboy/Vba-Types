@@ -1,3 +1,4 @@
+from itertools import product
 from .vba_registry import registry
 from vba_types.vba_type_base import VBATypeBase
 from vba_types.array import VBAArray
@@ -129,84 +130,58 @@ def _bool_string_equality(left: VBATypeBase,
         return VBABoolean(b.value == 0)
     raise TypeMismatchError()
 
+register_multiple_not_equal(("+", "-", "*", "/", "//", "%"), VBANull, handle_null_propogation)
+register_multiple_not_equal(("+", "-", "*", "/", "//", "%"), VBAArray, type_mismatch)
+register_multiple(
+    {
+        '+': _add_promote_to_integer,
+        '-': _sub_promote_to_integer,
+        '*': _mul_promote_to_integer,
+    },
+    [VBABoolean, VBAInteger, VBAEmpty],
+    [VBABoolean, VBAInteger]
+)
+register_multiple(
+    {
+        '+': _add_promote_to_integer,
+        '-': _sub_promote_to_integer,
+        '*': _mul_promote_to_integer,
+        '/': _truediv_promote_to_integer,
+        '//': _floordiv_promote_to_integer,
+        '%': _mod_promote_to_integer,
+    }, [VBAEmpty], [VBAEmpty]
+)
 
-registry.register("+", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("+", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("-", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("-", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("*", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("*", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("/", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("/", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("//", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("//", VBATypeBase, VBANull, handle_null_propogation)
-registry.register("%", VBANull, VBATypeBase, handle_null_propogation)
-registry.register("%", VBATypeBase, VBANull, handle_null_propogation)
+register_multiple(
+    {
+        '+': _add_promote_to_long,
+        '-': _sub_promote_to_long,
+        '*': _mul_promote_to_long,
+    },
+    [VBABoolean, VBAInteger, VBALong, VBAEmpty],
+    [VBALong]
+)
 
-registry.register("+", VBAArray, VBATypeBase, type_mismatch)
-registry.register("+", VBATypeBase, VBAArray, type_mismatch)
-registry.register("-", VBAArray, VBATypeBase, type_mismatch)
-registry.register("-", VBATypeBase, VBAArray, type_mismatch)
-registry.register("*", VBAArray, VBATypeBase, type_mismatch)
-registry.register("*", VBATypeBase, VBAArray, type_mismatch)
-registry.register("/", VBAArray, VBATypeBase, type_mismatch)
-registry.register("/", VBATypeBase, VBAArray, type_mismatch)
-registry.register("//", VBAArray, VBATypeBase, type_mismatch)
-registry.register("//", VBATypeBase, VBAArray, type_mismatch)
-registry.register("%", VBAArray, VBATypeBase, type_mismatch)
-registry.register("%", VBATypeBase, VBAArray, type_mismatch)
+register_multiple(
+    {
+        '+': _add_promote_to_double,
+        '-': _sub_promote_to_double,
+        '*': _mul_promote_to_double,
+        '/': _truediv_promote_to_double,
+    },
+    [VBAFloatType, VBAIntegralType, VBAEmpty],
+    [VBADouble]
+)
 
-registry.register("+", VBAInteger, VBAInteger, _add_promote_to_integer)
-registry.register("+", VBABoolean, VBAInteger, _add_promote_to_integer)
-registry.register("+", VBAInteger, VBABoolean, _add_promote_to_integer)
-registry.register("+", VBAInteger, VBAEmpty, _add_promote_to_integer)
-registry.register("+", VBAEmpty, VBAInteger, _add_promote_to_integer)
-registry.register("+", VBAEmpty, VBAEmpty, _add_promote_to_integer)
-registry.register("-", VBAInteger, VBAInteger, _sub_promote_to_integer)
-registry.register("-", VBABoolean, VBAInteger, _sub_promote_to_integer)
-registry.register("-", VBAInteger, VBABoolean, _sub_promote_to_integer)
-registry.register("-", VBAEmpty, VBAEmpty, _sub_promote_to_integer)
-registry.register("-", VBAEmpty, VBAInteger, _sub_promote_to_integer)
-registry.register("-", VBAInteger, VBAEmpty, _sub_promote_to_integer)
-
-registry.register("+", VBADouble, VBADouble, _add_promote_to_double)
-registry.register("+", VBAIntegralType, VBADouble, _add_promote_to_double)
-registry.register("+", VBAEmpty, VBADouble, _add_promote_to_double)
-registry.register("+", VBADouble, VBAIntegralType, _add_promote_to_double)
-registry.register("+", VBADouble, VBAEmpty, _add_promote_to_double)
-registry.register("-", VBADouble, VBADouble, _sub_promote_to_double)
-registry.register("-", VBAIntegralType, VBADouble, _sub_promote_to_double)
-registry.register("-", VBAEmpty, VBADouble, _sub_promote_to_double)
-registry.register("-", VBADouble, VBAIntegralType, _sub_promote_to_double)
-registry.register("-", VBADouble, VBAEmpty, _sub_promote_to_double)
-registry.register("-", VBALong, VBALong, _sub_promote_to_long)
-
-registry.register("*", VBAInteger, VBAInteger, _mul_promote_to_integer)
-registry.register("*", VBABoolean, VBAInteger, _mul_promote_to_integer)
-registry.register("*", VBAInteger, VBABoolean, _mul_promote_to_integer)
-registry.register("*", VBAInteger, VBAEmpty, _mul_promote_to_integer)
-registry.register("*", VBAEmpty, VBAInteger, _mul_promote_to_integer)
-registry.register("*", VBAEmpty, VBAEmpty, _mul_promote_to_integer)
-registry.register("*", VBALong, VBAInteger, _mul_promote_to_long)
-registry.register("*", VBAInteger, VBALong, _mul_promote_to_long)
-registry.register("*", VBALong, VBALong, _mul_promote_to_long)
-registry.register("*", VBALong, VBABoolean, _mul_promote_to_long)
-registry.register("*", VBABoolean, VBALong, _mul_promote_to_long)
 registry.register("%", VBAInteger, VBADouble, _mod_promote_to_integer)
 registry.register("%", VBAInteger, VBAInteger, _mod_promote_to_long)
-
-registry.register("*", VBADouble, VBADouble, _mul_promote_to_double)
-registry.register("*", VBAIntegralType, VBADouble, _mul_promote_to_double)
 registry.register("*", VBAEmpty, VBADouble, _mul_promote_to_double)
-registry.register("*", VBADouble, VBAIntegralType, _mul_promote_to_double)
 registry.register("*", VBADouble, VBAEmpty, _mul_promote_to_double)
 
 registry.register("/", VBANumericType,
                   VBANumericType, _truediv_promote_to_double)
 registry.register("/", VBAIntegralType, VBAEmpty, _truediv_promote_to_double)
 registry.register("/", VBAEmpty, VBAIntegralType, _truediv_promote_to_double)
-registry.register("/", VBAIntegralType, VBADouble, _truediv_promote_to_double)
-registry.register("/", VBADouble, VBADouble, _truediv_promote_to_double)
 
 registry.register("//", VBAIntegralType,
                   VBAIntegralType, _floordiv_promote_to_long)
@@ -257,3 +232,26 @@ registry.register("<", VBAString, VBAString, _string_lt)
 
 registry.register("==", VBABoolean, VBAString, _bool_string_equality)
 registry.register("==", VBAString, VBABoolean, _bool_string_equality)
+
+
+def register_multiple(operator_handlers, *type_sets):
+    """
+    Register all combinations of operators and types, and associate if the type
+    are dissimilar
+    """
+    for op, handler in operator_handlers.items():
+        for types in product(*type_sets):
+            registry.register(op, *types, handler)
+
+            # Add reversed signature if different
+            if len(types) == 2 and types[0] != types[1]:
+                registry.register(op, types[1], types[0], handler)
+
+
+def register_multiple_not_equal(operators, type, handler):
+    """
+    Register a type with all types
+    """
+    for op in operator_handlers:
+        registry.register(op, type, VBATypeBase, VBAhandler)
+        registry.register(op, VBATypeBase, type, handler)    
