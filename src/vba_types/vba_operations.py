@@ -57,6 +57,10 @@ def _sub_promote_to_double(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
     return VBADouble(left.value - right.value)
 
 
+def _sub_promote_to_long(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
+    return VBALong(left.value - right.value)
+
+
 def _mul_promote_to_double(left: VBATypeBase,
                            right: VBATypeBase) -> VBADouble:
     return VBADouble(left.value * right.value)
@@ -175,6 +179,7 @@ registry.register("-", VBAIntegralType, VBADouble, _sub_promote_to_double)
 registry.register("-", VBAEmpty, VBADouble, _sub_promote_to_double)
 registry.register("-", VBADouble, VBAIntegralType, _sub_promote_to_double)
 registry.register("-", VBADouble, VBAEmpty, _sub_promote_to_double)
+registry.register("-", VBALong, VBALong, _sub_promote_to_long)
 
 registry.register("*", VBAInteger, VBAInteger, _mul_promote_to_integer)
 registry.register("*", VBABoolean, VBAInteger, _mul_promote_to_integer)
