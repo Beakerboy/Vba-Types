@@ -57,7 +57,7 @@ def _sub_promote_to_double(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
     return VBADouble(left.value - right.value)
 
 
-def _sub_promote_to_long(left: VBATypeBase, right: VBATypeBase) -> VBADouble:
+def _sub_promote_to_long(left: VBATypeBase, right: VBATypeBase) -> VBALong:
     return VBALong(left.value - right.value)
 
 
