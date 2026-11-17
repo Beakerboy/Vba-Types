@@ -5,14 +5,15 @@ from vba_types.array import VBAArray
 from vba_types.boolean import VBABoolean
 from vba_types.double import VBADouble
 from vba_types.empty import Empty, VBAEmpty
-from vba_types.integral_type import VBAIntegralType, VBAInteger, VBALong
+from .float_type import VBAFloatType
+from vba_types.integral_type import VBAIntegralType, VBAByte, VBAInteger, VBALong
 from vba_types.null import Null, VBANull
 from vba_types.numeric_type import VBANumericType
 from vba_types.string import VBAString
 from .exceptions import DivisionByZeroError, TypeMismatchError
 
 
-def register_multiple(operator_handlers, *type_sets):
+def register_multiple(operator_handlers: dict, *type_sets):
     """
     Register all combinations of operators and types, and associate if the type
     are dissimilar
@@ -26,13 +27,13 @@ def register_multiple(operator_handlers, *type_sets):
                 registry.register(op, types[1], types[0], handler)
 
 
-def register_against_all(operators, type, handler):
+def register_against_all(operators: tuple, type, handler):
     """
     Register a type with all types
     """
-    for op in operator_handlers:
-        registry.register(op, type, VBATypeBase, VBAhandler)
-        registry.register(op, VBATypeBase, type, handler)    
+    for op in operators:
+        registry.register(op, type, VBATypeBase, handler)
+        registry.register(op, VBATypeBase, type, handler)
 
 
 def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
@@ -41,6 +42,21 @@ def handle_null_propogation(left: VBATypeBase, right: VBATypeBase) -> VBANull:
 
 def type_mismatch(left: VBATypeBase, right: VBATypeBase) -> None:
     raise TypeMismatchError
+
+
+def _add_promote_to_integer(left: VBATypeBase,
+                            right: VBATypeBase) -> VBAByte:
+    return VBAByte(left.value + right.value)
+
+
+def _sub_promote_to_integer(left: VBATypeBase,
+                            right: VBATypeBase) -> VBAByte:
+    return VBAByte(left.value - right.value)
+
+
+def _mul_promote_to_integer(left: VBATypeBase,
+                            right: VBATypeBase) -> VBAByte:
+    return VBAByte(left.value * right.value)
 
 
 def _add_promote_to_integer(left: VBATypeBase,
@@ -178,7 +194,7 @@ register_multiple(
         '+': _add_promote_to_integer,
         '-': _sub_promote_to_integer,
         '*': _mul_promote_to_integer,
-        '/': _truediv_promote_to_integer,
+        '/': _truediv_promote_to_double,
         '//': _floordiv_promote_to_integer,
         '%': _mod_promote_to_integer,
     }, [VBAEmpty], [VBAEmpty]
