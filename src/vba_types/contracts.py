@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Any, Callable, NotRequired, TypedDict
-from vba_types import VBAVariable
+from .variable import VBAVariable
 
 
 class ParamDefinition(TypedDict):
