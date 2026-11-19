@@ -1,6 +1,7 @@
 from __future__ import annotations
 import inspect
-from typing import Any, Callable, Type
+import types
+from typing import Any, Callable, Type, Union, get_args, get_origin
 from .contracts import (
     LibModuleDefinition,
     LibProjectDefinition,
@@ -8,9 +9,24 @@ from .contracts import (
     ParamDefinition,
     PassMech,
 )
-from .empty import VBAEmpty
+from .boolean import VBABoolean
+from .double import VBADouble
+from .empty import Empty
+from .integral_type import VBAInteger, VBALong
+from .numeric_type import VBANumericType
+from .string import VBAString
 from .vba_type_base import VBATypeBase
 from .variable import VBAVariable
+
+_TYPE_MAP: dict[type[VBATypeBase], str] = {
+    VBABoolean: "boolean",
+    VBAInteger: "integer",
+    VBALong: "long",
+    VBADouble: "double",
+    VBAString: "string",
+    VBANumericType: "variant",
+    VBATypeBase: "variant",
+}
 
 
 def vba_proc(
@@ -90,7 +106,7 @@ class LibraryBuilder:
                     continue
 
                 optional = param.default is not inspect.Parameter.empty
-                default_val = param.default if optional else VBAEmpty()
+                default_val = param.default if optional else Empty
                 mech: PassMech = "ByRef" if param_name in byref_params else "ByVal"
 
                 params.append({
@@ -113,8 +129,19 @@ class LibraryBuilder:
         return procedures
 
     @staticmethod
-    def _make_vba_variable(annotation: Any) -> VBAVariable:
-        # Adjust this constructor call to match your VBAVariable.__init__ signature
-        if isinstance(annotation, type) and issubclass(annotation, VBATypeBase):
-            return VBAVariable(annotation)
-        return VBAVariable(VBATypeBase)
+    def _unwrap_optional(annotation: Any) -> Any:
+        """Unwraps Optional[T] / T | None to T."""
+        origin = get_origin(annotation)
+        if origin is Union or origin is types.UnionType:
+            args = [a for a in get_args(annotation) if a is not type(None)]
+            if len(args) == 1:
+                return args[0]
+        return annotation
+
+    @classmethod
+    def _make_vba_variable(cls, annotation: Any) -> VBAVariable:
+        resolved = cls._unwrap_optional(annotation)
+        if isinstance(resolved, type) and issubclass(resolved, VBATypeBase):
+            declared = _TYPE_MAP.get(resolved, "variant")
+            return VBAVariable(declared_type=declared)
+        return VBAVariable(declared_type="variant")
