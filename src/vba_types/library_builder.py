@@ -34,7 +34,9 @@ def vba_proc(
     byref: list[str] | None = None,
     name: str | None = None,
 ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-    """Optional decorator to override VBA procedure name or ByRef parameters."""
+    """
+    Optional decorator to override VBA procedure name or ByRef parameters.
+    """
     def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
         setattr(func, "_vba_byref", set(byref or []))
         if name is not None:
@@ -84,7 +86,8 @@ class LibraryBuilder:
             if attr_name.startswith("_"):
                 continue
 
-            # Unwrap @staticmethod / @classmethod to inspect the underlying function
+            # Unwrap @staticmethod / @classmethod to inspect the underlying
+            # function
             if isinstance(raw_member, (staticmethod, classmethod)):
                 func = raw_member.__func__
             elif callable(raw_member):
