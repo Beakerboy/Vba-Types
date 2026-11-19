@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Callable, TypedDict, TypeVar
+from typing import Any, Callable, NotRequired, TypedDict
 from vba_types import VBAVariable
 
 
@@ -15,7 +15,7 @@ class FunctionBase(TypedDict):
     type: str
     project: str
     module: str
-    extra: dict[str, Any]
+    extra: NotRequired[dict[str, Any]]
 
 
 class LibraryDefinition(FunctionBase):
