@@ -81,7 +81,7 @@ class LibraryBuilder:
         }
 
     def _extract_procedures(
-        self: T, module_name: str, cls: https://github.com/Beakerboy/Vba-Types/actions/runs/44537228340/job/135605756299
+        self: T, module_name: str, cls: Type[Any]
     ) -> dict[str, LibraryDefinition]:
         procedures: dict[str, LibraryDefinition] = {}
 
