@@ -41,6 +41,9 @@ class VBAArray(VBATypeBase):
         for item in self._data:
             yield item
 
+    def __repr__(self: T) -> str:
+        return f"<VBAArray: Bounds {self._bounds}>"
+
     @classmethod
     def initialize(cls: Type[T],
                    *args: int | tuple[int, int],
@@ -59,6 +62,35 @@ class VBAArray(VBATypeBase):
             arr._data = arr._recursive_init(shape, empty)
             return arr
 
+    def lbound(self: T, dimension: VBATypeBase | None = None) -> VBALong:
+        from .integral_type import VBALong
+        if dimension is None:
+            dimension = VBALong(1)
+        return VBALong(self._bounds[dimension.value - 1][0])
+
+    def ubound(self: T, dimension: VBATypeBase | None = None) -> VBALong:
+        from .integral_type import VBALong
+        if dimension is None:
+            dimension = VBALong(1)
+        return VBALong(self._bounds[dimension.value - 1][1])
+
+    def redim(self: T,
+              *bounds: tuple[int, int],
+              preserve: bool = False,
+              empty: VBATypeBase) -> None:
+        shape = tuple(
+            high - low + 1
+            for low, high in bounds
+        )
+
+        if not preserve:
+            self._bounds = list(bounds)
+            self._data = self._recursive_init(shape, empty)
+
+    # Check the behavior of altering an element in an initialized array.
+    # [empty] * shape[0] may copy a reference to the empty object shape[0]
+    # number of times, such that editing arr(0) would change it in all entries.
+    # Do we need a deep clone or read the type of empty and initialize it.
     def _recursive_init(self: T,
                         shape: tuple[int, ...],
                         empty: VBATypeBase) -> Any:
@@ -78,20 +110,3 @@ class VBAArray(VBATypeBase):
                 raise SubscriptOutOfRangeError()
             internal.append(idx - low)
         return tuple(internal)
-
-    @staticmethod
-    def lbound(arr: T, dimension: VBATypeBase | None = None) -> VBATypeBase:
-        from .integral_type import VBALong
-        if dimension is None:
-            dimension = VBALong(1)
-        return VBALong(arr._bounds[dimension.value - 1][0])
-
-    @staticmethod
-    def ubound(arr: T, dimension: VBATypeBase | None = None) -> VBATypeBase:
-        from .integral_type import VBALong
-        if dimension is None:
-            dimension = VBALong(1)
-        return VBALong(arr._bounds[dimension.value - 1][1])
-
-    def __repr__(self: T) -> str:
-        return f"<VBAArray: Bounds {self._bounds}>"
