@@ -98,10 +98,10 @@ def test_redim(bounds1, bounds2, type1, type2) -> None:
 @pytest.mark.parametrize(
     "bounds1, bounds2, type1, type2", [
         ((0, 2), (0, 3), Empty, VBAInteger(0)),
-        ((0, 2), (1, 3), Empty, VBAInteger(0)),
+        (((0, 2), (1, 2)), ((0, 2), (1, 3)), Empty, VBAInteger(0)),
     ])
 def test_redim_preserve(bounds1, bounds2, type1, type2) -> None:
-    arr = VBAArray.initialize(bounds1, empty=type1)
-    arr.redim(bounds2, preserve=True, empty=type2)
+    arr = VBAArray.initialize(*bounds1, empty=type1)
+    arr.redim(*bounds2, preserve=True, empty=type2)
     assert arr.lbound() == bounds2(0)
     assert arr.ubound() == bounds2(1)
