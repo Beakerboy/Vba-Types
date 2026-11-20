@@ -123,6 +123,6 @@ def test_redim_preserve(bounds1: tuple,
         ((0, 4), (0, 3)),
     ])
 def test_redim_preserve_exceptions(bounds: tuple) -> None:
-    arr = VBAArray.initialize(((0, 3), (0, 3)), empty=Empty)
+    arr = VBAArray.initialize((0, 3), (0, 3), empty=Empty)
     with pytest.raises(SubscriptOutOfRangeError):
         arr.redim(*bounds, preserve=True, empty=Empty)
