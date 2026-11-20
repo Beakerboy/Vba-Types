@@ -62,13 +62,13 @@ class VBAArray(VBATypeBase):
             arr._data = arr._recursive_init(shape, empty)
             return arr
 
-    def lbound(self: T, dimension: VBATypeBase | None = None) -> VBALong:
+    def lbound(self: T, dimension: VBATypeBase | None = None) -> VBATypeBase:
         from .integral_type import VBALong
         if dimension is None:
             dimension = VBALong(1)
         return VBALong(self._bounds[dimension.value - 1][0])
 
-    def ubound(self: T, dimension: VBATypeBase | None = None) -> VBALong:
+    def ubound(self: T, dimension: VBATypeBase | None = None) -> VBATypeBase:
         from .integral_type import VBALong
         if dimension is None:
             dimension = VBALong(1)
