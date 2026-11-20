@@ -10,7 +10,7 @@ T = TypeVar('T', bound='VBAArray')
 
 class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
-        self._data: VBAArrayData = list(args)
+        self._data: list[VBAArrayData] = list(args)
         ubound = base + len(args) - 1
         self._bounds = [(base, ubound)]
 
