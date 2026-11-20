@@ -198,13 +198,13 @@ class VBAArray(VBATypeBase):
         """
         limit = min(old_shape[0], new_shape[0])
 
+        assert isinstance(src, list)
+        assert isinstance(dst, list)
         if len(old_shape) == 1:
             for i in range(limit):
                 dst[i] = src[i]
             return
 
-        assert isinstance(src, list)
-        assert isinstance(dst, list)
         for i in range(limit):
             self._copy_overlap(
                 src[i],
