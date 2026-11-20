@@ -91,7 +91,7 @@ def test_assignment_updates_value() -> None:
     ])
 def test_redim(bounds1: tuple,
                bounds2: tuple,
-               type1: "VBATypeBase", type2: "VBATypeBase") -> None:
+               type1: VBATypeBase, type2: VBATypeBase) -> None:
     arr = VBAArray.initialize(bounds1, empty=type1)
     arr.redim(bounds2, empty=type2)
     assert arr.lbound().value == bounds2(0)
@@ -105,7 +105,7 @@ def test_redim(bounds1: tuple,
     ])
 def test_redim_preserve(bounds1: tuple,
                         bounds2: tuple,
-                        type1: "VBATypeBase", type2: "VBATypeBase") -> None:
+                        type1: VBATypeBase, type2: VBATypeBase) -> None:
     arr = VBAArray.initialize(*bounds1, empty=type1)
     arr.redim(*bounds2, preserve=True, empty=type2)
     assert arr.lbound().value == bounds2(0)(0)
