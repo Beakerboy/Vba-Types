@@ -101,14 +101,12 @@ def test_redim(bounds1: tuple,
 
 @pytest.mark.parametrize(
     "bounds1, bounds2, type1, type2", [
-        (((0, 2),), ((0, 3),), Empty, VBAInteger()),
+        (((0, 2),), ((0, 3),), (0,)), VBAInteger()),
     ])
 def test_redim_preserve(bounds1: tuple,
-                        bounds2: tuple,
-                        type1: VBATypeBase, type2: VBATypeBase) -> None:
-    arr = VBAArray.initialize(*bounds1, empty=type1)
-    arr[arr.lbound(VBAInteger(1)).value] = VBAInteger(1)
+                        bounds2: tuple, set_index: tuple) -> None:
+    arr = VBAArray.initialize(*bounds1, empty=Empty)
+    arr[*set_index] = VBAInteger(1)
     arr.redim(*bounds2, preserve=True, empty=type2)
-    assert arr.lbound().value == bounds2[0][0]
-    assert arr.ubound().value == bounds2[0][1]
+    assert arr.ubound(VBAInteger(len(bounds1) - 1)).value == 3
     assert arr[arr.lbound(VBAInteger(1)).value].value == 1
