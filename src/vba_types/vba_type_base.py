@@ -88,3 +88,7 @@ class VBATypeBase(ABC):
             return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("<=", self, other)
+
+    @classmethod
+    def default_instance(cls: Type[T]):
+        return cls()
