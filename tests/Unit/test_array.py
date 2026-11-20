@@ -81,3 +81,27 @@ def test_assignment_updates_value() -> None:
     arr = VBAArray(None, None)
     arr[0] = "Modified"
     assert arr[0] == "Modified"
+
+
+@pytest.mark.parametrize(
+    "bounds1, bounds2, type1, type2", [
+        ((0, 2), (0, 3), Empty, VBAInteger(0)),
+        ((0, 2), (1, 3), Empty, VBAInteger(0)),
+    ])
+def test_redim(bounds1, bounds2, type1, type2) -> None:
+    arr = VBAArray.initialize(bounds1, empty=type1)
+    arr.redim(bounds2, empty=type2))
+    assert arr.lbound() == bounds2(0)
+    assert arr.ubound() == bounds2(1)
+
+
+@pytest.mark.parametrize(
+    "bounds1, bounds2, type1, type2", [
+        ((0, 2), (0, 3), Empty, VBAInteger(0)),
+        ((0, 2), (1, 3), Empty, VBAInteger(0)),
+    ])
+def test_redim_preserve(bounds1, bounds2, type1, type2) -> None:
+    arr = VBAArray.initialize(bounds1, empty=type1)
+    arr.redim(bounds2, preserve=True, empty=type2))
+    assert arr.lbound() == bounds2(0)
+    assert arr.ubound() == bounds2(1)
