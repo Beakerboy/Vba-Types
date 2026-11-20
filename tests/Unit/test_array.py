@@ -101,7 +101,7 @@ def test_redim(bounds1: tuple,
 
 @pytest.mark.parametrize(
     "bounds1, bounds2, set_index", [
-        (((0, 2),), ((0, 3),), (0,), VBAInteger()),
+        (((0, 2),), ((0, 3),), (0,)),
     ])
 def test_redim_preserve(bounds1: tuple,
                         bounds2: tuple, set_index: tuple) -> None:
