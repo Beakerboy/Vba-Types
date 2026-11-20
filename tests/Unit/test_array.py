@@ -94,8 +94,9 @@ def test_assignment_updates_value() -> None:
 def test_redim(bounds1: tuple, bounds2: tuple, changed_dim: int) -> None:
     arr = VBAArray.initialize(*bounds1, empty=Empty)
     arr.redim(*bounds2, empty=VBAInteger())
-    assert arr.lbound(VBAInteger(changed_dim)).value == bounds2[changed_dim - 1][0]
-    assert arr.ubound(VBAInteger(changed_dim)).value == bounds2[changed_dim - 1][1]
+    dim = VBAInteger(changed_dim)
+    assert arr.lbound(dim).value == bounds2[changed_dim - 1][0]
+    assert arr.ubound(dim).value == bounds2[changed_dim - 1][1]
 
 
 @pytest.mark.parametrize(
