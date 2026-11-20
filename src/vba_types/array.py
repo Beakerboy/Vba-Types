@@ -152,3 +152,21 @@ class VBAArray(VBATypeBase):
                 raise SubscriptOutOfRangeError()
             internal.append(idx - low)
         return tuple(internal)
+
+    def _copy_overlap(self: T, src: VBAArraySequence, dst: VBAArraySequence,
+                      old_shape: tuple[int, ...], new_shape: tuple[int, ...]) -> None:
+
+        limit = min(old_shape[0], new_shape[0])
+
+        if len(old_shape) == 1:
+            for i in range(limit):
+                dst[i] = src[i]
+            return
+
+        for i in range(limit):
+            self._copy_overlap(
+                src[i],
+                dst[i],
+                old_shape[1:],
+                new_shape[1:],
+            )
