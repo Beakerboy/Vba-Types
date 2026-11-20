@@ -90,6 +90,7 @@ def test_assignment_updates_value() -> None:
         (((0, 2), ), ((0, 3), ), Empty, VBAInteger()),
         (((0, 2), ), ((1, 3), ), Empty, VBAInteger()),
         (((0, 2), ), ((1, 3), (0, 4)), Empty, VBAInteger()),
+        (((0, 3), (0, 3)), ((0, 4), (0, 3)), Empty, VBAInteger()),
     ])
 def test_redim(bounds1: tuple,
                bounds2: tuple,
@@ -103,6 +104,8 @@ def test_redim(bounds1: tuple,
 @pytest.mark.parametrize(
     "bounds1, bounds2, set_index", [
         (((0, 2),), ((0, 3),), (0,)),
+        (((0, 3), (0, 3)), ((0, 3), (0, 4)), (0, 0)),
+        (((0, 3), (0, 4)), ((0, 3), (0, 3)), (0, 0)),
     ])
 def test_redim_preserve(bounds1: tuple,
                         bounds2: tuple, set_index: tuple) -> None:
@@ -111,3 +114,22 @@ def test_redim_preserve(bounds1: tuple,
     arr.redim(*bounds2, preserve=True, empty=VBAInteger(1))
     assert arr.ubound(VBAInteger(len(bounds1) - 1)).value == 3
     assert arr[arr.lbound(VBAInteger(1)).value].value == 1
+
+
+def test_redim_preserve_change_rank(bounds1: tuple,
+                        bounds2: tuple, set_index: tuple) -> None:
+    arr = VBAArray.initialize((0, 1), empty=Empty)
+    with pytest.raises(SubscriptOutOfRangeError):
+        arr.redim(((0, 1), (0, 1)), preserve=True, empty=Empty)
+
+def test_redim_preserve_change_lower(bounds1: tuple,
+                        bounds2: tuple, set_index: tuple) -> None:
+    arr = VBAArray.initialize((0, 3), empty=Empty)
+    with pytest.raises(SubscriptOutOfRangeError):
+        arr.redim((1, 3), preserve=True, empty=Empty)
+
+def test_redim_preserve_change_upper(bounds1: tuple,
+                        bounds2: tuple, set_index: tuple) -> None:
+    arr = VBAArray.initialize(((0, 3), (0, 3)), empty=Empty)
+    with pytest.raises(SubscriptOutOfRangeError):
+        arr.redim(((0, 4), (0, 3))preserve=True, empty=Empty)
