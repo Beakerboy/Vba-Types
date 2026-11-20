@@ -4,14 +4,13 @@ from .exceptions import SubscriptOutOfRangeError
 from .vba_type_base import VBATypeBase
 
 
-VBAArraySequence: TypeAlias = list[VBATypeBase] | list["VBAArraySequence"]
 VBAArrayData: TypeAlias = VBATypeBase | list["VBAArrayData"]
 T = TypeVar('T', bound='VBAArray')
 
 
 class VBAArray(VBATypeBase):
     def __init__(self: T, *args: VBATypeBase, base: int = 0) -> None:
-        self._data: VBAArraySequence = list(args)
+        self._data: VBAArrayData = list(args)
         ubound = base + len(args) - 1
         self._bounds = [(base, ubound)]
 
