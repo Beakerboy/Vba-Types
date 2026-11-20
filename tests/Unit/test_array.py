@@ -1,3 +1,4 @@
+from __future__ import annotations
 import pytest
 from vba_types.array import VBAArray
 from vba_types.integral_type import VBAInteger
@@ -81,3 +82,47 @@ def test_assignment_updates_value() -> None:
     arr = VBAArray(None, None)
     arr[0] = "Modified"
     assert arr[0] == "Modified"
+
+
+@pytest.mark.parametrize(
+    "bounds1, bounds2, changed_dim", [
+        (((0, 2), ), ((0, 3), ), 1),
+        (((0, 2), ), ((1, 3), ), 1),
+        (((0, 2), ), ((1, 3), (0, 4)), 2),
+        (((0, 3), (0, 3)), ((0, 4), (0, 3)), 1),
+    ])
+def test_redim(bounds1: tuple, bounds2: tuple, changed_dim: int) -> None:
+    arr = VBAArray.initialize(*bounds1, empty=Empty)
+    arr.redim(*bounds2, empty=VBAInteger())
+    dim = VBAInteger(changed_dim)
+    assert arr.lbound(dim).value == bounds2[changed_dim - 1][0]
+    assert arr.ubound(dim).value == bounds2[changed_dim - 1][1]
+
+
+@pytest.mark.parametrize(
+    "bounds1, bounds2, set_index", [
+        (((0, 2),), ((0, 3),), (0,)),
+        (((0, 3), (0, 3)), ((0, 3), (0, 4)), (0, 0)),
+        (((0, 3), (0, 4)), ((0, 3), (0, 3)), (0, 0)),
+    ])
+def test_redim_preserve(bounds1: tuple,
+                        bounds2: tuple, set_index: tuple) -> None:
+    arr = VBAArray.initialize(*bounds1, empty=Empty)
+    arr[*set_index] = VBAInteger(1)
+    arr.redim(*bounds2, preserve=True, empty=VBAInteger(1))
+    rank = len(bounds1)
+    assert arr.ubound(VBAInteger(rank)).value == bounds2[rank - 1][1]
+    assert arr.lbound(VBAInteger(rank)).value == bounds2[rank - 1][0]
+    assert arr[*set_index] == VBAInteger(1)
+
+
+@pytest.mark.parametrize(
+    "bounds", [
+        ((0, 3), (0, 3), (0, 3)),
+        ((0, 3), (1, 3)),
+        ((0, 4), (0, 3)),
+    ])
+def test_redim_preserve_exceptions(bounds: tuple) -> None:
+    arr = VBAArray.initialize((0, 3), (0, 3), empty=Empty)
+    with pytest.raises(SubscriptOutOfRangeError):
+        arr.redim(*bounds, preserve=True, empty=Empty)

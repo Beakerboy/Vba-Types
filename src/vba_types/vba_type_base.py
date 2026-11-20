@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC
-from typing import Any, TypeVar
+from typing import Any, Type, TypeVar
 
 
 T = TypeVar('T', bound='VBATypeBase')
@@ -88,3 +88,7 @@ class VBATypeBase(ABC):
             return NotImplemented
         from vba_types.vba_registry import registry
         return registry.execute("<=", self, other)
+
+    @classmethod
+    def default_instance(cls: Type[T]) -> "VBATypeBase":
+        return cls()
