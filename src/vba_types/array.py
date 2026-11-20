@@ -74,8 +74,8 @@ class VBAArray(VBATypeBase):
             dimension = VBALong(1)
         return VBALong(self._bounds[dimension.value - 1][1])
 
-    def redim(self: t, *bounds: tuple[int, int], preserve: bool = False,
-        empty: VBATypeBase) -> None:
+    def redim(self: T, *bounds: tuple[int, int], preserve: bool = False,
+              empty: VBATypeBase) -> None:
         """
         Implements VBA ReDim and ReDim Preserve.
 
@@ -154,7 +154,8 @@ class VBAArray(VBATypeBase):
         return tuple(internal)
 
     def _copy_overlap(self: T, src: VBAArraySequence, dst: VBAArraySequence,
-                      old_shape: tuple[int, ...], new_shape: tuple[int, ...]) -> None:
+                      old_shape: tuple[int, ...],
+                      new_shape: tuple[int, ...]) -> None:
 
         limit = min(old_shape[0], new_shape[0])
 
