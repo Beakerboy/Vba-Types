@@ -170,7 +170,7 @@ class VBAArray(VBATypeBase):
 
         The method operates on the internal zero-based list representation
         rather than VBA bounds. Bound validation should already have been
-        performed by`redim()` before this method is called.
+        performed by `redim()` before this method is called.
 
         Args:
             src: The source array data structure being resized from.
@@ -203,6 +203,8 @@ class VBAArray(VBATypeBase):
                 dst[i] = src[i]
             return
 
+        assert isinstance(src, list)
+        assert isinstance(dst, list)
         for i in range(limit):
             self._copy_overlap(
                 src[i],
