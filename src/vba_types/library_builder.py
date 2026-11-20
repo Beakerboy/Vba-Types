@@ -1,7 +1,7 @@
 from __future__ import annotations
 import inspect
 import types
-from typing import Any, Callable, Type, Union, get_args, get_origin
+from typing import Any, Callable, Type, TypeVar, Union, get_args, get_origin
 from .contracts import (
     LibModuleDefinition,
     LibProjectDefinition,
@@ -45,13 +45,16 @@ def vba_proc(
     return decorator
 
 
+T = TypeVar("T", bound="LibraryBuilder")
+
+
 class LibraryBuilder:
-    def __init__(self, name: str) -> None:
+    def __init__(self: T, name: str) -> None:
         self.name = name.lower()
         self._modules: dict[str, LibModuleDefinition] = {}
         self._classes: dict[str, LibModuleDefinition] = {}
 
-    def add_module(self, module_name: str, cls: Type[Any]) -> LibraryBuilder:
+    def add_module(self: T, module_name: str, cls: Type[Any]) -> LibraryBuilder:
         mod_key = module_name.lower()
         self._modules[mod_key] = {
             "name": mod_key,
@@ -78,7 +81,7 @@ class LibraryBuilder:
         }
 
     def _extract_procedures(
-        self, module_name: str, cls: Type[Any]
+        self: T, module_name: str, cls: https://github.com/Beakerboy/Vba-Types/actions/runs/44537228340/job/135605756299
     ) -> dict[str, LibraryDefinition]:
         procedures: dict[str, LibraryDefinition] = {}
 
@@ -99,9 +102,11 @@ class LibraryBuilder:
             proc_name = getattr(func, "_vba_name", attr_name.lower())
             byref_params: set[str] = getattr(func, "_vba_byref", set())
 
-            # eval_str=True resolves stringified annotations from `from __future__ import annotations`
             sig = inspect.signature(func, eval_str=True)
-            is_sub = sig.return_annotation is None or sig.return_annotation is inspect.Signature.empty
+            is_sub = (
+                sig.return_annotation is None or 
+                sig.return_annotation is inspect.Signature.empty
+            )
 
             params: list[ParamDefinition] = []
             for param_name, param in sig.parameters.items():
@@ -110,7 +115,9 @@ class LibraryBuilder:
 
                 optional = param.default is not inspect.Parameter.empty
                 default_val = param.default if optional else Empty
-                mech: PassMech = "ByRef" if param_name in byref_params else "ByVal"
+                mech: PassMech = "ByVal"
+                if param_name in byref_params 
+                    mech  = "ByRef"
 
                 params.append({
                     "name": param_name.lower(),
@@ -142,7 +149,7 @@ class LibraryBuilder:
         return annotation
 
     @classmethod
-    def _make_vba_variable(cls, annotation: Any) -> VBAVariable:
+    def _make_vba_variable(cls: Type[T], annotation: Any) -> VBAVariable:
         resolved = cls._unwrap_optional(annotation)
         if isinstance(resolved, type) and issubclass(resolved, VBATypeBase):
             declared = _TYPE_MAP.get(resolved, "variant")
