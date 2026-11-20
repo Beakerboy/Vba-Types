@@ -108,8 +108,8 @@ def test_redim_preserve(bounds1: tuple,
                         bounds2: tuple,
                         type1: VBATypeBase, type2: VBATypeBase) -> None:
     arr = VBAArray.initialize(*bounds1, empty=type1)
-    arr[arr.lbound().value, arr.ubound().value] = VBAInteger(1)
+    arr[arr.lbound(1).value, arr.lbound(2).value] = VBAInteger(1)
     arr.redim(*bounds2, preserve=True, empty=type2)
     assert arr.lbound().value == bounds2[0][0]
     assert arr.ubound().value == bounds2[0][1]
-    assert arr[arr.lbound().value, arr.ubound().value].value == 1
+    assert arr[arr.lbound(1).value, arr.lbound(2).value].value == 1
