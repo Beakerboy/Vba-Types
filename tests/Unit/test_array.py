@@ -1,3 +1,4 @@
+from __future__ import annotations
 import pytest
 from vba_types.array import VBAArray
 from vba_types.integral_type import VBAInteger
