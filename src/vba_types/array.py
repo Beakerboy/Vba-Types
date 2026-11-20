@@ -5,6 +5,7 @@ from .vba_type_base import VBATypeBase
 
 
 VBAArraySequence: TypeAlias = list[VBATypeBase] | list["VBAArraySequence"]
+VBAArrayData: TypeAlias = VBATypeBase | list["VBAArrayData"]
 T = TypeVar('T', bound='VBAArray')
 
 
@@ -153,10 +154,47 @@ class VBAArray(VBATypeBase):
             internal.append(idx - low)
         return tuple(internal)
 
-    def _copy_overlap(self: T, src: VBAArraySequence, dst: VBAArraySequence,
+    def _copy_overlap(self: T, src: VBAArrayData, dst: VBAArrayData,
                       old_shape: tuple[int, ...],
                       new_shape: tuple[int, ...]) -> None:
+        """
+        Recursively copies values from one array storage structure into another,
+        preserving only the region that exists in both arrays.
 
+        This method is used to implement VBA's `ReDim Preserve` behavior. The
+        destination array may be either larger or smaller than the source array.
+        Only elements whose indices are valid in both arrays are copied. Elements
+        outside the overlapping region are either discarded (when shrinking) or
+        retain their default initialization values (when expanding).
+
+        The method operates on the internal zero-based list representation rather
+        than VBA bounds. Bound validation should already have been performed by
+        `redim()` before this method is called.
+
+        Args:
+            src: The source array data structure being resized from.
+            dst: The newly allocated destination array data structure.
+            old_shape: The dimensions of the source array, expressed as element
+                counts for each dimension.
+            new_shape: The dimensions of the destination array, expressed as
+                element counts for each dimension.
+
+        Examples:
+            Expanding a one-dimensional array:
+
+                [1, 2, 3] -> [1, 2, 3, 0, 0]
+
+            Shrinking a one-dimensional array:
+
+                [1, 2, 3, 4] -> [1, 2]
+
+            Expanding the last dimension of a two-dimensional array:
+
+                (3 x 2) -> (3 x 4)
+
+            In each case, only the intersection of the source and destination
+            arrays is copied.
+        """
         limit = min(old_shape[0], new_shape[0])
 
         if len(old_shape) == 1:
