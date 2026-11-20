@@ -87,18 +87,18 @@ def test_assignment_updates_value() -> None:
 
 @pytest.mark.parametrize(
     "bounds1, bounds2, type1, type2", [
-        (((0, 2), ), ((0, 3), ), Empty, VBAInteger()),
-        (((0, 2), ), ((1, 3), ), Empty, VBAInteger()),
-        (((0, 2), ), ((1, 3), (0, 4)), Empty, VBAInteger()),
-        (((0, 3), (0, 3)), ((0, 4), (0, 3)), Empty, VBAInteger()),
+        (((0, 2), ), ((0, 3), ), 1, VBAInteger()),
+        (((0, 2), ), ((1, 3), ), 1, VBAInteger()),
+        (((0, 2), ), ((1, 3), (0, 4)), 2, VBAInteger()),
+        (((0, 3), (0, 3)), ((0, 4), (0, 3)), 1, VBAInteger()),
     ])
 def test_redim(bounds1: tuple,
                bounds2: tuple,
-               type1: VBATypeBase, type2: VBATypeBase) -> None:
-    arr = VBAArray.initialize(*bounds1, empty=type1)
+               changed_dim: int, type2: VBATypeBase) -> None:
+    arr = VBAArray.initialize(*bounds1, empty=Empty)
     arr.redim(*bounds2, empty=type2)
-    assert arr.lbound().value == bounds2[0]
-    assert arr.ubound().value == bounds2[1]
+    assert arr.lbound(changed_dim).value == bounds2[changed_dim - 1][0]
+    assert arr.ubound(changed_dim).value == bounds2[changed_dim - 1][1]
 
 
 @pytest.mark.parametrize(
