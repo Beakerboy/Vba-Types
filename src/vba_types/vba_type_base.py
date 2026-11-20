@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC
-from typing import Any, TypeVar
+from typing import Any, Type, TypeVar
 
 
 T = TypeVar('T', bound='VBATypeBase')
