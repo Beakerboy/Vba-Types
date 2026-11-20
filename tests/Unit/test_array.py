@@ -1,7 +1,7 @@
 from __future__ import annotations
 import pytest
 from vba_types.array import VBAArray
-from vba_types.integral_type import VBAInteger, VBATypeBase
+from vba_types.integral_type import VBAInteger
 from vba_types.type_base import VBATypeBase
 from vba_types.empty import Empty
 from vba_types.exceptions import SubscriptOutOfRangeError
