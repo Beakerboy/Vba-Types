@@ -107,6 +107,6 @@ def test_redim_preserve(bounds1: tuple,
                         bounds2: tuple, set_index: tuple) -> None:
     arr = VBAArray.initialize(*bounds1, empty=Empty)
     arr[*set_index] = VBAInteger(1)
-    arr.redim(*bounds2, preserve=True, empty=type2)
+    arr.redim(*bounds2, preserve=True, empty=VBAInteger(1))
     assert arr.ubound(VBAInteger(len(bounds1) - 1)).value == 3
     assert arr[arr.lbound(VBAInteger(1)).value].value == 1
