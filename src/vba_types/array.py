@@ -74,18 +74,60 @@ class VBAArray(VBATypeBase):
             dimension = VBALong(1)
         return VBALong(self._bounds[dimension.value - 1][1])
 
-    def redim(self: T,
-              *bounds: tuple[int, int],
-              preserve: bool = False,
-              empty: VBATypeBase) -> None:
-        shape = tuple(
-            high - low + 1
-            for low, high in bounds
+    def redim(self: t, *bounds: tuple[int, int], preserve: bool = False,
+        empty: VBATypeBase) -> None:
+        """
+        Implements VBA ReDim and ReDim Preserve.
+
+        Assumes declaration legality has already been validated by
+        the interpreter/compiler.
+        """
+
+        new_shape = tuple(
+            upper - lower + 1
+            for lower, upper in bounds
         )
 
-        if not preserve:
-            self._bounds = list(bounds)
-            self._data = self._recursive_init(shape, empty)
+        # ReDim Preserve validation
+        if preserve:
+
+            if len(bounds) != len(self._bounds):
+                raise SubscriptOutOfRangeError()
+
+            # All dimensions except the final one must be identical
+            for old, new in zip(self._bounds[:-1], bounds[:-1]):
+                if old != new:
+                    raise SubscriptOutOfRangeError()
+
+            # Last dimension: lower bound must remain the same
+            old_low, old_high = self._bounds[-1]
+            new_low, new_high = bounds[-1]
+
+            if old_low != new_low:
+                raise SubscriptOutOfRangeError()
+
+            # Upper bound may change freely
+
+        # Allocate new storage
+        new_data = self._recursive_init(new_shape, empty)
+
+        # Copy overlapping values
+        if preserve:
+
+            old_shape = tuple(
+                upper - lower + 1
+                for lower, upper in self._bounds
+            )
+
+            self._copy_overlap(
+                self._data,
+                new_data,
+                old_shape,
+                new_shape,
+            )
+
+        self._bounds = list(bounds)
+        self._data = new_data
 
     # Check the behavior of altering an element in an initialized array.
     # [empty] * shape[0] may copy a reference to the empty object shape[0]
