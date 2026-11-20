@@ -134,4 +134,4 @@ def test_redim_preserve_change_upper(bounds1: tuple,
                         bounds2: tuple, set_index: tuple) -> None:
     arr = VBAArray.initialize(((0, 3), (0, 3)), empty=Empty)
     with pytest.raises(SubscriptOutOfRangeError):
-        arr.redim(((0, 4), (0, 3))preserve=True, empty=Empty)
+        arr.redim(((0, 4), (0, 3)), preserve=True, empty=Empty)
