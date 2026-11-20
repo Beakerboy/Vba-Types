@@ -1,5 +1,6 @@
 from .array import VBAArray
 from .boolean import VBABoolean
+from .contracts import LibProjectDefinition
 from .double import VBADouble
 from .empty import VBAEmpty, Empty
 from .integral_type import VBAInteger,  VBALong
@@ -23,4 +24,5 @@ __all__ = [
     "VBATypeBase",
     "VBAVariable",
     "literal_from_string",
+    "LibProjectDefinition",
 ]
