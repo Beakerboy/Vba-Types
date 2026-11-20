@@ -90,7 +90,7 @@ def test_assignment_updates_value() -> None:
     ])
 def test_redim(bounds1, bounds2, type1, type2) -> None:
     arr = VBAArray.initialize(bounds1, empty=type1)
-    arr.redim(bounds2, empty=type2))
+    arr.redim(bounds2, empty=type2)
     assert arr.lbound() == bounds2(0)
     assert arr.ubound() == bounds2(1)
 
@@ -102,6 +102,6 @@ def test_redim(bounds1, bounds2, type1, type2) -> None:
     ])
 def test_redim_preserve(bounds1, bounds2, type1, type2) -> None:
     arr = VBAArray.initialize(bounds1, empty=type1)
-    arr.redim(bounds2, preserve=True, empty=type2))
+    arr.redim(bounds2, preserve=True, empty=type2)
     assert arr.lbound() == bounds2(0)
     assert arr.ubound() == bounds2(1)
