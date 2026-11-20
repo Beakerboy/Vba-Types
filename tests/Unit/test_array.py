@@ -92,9 +92,7 @@ def test_assignment_updates_value() -> None:
         (((0, 2), ), ((1, 3), (0, 4)), 2),
         (((0, 3), (0, 3)), ((0, 4), (0, 3)), 1),
     ])
-def test_redim(bounds1: tuple,
-               bounds2: tuple,
-               changed_dim: int) -> None:
+def test_redim(bounds1: tuple, bounds2: tuple, changed_dim: int) -> None:
     arr = VBAArray.initialize(*bounds1, empty=Empty)
     arr.redim(*bounds2, empty=VBAInteger())
     assert arr.lbound(changed_dim).value == bounds2[changed_dim - 1][0]
