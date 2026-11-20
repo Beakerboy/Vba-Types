@@ -111,8 +111,8 @@ def test_redim_preserve(bounds1: tuple,
     arr[*set_index] = VBAInteger(1)
     arr.redim(*bounds2, preserve=True, empty=VBAInteger(1))
     rank = len(bounds1)
-    assert arr.ubound(VBAInteger(rank - 1)).value == bounds2[rank - 1][1]
-    assert arr.lbound(VBAInteger(rank - 1)).value == bounds2[rank - 1][0]
+    assert arr.ubound(VBAInteger(rank)).value == bounds2[rank - 1][1]
+    assert arr.lbound(VBAInteger(rank)).value == bounds2[rank - 1][0]
     assert arr[*set_index] == VBAInteger(1)
 
 
