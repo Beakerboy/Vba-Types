@@ -90,5 +90,5 @@ class VBATypeBase(ABC):
         return registry.execute("<=", self, other)
 
     @classmethod
-    def default_instance(cls: Type[T]):
+    def default_instance(cls: Type[T]) -> "VBATypeBase":
         return cls()
