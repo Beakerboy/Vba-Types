@@ -112,4 +112,4 @@ def test_redim_preserve(bounds1: tuple,
     arr.redim(*bounds2, preserve=True, empty=type2)
     assert arr.lbound().value == bounds2[0][0]
     assert arr.ubound().value == bounds2[0][1]
-    assert arr[arr.lbound().value][arr.ubound().value].value = 1
+    assert arr[arr.lbound().value][arr.ubound().value].value == 1
