@@ -158,18 +158,19 @@ class VBAArray(VBATypeBase):
                       old_shape: tuple[int, ...],
                       new_shape: tuple[int, ...]) -> None:
         """
-        Recursively copies values from one array storage structure into another,
-        preserving only the region that exists in both arrays.
+        Recursively copies values from one array storage structure into
+        another, preserving only the region that exists in both arrays.
 
         This method is used to implement VBA's `ReDim Preserve` behavior. The
-        destination array may be either larger or smaller than the source array.
-        Only elements whose indices are valid in both arrays are copied. Elements
-        outside the overlapping region are either discarded (when shrinking) or
-        retain their default initialization values (when expanding).
+        destination array may be either larger or smaller than the source
+        array. Only elements whose indices are valid in both arrays are copied.
+        Elements outside the overlapping region are either discarded (when
+        shrinking) or retain their default initialization values (when
+        expanding).
 
-        The method operates on the internal zero-based list representation rather
-        than VBA bounds. Bound validation should already have been performed by
-        `redim()` before this method is called.
+        The method operates on the internal zero-based list representation
+        rather than VBA bounds. Bound validation should already have been
+        performed by`redim()` before this method is called.
 
         Args:
             src: The source array data structure being resized from.
