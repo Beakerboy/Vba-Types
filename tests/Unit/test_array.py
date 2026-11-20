@@ -85,7 +85,7 @@ def test_assignment_updates_value() -> None:
 
 
 @pytest.mark.parametrize(
-    "bounds1, bounds2, type1, type2", [
+    "bounds1, bounds2, changed_dim", [
         (((0, 2), ), ((0, 3), ), 1),
         (((0, 2), ), ((1, 3), ), 1),
         (((0, 2), ), ((1, 3), (0, 4)), 2),
