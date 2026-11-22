@@ -1,169 +1,191 @@
 from __future__ import annotations
-import inspect
-import types
-from typing import Any, Callable, Type, TypeVar, Union, get_args, get_origin
-from .contracts import (
-    LibModuleDefinition,
-    LibProjectDefinition,
-    LibraryDefinition,
-    ParamDefinition,
-    PassMech,
-)
-from .boolean import VBABoolean
-from .double import VBADouble
-from .empty import Empty
-from .integral_type import VBAInteger, VBALong
-from .numeric_type import VBANumericType
-from .string import VBAString
-from .vba_type_base import VBATypeBase
-from .variable import VBAVariable
 
-_TYPE_MAP: dict[type[VBATypeBase], str] = {
-    VBABoolean: "boolean",
-    VBAInteger: "integer",
-    VBALong: "long",
-    VBADouble: "double",
-    VBAString: "string",
-    VBANumericType: "variant",
-    VBATypeBase: "variant",
-}
+from typing import Any, Optional
+import pytest
+
+from vba_types.boolean import VBABoolean
+from vba_types.double import VBADouble
+from vba_types.empty import Empty
+from vba_types.integral_type import VBAInteger, VBALong
+from vba_types.library_builder import LibraryBuilder, vba_proc
+from vba_types.numeric_type import VBANumericType
+from vba_types.string import VBAString
+from vba_types.vba_type_base import VBATypeBase
+from vba_types.variable import VBAVariable
 
 
-def vba_proc(
-    *,
-    byref: list[str] | None = None,
-    name: str | None = None,
-) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-    """
-    Optional decorator to override VBA procedure name or ByRef parameters.
-    """
-    def decorator(func: Callable[..., Any]) -> Callable[..., Any]:
-        setattr(func, "_vba_byref", set(byref or []))
-        if name is not None:
-            setattr(func, "_vba_name", name.lower())
-        return func
-    return decorator
+class SampleModule:
+    CONSTANT_ATTR: int = 42
 
-
-T = TypeVar("T", bound="LibraryBuilder")
-
-
-class LibraryBuilder:
-    def __init__(self: T, name: str) -> None:
-        self.name = name.lower()
-        self._modules: dict[str, LibModuleDefinition] = {}
-        self._classes: dict[str, LibModuleDefinition] = {}
-
-    def add_module(self: T, module_name: str,
-                   cls: Type[Any]) -> LibraryBuilder:
-        mod_key = module_name.lower()
-        self._modules[mod_key] = {
-            "name": mod_key,
-            "type": "Module",
-            "functions": self._extract_procedures(mod_key, cls),
-        }
-        return self
-
-    def add_class(self: T, class_name: str, cls: Type[Any]) -> LibraryBuilder:
-        cls_key = class_name.lower()
-        self._classes[cls_key] = {
-            "name": cls_key,
-            "type": "Class",
-            "functions": self._extract_procedures(cls_key, cls),
-        }
-        return self
-
-    def build(self: T) -> LibProjectDefinition:
-        return {
-            "name": self.name,
-            "type": "Library",
-            "modules": self._modules,
-            "classes": self._classes,
-        }
-
-    def _extract_procedures(
-        self: T, module_name: str, cls: Type[Any]
-    ) -> dict[str, LibraryDefinition]:
-        procedures: dict[str, LibraryDefinition] = {}
-
-        for attr_name, raw_member in cls.__dict__.items():
-            if attr_name.startswith("_"):
-                continue
-
-            # Unwrap @staticmethod / @classmethod to inspect the underlying
-            # function
-            if isinstance(raw_member, (staticmethod, classmethod)):
-                func = raw_member.__func__
-            elif callable(raw_member):
-                func = raw_member
-            else:
-                continue
-
-            handle = getattr(cls, attr_name)
-            proc_name = getattr(func, "_vba_name", attr_name.lower())
-            byref_params: set[str] = getattr(func, "_vba_byref", set())
-
-            sig = inspect.signature(func, eval_str=True)
-            is_sub = (
-                sig.return_annotation is None or
-                sig.return_annotation is inspect.Signature.empty
-            )
-
-            params: list[ParamDefinition] = []
-            for param_name, param in sig.parameters.items():
-                if param_name in ("self", "cls"):
-                    continue
-
-                if param.kind == inspect.Parameter.VAR_POSITIONAL:
-                    for i in range(1, 31):
-                        params.append({
-                            "name": f"arg{i}",
-                            "optional": i > 1,
-                            "default": Empty,
-                            "var": self._make_vba_variable(param.annotation),
-                            "mech": "ByVal",
-                        })
-                    continue
-
-                optional = param.default is not inspect.Parameter.empty
-                default_val = param.default if optional else Empty
-                mech: PassMech = "ByVal"
-                if param_name in byref_params:
-                    mech = "ByRef"
-
-                params.append({
-                    "name": param_name.lower(),
-                    "optional": optional,
-                    "default": default_val,
-                    "var": self._make_vba_variable(param.annotation),
-                    "mech": mech,
-                })
-
-            procedures[proc_name] = {
-                "name": proc_name,
-                "type": "Sub" if is_sub else "Function",
-                "project": self.name,
-                "module": module_name,
-                "handle": handle,
-                "params": params,
-            }
-
-        return procedures
+    def _private_helper(self) -> None:
+        pass
 
     @staticmethod
-    def _unwrap_optional(annotation: Any) -> Any:
-        """Unwraps Optional[T] / T | None to T."""
-        origin = get_origin(annotation)
-        if origin is Union or origin is types.UnionType:
-            args = [a for a in get_args(annotation) if a is not type(None)]
-            if len(args) == 1:
-                return args[0]
-        return annotation
+    def my_func(a: VBAInteger, b: VBADouble = VBADouble(1.5)) -> VBAString:
+        return VBAString("ok")
 
     @classmethod
-    def _make_vba_variable(cls: Type[T], annotation: Any) -> VBAVariable:
-        resolved = cls._unwrap_optional(annotation)
-        if isinstance(resolved, type) and issubclass(resolved, VBATypeBase):
-            declared = _TYPE_MAP.get(resolved, "variant")
-            return VBAVariable(declared_type=declared)
-        return VBAVariable(declared_type="variant")
+    def class_sub(cls, flag: VBABoolean) -> None:
+        pass
+
+    def untyped_sub(self, x: Any) -> None:
+        pass
+
+    @vba_proc(byref=["target"], name="CustomProcName")
+    def original_name(self, target: VBALong, source: VBAString) -> VBABoolean:
+        return VBABoolean(True)
+
+    @staticmethod
+    def variadic_func(*args: VBANumericType) -> VBADouble:
+        return VBADouble(0.0)
+
+
+class SampleClass:
+    def method_one(
+        self,
+        opt_pipe: VBAInteger | None = None,
+        opt_typing: Optional[VBAString] = None,
+        generic_val: VBATypeBase = Empty,
+    ) -> VBALong:
+        return VBALong(1)
+
+
+class TestLibraryBuilder:
+    def test_build_project_structure_and_lowercasing(self) -> None:
+        project = (
+            LibraryBuilder("MyProject")
+            .add_module("MyModule", SampleModule)
+            .add_class("MyClass", SampleClass)
+            .build()
+        )
+
+        assert project["name"] == "myproject"
+        assert project["type"] == "Library"
+        assert "mymodule" in project["modules"]
+        assert "myclass" in project["classes"]
+
+        mod = project["modules"]["mymodule"]
+        assert mod["name"] == "mymodule"
+        assert mod["type"] == "Module"
+
+        cls_def = project["classes"]["myclass"]
+        assert cls_def["name"] == "myclass"
+        assert cls_def["type"] == "Class"
+
+    def test_ignores_private_and_non_callable_attributes(self) -> None:
+        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        funcs = project["modules"]["mod"]["functions"]
+
+        assert "_private_helper" not in funcs
+        assert "constant_attr" not in funcs
+        assert "CONSTANT_ATTR" not in funcs
+
+    def test_function_vs_sub_detection(self) -> None:
+        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        funcs = project["modules"]["mod"]["functions"]
+
+        assert funcs["my_func"]["type"] == "Function"
+        assert funcs["class_sub"]["type"] == "Sub"
+        assert funcs["untyped_sub"]["type"] == "Sub"
+
+    def test_staticmethod_and_classmethod_unwrapping(self) -> None:
+        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        funcs = project["modules"]["mod"]["functions"]
+
+        assert [p["name"] for p in funcs["my_func"]["params"]] == ["a", "b"]
+        assert [p["name"] for p in funcs["class_sub"]["params"]] == ["flag"]
+        assert [p["name"] for p in funcs["untyped_sub"]["params"]] == ["x"]
+
+        assert funcs["my_func"]["handle"] is SampleModule.my_func
+        assert funcs["class_sub"]["handle"] == SampleModule.class_sub
+
+    def test_required_and_optional_parameters(self) -> None:
+        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        params = project["modules"]["mod"]["functions"]["my_func"]["params"]
+
+        assert params[0]["name"] == "a"
+        assert params[0]["optional"] is False
+        assert params[0]["default"] is Empty
+        assert params[0]["mech"] == "ByVal"
+        assert params[0]["var"].declared_type == "integer"
+
+        assert params[1]["name"] == "b"
+        assert params[1]["optional"] is True
+        default_b = params[1]["default"]
+        assert isinstance(default_b, VBADouble)
+        assert default_b.value == 1.5
+        assert params[1]["mech"] == "ByVal"
+        assert params[1]["var"].declared_type == "double"
+
+    def test_vba_proc_decorator_overrides(self) -> None:
+        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        funcs = project["modules"]["mod"]["functions"]
+
+        assert "original_name" not in funcs
+        assert "customprocname" in funcs
+
+        proc = funcs["customprocname"]
+        assert proc["name"] == "customprocname"
+        assert proc["type"] == "Function"
+
+        params = proc["params"]
+        assert params[0]["name"] == "target"
+        assert params[0]["mech"] == "ByRef"
+        assert params[0]["var"].declared_type == "long"
+
+        assert params[1]["name"] == "source"
+        assert params[1]["mech"] == "ByVal"
+        assert params[1]["var"].declared_type == "string"
+
+    def test_var_positional_args_expansion(self) -> None:
+        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        params = project["modules"]["mod"]["functions"]["variadic_func"]["params"]
+
+        assert len(params) == 30
+        assert params[0]["name"] == "arg1"
+        assert params[0]["optional"] is False
+        assert params[0]["default"] is Empty
+        assert params[0]["var"].declared_type == "variant"
+
+        for idx in range(1, 30):
+            assert params[idx]["name"] == f"arg{idx + 1}"
+            assert params[idx]["optional"] is True
+            assert params[idx]["default"] is Empty
+            assert params[idx]["mech"] == "ByVal"
+
+    def test_optional_union_and_fallback_type_annotations(self) -> None:
+        project = LibraryBuilder("TestLib").add_class("Cls", SampleClass).build()
+        params = project["classes"]["cls"]["functions"]["method_one"]["params"]
+
+        assert params[0]["var"].declared_type == "integer"
+        assert params[0]["optional"] is True
+        assert params[0]["default"] is None
+
+        assert params[1]["var"].declared_type == "string"
+        assert params[1]["optional"] is True
+        assert params[1]["default"] is None
+
+        assert params[2]["var"].declared_type == "variant"
+        assert params[2]["optional"] is True
+        assert params[2]["default"] is Empty
+
+    @pytest.mark.parametrize(
+        ("annotation", "expected_type"),
+        [
+            (VBABoolean, "boolean"),
+            (VBAInteger, "integer"),
+            (VBALong, "long"),
+            (VBADouble, "double"),
+            (VBAString, "string"),
+            (VBANumericType, "variant"),
+            (VBATypeBase, "variant"),
+            (int, "variant"),
+            (None, "variant"),
+        ],
+    )
+    def test_make_vba_variable_type_mapping(
+        self, annotation: Any, expected_type: str
+    ) -> None:
+        var: VBAVariable = LibraryBuilder._make_vba_variable(annotation)
+        assert isinstance(var, VBAVariable)
+        assert var.declared_type == expected_type
