@@ -104,7 +104,7 @@ class LibraryBuilder:
 
             sig = inspect.signature(func, eval_str=True)
             is_sub = (
-                sig.return_annotation is None or 
+                sig.return_annotation is None or
                 sig.return_annotation is inspect.Signature.empty
             )
 
@@ -113,11 +113,22 @@ class LibraryBuilder:
                 if param_name in ("self", "cls"):
                     continue
 
+                if param.kind == inspect.Parameter.VAR_POSITIONAL:
+                    for i in range(1, 31):
+                        params.append({
+                            "name": f"arg{i}",
+                            "optional": i > 1,
+                            "default": Empty,
+                            "var": self._make_vba_variable(param.annotation),
+                            "mech": "ByVal",
+                        })
+                    continue
+
                 optional = param.default is not inspect.Parameter.empty
                 default_val = param.default if optional else Empty
                 mech: PassMech = "ByVal"
-                if param_name in byref_params 
-                    mech  = "ByRef"
+                if param_name in byref_params:
+                    mech = "ByRef"
 
                 params.append({
                     "name": param_name.lower(),
