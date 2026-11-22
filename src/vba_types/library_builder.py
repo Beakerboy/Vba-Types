@@ -72,7 +72,7 @@ class TestLibraryBuilder:
         assert cls_def["name"] == "myclass"
         assert cls_def["type"] == "Class"
 
-    def test_ignores_private_and_non_callable_attributes(self) -> None:
+    def test_ignores_private_and_non_callable_attributes(self: T) -> None:
         project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
         funcs = project["modules"]["mod"]["functions"]
 
@@ -80,7 +80,7 @@ class TestLibraryBuilder:
         assert "constant_attr" not in funcs
         assert "CONSTANT_ATTR" not in funcs
 
-    def test_function_vs_sub_detection(self) -> None:
+    def test_function_vs_sub_detection(self:T) -> None:
         project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
         funcs = project["modules"]["mod"]["functions"]
 
@@ -88,7 +88,7 @@ class TestLibraryBuilder:
         assert funcs["class_sub"]["type"] == "Sub"
         assert funcs["untyped_sub"]["type"] == "Sub"
 
-    def test_staticmethod_and_classmethod_unwrapping(self) -> None:
+    def test_staticmethod_and_classmethod_unwrapping(self: T) -> None:
         project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
         funcs = project["modules"]["mod"]["functions"]
 
@@ -99,7 +99,7 @@ class TestLibraryBuilder:
         assert funcs["my_func"]["handle"] is SampleModule.my_func
         assert funcs["class_sub"]["handle"] == SampleModule.class_sub
 
-    def test_required_and_optional_parameters(self) -> None:
+    def test_required_and_optional_parameters(self: T) -> None:
         project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
         params = project["modules"]["mod"]["functions"]["my_func"]["params"]
 
@@ -117,7 +117,7 @@ class TestLibraryBuilder:
         assert params[1]["mech"] == "ByVal"
         assert params[1]["var"].declared_type == "double"
 
-    def test_vba_proc_decorator_overrides(self) -> None:
+    def test_vba_proc_decorator_overrides(self: T) -> None:
         project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
         funcs = project["modules"]["mod"]["functions"]
 
@@ -137,7 +137,7 @@ class TestLibraryBuilder:
         assert params[1]["mech"] == "ByVal"
         assert params[1]["var"].declared_type == "string"
 
-    def test_var_positional_args_expansion(self) -> None:
+    def test_var_positional_args_expansion(self: T) -> None:
         project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
         params = project["modules"]["mod"]["functions"]["variadic_func"]["params"]
 
@@ -184,7 +184,7 @@ class TestLibraryBuilder:
         ],
     )
     def test_make_vba_variable_type_mapping(
-        self, annotation: Any, expected_type: str
+        self: T, annotation: Any, expected_type: str
     ) -> None:
         var: VBAVariable = LibraryBuilder._make_vba_variable(annotation)
         assert isinstance(var, VBAVariable)
