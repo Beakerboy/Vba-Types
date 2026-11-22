@@ -54,7 +54,8 @@ class LibraryBuilder:
         self._modules: dict[str, LibModuleDefinition] = {}
         self._classes: dict[str, LibModuleDefinition] = {}
 
-    def add_module(self: T, module_name: str, cls: Type[Any]) -> LibraryBuilder:
+    def add_module(self: T, module_name: str,
+                   cls: Type[Any]) -> LibraryBuilder:
         mod_key = module_name.lower()
         self._modules[mod_key] = {
             "name": mod_key,
@@ -63,7 +64,7 @@ class LibraryBuilder:
         }
         return self
 
-    def add_class(self, class_name: str, cls: Type[Any]) -> LibraryBuilder:
+    def add_class(self: T, class_name: str, cls: Type[Any]) -> LibraryBuilder:
         cls_key = class_name.lower()
         self._classes[cls_key] = {
             "name": cls_key,
@@ -72,7 +73,7 @@ class LibraryBuilder:
         }
         return self
 
-    def build(self) -> LibProjectDefinition:
+    def build(self: T) -> LibProjectDefinition:
         return {
             "name": self.name,
             "type": "Library",
