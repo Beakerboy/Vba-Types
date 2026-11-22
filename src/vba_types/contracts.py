@@ -1,6 +1,8 @@
 from __future__ import annotations
-from typing import Any, Callable, NotRequired, TypedDict
+from typing import Any, Callable, Literal, NotRequired, TypedDict
 from .variable import VBAVariable
+
+PassMech = Literal["ByVal", "ByRef"]
 
 
 class ParamDefinition(TypedDict):
@@ -8,7 +10,7 @@ class ParamDefinition(TypedDict):
     optional: bool
     default: Any
     var: VBAVariable
-    mech: str
+    mech: PassMech
 
 
 class FunctionBase(TypedDict):
