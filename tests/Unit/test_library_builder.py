@@ -1,37 +1,42 @@
 from __future__ import annotations
-from typing import Optional
+
+from typing import Any, Optional, Type
 import pytest
 
 from vba_types.boolean import VBABoolean
 from vba_types.double import VBADouble
 from vba_types.empty import Empty
 from vba_types.integral_type import VBAInteger, VBALong
-from vba_types.library_builder import LibraryBuilder, vba_proc
 from vba_types.numeric_type import VBANumericType
+from vba_types.project_builder import LibraryBuilder, vba_proc
 from vba_types.string import VBAString
 from vba_types.vba_type_base import VBATypeBase
 from vba_types.variable import VBAVariable
 
 
 class SampleModule:
-    CONSTANT_ATTR = 42
+    CONSTANT_ATTR: int = 42
 
-    def _private_helper(self) -> None:
+    def _private_helper(self: SampleModule) -> None:
         pass
 
     @staticmethod
-    def my_func(a: VBAInteger, b: VBADouble = VBADouble(1.5)) -> VBAString:
+    def my_func(
+        a: VBAInteger, b: VBADouble = VBADouble(1.5)
+    ) -> VBAString:
         return VBAString("ok")
 
     @classmethod
-    def class_sub(cls, flag: VBABoolean) -> None:
+    def class_sub(cls: Type[SampleModule], flag: VBABoolean) -> None:
         pass
 
-    def untyped_sub(self, x):
+    def untyped_sub(self: SampleModule, x) -> None:  # noqa: ANN001
         pass
 
     @vba_proc(byref=["target"], name="CustomProcName")
-    def original_name(self, target: VBALong, source: VBAString) -> VBABoolean:
+    def original_name(
+        self: SampleModule, target: VBALong, source: VBAString
+    ) -> VBABoolean:
         return VBABoolean(True)
 
     @staticmethod
@@ -41,7 +46,7 @@ class SampleModule:
 
 class SampleClass:
     def method_one(
-        self,
+        self: SampleClass,
         opt_pipe: VBAInteger | None = None,
         opt_typing: Optional[VBAString] = None,
         generic_val: VBATypeBase = Empty,
@@ -50,7 +55,9 @@ class SampleClass:
 
 
 class TestLibraryBuilder:
-    def test_build_project_structure_and_lowercasing(self) -> None:
+    def test_build_project_structure_and_lowercasing(
+        self: TestLibraryBuilder,
+    ) -> None:
         project = (
             LibraryBuilder("MyProject")
             .add_module("MyModule", SampleModule)
@@ -71,27 +78,36 @@ class TestLibraryBuilder:
         assert cls_def["name"] == "myclass"
         assert cls_def["type"] == "Class"
 
-    def test_ignores_private_and_non_callable_attributes(self) -> None:
-        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+    def test_ignores_private_and_non_callable_attributes(
+        self: TestLibraryBuilder,
+    ) -> None:
+        project = (
+            LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        )
         funcs = project["modules"]["mod"]["functions"]
 
         assert "_private_helper" not in funcs
         assert "constant_attr" not in funcs
         assert "CONSTANT_ATTR" not in funcs
 
-    def test_function_vs_sub_detection(self) -> None:
-        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+    def test_function_vs_sub_detection(self: TestLibraryBuilder) -> None:
+        project = (
+            LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        )
         funcs = project["modules"]["mod"]["functions"]
 
         assert funcs["my_func"]["type"] == "Function"
         assert funcs["class_sub"]["type"] == "Sub"
         assert funcs["untyped_sub"]["type"] == "Sub"
 
-    def test_staticmethod_and_classmethod_unwrapping(self) -> None:
-        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+    def test_staticmethod_and_classmethod_unwrapping(
+        self: TestLibraryBuilder,
+    ) -> None:
+        project = (
+            LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        )
         funcs = project["modules"]["mod"]["functions"]
 
-        # Ensure 'self' and 'cls' are stripped and handles are callable
         assert [p["name"] for p in funcs["my_func"]["params"]] == ["a", "b"]
         assert [p["name"] for p in funcs["class_sub"]["params"]] == ["flag"]
         assert [p["name"] for p in funcs["untyped_sub"]["params"]] == ["x"]
@@ -99,24 +115,32 @@ class TestLibraryBuilder:
         assert funcs["my_func"]["handle"] is SampleModule.my_func
         assert funcs["class_sub"]["handle"] == SampleModule.class_sub
 
-    def test_required_and_optional_parameters(self) -> None:
-        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+    def test_required_and_optional_parameters(
+        self: TestLibraryBuilder,
+    ) -> None:
+        project = (
+            LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        )
         params = project["modules"]["mod"]["functions"]["my_func"]["params"]
 
-        assert params[0]["name"] == "a"
-        assert params[0]["optional"] is False
-        assert params[0]["default"] is Empty
-        assert params[0]["mech"] == "ByVal"
-        assert params[0]["var"].declared_type == "integer"
+        assert params["name"] == "a"
+        assert params["optional"] is False
+        assert params["default"] is Empty
+        assert params["mech"] == "ByVal"
+        assert params["var"].declared_type == "integer"
 
-        assert params[1]["name"] == "b"
-        assert params[1]["optional"] is True
-        assert params[1]["default"] == VBADouble(1.5)
-        assert params[1]["mech"] == "ByVal"
-        assert params[1]["var"].declared_type == "double"
+        assert params["name"] == "b"
+        assert params["optional"] is True
+        default_b = params["default"]
+        assert isinstance(default_b, VBADouble)
+        assert default_b.value == 1.5
+        assert params["mech"] == "ByVal"
+        assert params["var"].declared_type == "double"
 
-    def test_vba_proc_decorator_overrides(self) -> None:
-        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+    def test_vba_proc_decorator_overrides(self: TestLibraryBuilder) -> None:
+        project = (
+            LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        )
         funcs = project["modules"]["mod"]["functions"]
 
         assert "original_name" not in funcs
@@ -127,23 +151,27 @@ class TestLibraryBuilder:
         assert proc["type"] == "Function"
 
         params = proc["params"]
-        assert params[0]["name"] == "target"
-        assert params[0]["mech"] == "ByRef"
-        assert params[0]["var"].declared_type == "long"
+        assert params["name"] == "target"
+        assert params["mech"] == "ByRef"
+        assert params["var"].declared_type == "long"
 
-        assert params[1]["name"] == "source"
-        assert params[1]["mech"] == "ByVal"
-        assert params[1]["var"].declared_type == "string"
+        assert params["name"] == "source"
+        assert params["mech"] == "ByVal"
+        assert params["var"].declared_type == "string"
 
-    def test_var_positional_args_expansion(self) -> None:
-        project = LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
-        params = project["modules"]["mod"]["functions"]["variadic_func"]["params"]
+    def test_var_positional_args_expansion(self: TestLibraryBuilder) -> None:
+        project = (
+            LibraryBuilder("TestLib").add_module("Mod", SampleModule).build()
+        )
+        params = (
+            project["modules"]["mod"]["functions"]["variadic_func"]["params"]
+        )
 
         assert len(params) == 30
-        assert params[0]["name"] == "arg1"
-        assert params[0]["optional"] is False
-        assert params[0]["default"] is Empty
-        assert params[0]["var"].declared_type == "variant"
+        assert params["name"] == "arg1"
+        assert params["optional"] is False
+        assert params["default"] is Empty
+        assert params["var"].declared_type == "variant"
 
         for idx in range(1, 30):
             assert params[idx]["name"] == f"arg{idx + 1}"
@@ -151,21 +179,25 @@ class TestLibraryBuilder:
             assert params[idx]["default"] is Empty
             assert params[idx]["mech"] == "ByVal"
 
-    def test_optional_union_and_fallback_type_annotations(self) -> None:
-        project = LibraryBuilder("TestLib").add_class("Cls", SampleClass).build()
+    def test_optional_union_and_fallback_type_annotations(
+        self: TestLibraryBuilder,
+    ) -> None:
+        project = (
+            LibraryBuilder("TestLib").add_class("Cls", SampleClass).build()
+        )
         params = project["classes"]["cls"]["functions"]["method_one"]["params"]
 
-        assert params[0]["var"].declared_type == "integer"
-        assert params[0]["optional"] is True
-        assert params[0]["default"] is None
+        assert params["var"].declared_type == "integer"
+        assert params["optional"] is True
+        assert params["default"] is None
 
-        assert params[1]["var"].declared_type == "string"
-        assert params[1]["optional"] is True
-        assert params[1]["default"] is None
+        assert params["var"].declared_type == "string"
+        assert params["optional"] is True
+        assert params["default"] is None
 
-        assert params[2]["var"].declared_type == "variant"
-        assert params[2]["optional"] is True
-        assert params[2]["default"] is Empty
+        assert params["var"].declared_type == "variant"
+        assert params["optional"] is True
+        assert params["default"] is Empty
 
     @pytest.mark.parametrize(
         ("annotation", "expected_type"),
@@ -182,8 +214,8 @@ class TestLibraryBuilder:
         ],
     )
     def test_make_vba_variable_type_mapping(
-        self, annotation: object, expected_type: str
+        self: TestLibraryBuilder, annotation: Any, expected_type: str
     ) -> None:
-        var = LibraryBuilder._make_vba_variable(annotation)
+        var: VBAVariable = LibraryBuilder._make_vba_variable(annotation)
         assert isinstance(var, VBAVariable)
         assert var.declared_type == expected_type
