@@ -123,19 +123,19 @@ class TestLibraryBuilder:
         )
         params = project["modules"]["mod"]["functions"]["my_func"]["params"]
 
-        assert params["name"] == "a"
-        assert params["optional"] is False
-        assert params["default"] is Empty
-        assert params["mech"] == "ByVal"
-        assert params["var"].declared_type == "integer"
+        assert params[0]["name"] == "a"
+        assert params[0]["optional"] is False
+        assert params[0]["default"] is Empty
+        assert params[0]["mech"] == "ByVal"
+        assert params[0]["var"].declared_type == "integer"
 
-        assert params["name"] == "b"
-        assert params["optional"] is True
-        default_b = params["default"]
+        assert params[1]["name"] == "b"
+        assert params[1]["optional"] is True
+        default_b = params[1]["default"]
         assert isinstance(default_b, VBADouble)
         assert default_b.value == 1.5
-        assert params["mech"] == "ByVal"
-        assert params["var"].declared_type == "double"
+        assert params[1]["mech"] == "ByVal"
+        assert params[1]["var"].declared_type == "double"
 
     def test_vba_proc_decorator_overrides(self: TestLibraryBuilder) -> None:
         project = (
@@ -151,13 +151,13 @@ class TestLibraryBuilder:
         assert proc["type"] == "Function"
 
         params = proc["params"]
-        assert params["name"] == "target"
-        assert params["mech"] == "ByRef"
-        assert params["var"].declared_type == "long"
+        assert params[0]["name"] == "target"
+        assert params[0]["mech"] == "ByRef"
+        assert params[0]["var"].declared_type == "long"
 
-        assert params["name"] == "source"
-        assert params["mech"] == "ByVal"
-        assert params["var"].declared_type == "string"
+        assert params[1]["name"] == "source"
+        assert params[1]["mech"] == "ByVal"
+        assert params[1]["var"].declared_type == "string"
 
     def test_var_positional_args_expansion(self: TestLibraryBuilder) -> None:
         project = (
@@ -168,10 +168,10 @@ class TestLibraryBuilder:
         )
 
         assert len(params) == 30
-        assert params["name"] == "arg1"
-        assert params["optional"] is False
-        assert params["default"] is Empty
-        assert params["var"].declared_type == "variant"
+        assert params[0]["name"] == "arg1"
+        assert params[0]["optional"] is False
+        assert params[0]["default"] is Empty
+        assert params[0]["var"].declared_type == "variant"
 
         for idx in range(1, 30):
             assert params[idx]["name"] == f"arg{idx + 1}"
@@ -187,17 +187,17 @@ class TestLibraryBuilder:
         )
         params = project["classes"]["cls"]["functions"]["method_one"]["params"]
 
-        assert params["var"].declared_type == "integer"
-        assert params["optional"] is True
-        assert params["default"] is None
+        assert params[0]["var"].declared_type == "integer"
+        assert params[0]["optional"] is True
+        assert params[0]["default"] is None
 
-        assert params["var"].declared_type == "string"
-        assert params["optional"] is True
-        assert params["default"] is None
+        assert params[1]["var"].declared_type == "string"
+        assert params[1]["optional"] is True
+        assert params[1]["default"] is None
 
-        assert params["var"].declared_type == "variant"
-        assert params["optional"] is True
-        assert params["default"] is Empty
+        assert params[2]["var"].declared_type == "variant"
+        assert params[2]["optional"] is True
+        assert params[2]["default"] is Empty
 
     @pytest.mark.parametrize(
         ("annotation", "expected_type"),
