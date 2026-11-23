@@ -16,3 +16,5 @@ and this project adheres to [Semantic Versioning](https://semver.org).
 - Added String
 - Added type coersions
 - Added an operator registry
+- Added contracts
+- Added Library Builder
