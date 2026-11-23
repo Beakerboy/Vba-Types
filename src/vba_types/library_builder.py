@@ -167,5 +167,9 @@ class LibraryBuilder:
             declared = _TYPE_MAP.get(resolved, "variant")
             if declared == "variant":
                 return VBAVariable(declared_type="variant")
-            return VBAVariable(value=resolved(), declared_type=declared)
+            default_val = resolved()
+            if hasattr(default_val, "value"):
+                default_val = default_val.value
+            return VBAVariable(value=default_val, declared_type=declared)
         return VBAVariable(declared_type="variant")
+
