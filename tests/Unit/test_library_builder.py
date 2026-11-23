@@ -6,7 +6,7 @@ import pytest
 from vba_types.empty import Empty
 from vba_types.integral_type import VBAInteger, VBALong
 from vba_types.numeric_type import VBANumericType
-from vba_types.project_builder import LibraryBuilder, vba_proc
+from vba_types.library_builder import LibraryBuilder, vba_proc
 from vba_types.string import VBAString
 from vba_types.vba_type_base import VBATypeBase
 from vba_types.variable import VBAVariable
