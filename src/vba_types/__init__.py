@@ -4,6 +4,7 @@ from .contracts import LibProjectDefinition
 from .double import VBADouble
 from .empty import VBAEmpty, Empty
 from .integral_type import VBAInteger,  VBALong
+from .library_builder import LibraryBuilder
 from .string import VBAString
 from .vba_type_base import VBATypeBase
 from .literal_factory import literal_from_string
@@ -25,4 +26,5 @@ __all__ = [
     "VBAVariable",
     "literal_from_string",
     "LibProjectDefinition",
+    "LibraryBuilder",
 ]
