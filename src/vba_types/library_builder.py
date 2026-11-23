@@ -165,11 +165,5 @@ class LibraryBuilder:
         resolved = cls._unwrap_optional(annotation)
         if isinstance(resolved, type) and issubclass(resolved, VBATypeBase):
             declared = _TYPE_MAP.get(resolved, "variant")
-            if declared == "variant":
-                return VBAVariable(declared_type="variant")
-            default_val = resolved()
-            if hasattr(default_val, "value"):
-                default_val = default_val.value
-            return VBAVariable(value=default_val, declared_type=declared)
+            return VBAVariable(declared_type=declared)
         return VBAVariable(declared_type="variant")
-
