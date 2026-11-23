@@ -36,7 +36,7 @@ def lon_self(value: VBANumericType) -> VBALong:
 
 
 def dbl_self(value: VBANumericType) -> VBADouble:
-    return VBADouble(float(value))
+    return VBADouble(float(value.value))
 
 
 def bool_self(value: VBATypeBase) -> VBABoolean:
