@@ -3,12 +3,10 @@ from __future__ import annotations
 from typing import Any, Optional, Type
 import pytest
 
-from vba_types.boolean import VBABoolean
-from vba_types.double import VBADouble
 from vba_types.empty import Empty
 from vba_types.integral_type import VBAInteger, VBALong
 from vba_types.numeric_type import VBANumericType
-from vba_types.library_builder import LibraryBuilder, vba_proc
+from vba_types.project_builder import LibraryBuilder, vba_proc
 from vba_types.string import VBAString
 from vba_types.vba_type_base import VBATypeBase
 from vba_types.variable import VBAVariable
@@ -21,13 +19,11 @@ class SampleModule:
         pass
 
     @staticmethod
-    def my_func(
-        a: VBAInteger, b: VBADouble = VBADouble(1.5)
-    ) -> VBAString:
+    def my_func(a: VBAInteger, b: VBALong = VBALong(10)) -> VBAString:
         return VBAString("ok")
 
     @classmethod
-    def class_sub(cls: Type[SampleModule], flag: VBABoolean) -> None:
+    def class_sub(cls: Type[SampleModule], flag: VBAInteger) -> None:
         pass
 
     def untyped_sub(self: SampleModule, x) -> None:  # noqa: ANN001
@@ -36,12 +32,12 @@ class SampleModule:
     @vba_proc(byref=["target"], name="CustomProcName")
     def original_name(
         self: SampleModule, target: VBALong, source: VBAString
-    ) -> VBABoolean:
-        return VBABoolean(True)
+    ) -> VBAInteger:
+        return VBAInteger(1)
 
     @staticmethod
-    def variadic_func(*args: VBANumericType) -> VBADouble:
-        return VBADouble(0.0)
+    def variadic_func(*args: VBANumericType) -> VBALong:
+        return VBALong(0)
 
 
 class SampleClass:
@@ -132,10 +128,10 @@ class TestLibraryBuilder:
         assert params[1]["name"] == "b"
         assert params[1]["optional"] is True
         default_b = params[1]["default"]
-        assert isinstance(default_b, VBADouble)
-        assert default_b.value == 1.5
+        assert isinstance(default_b, VBALong)
+        assert default_b.value == 10
         assert params[1]["mech"] == "ByVal"
-        assert params[1]["var"].declared_type == "double"
+        assert params[1]["var"].declared_type == "long"
 
     def test_vba_proc_decorator_overrides(self: TestLibraryBuilder) -> None:
         project = (
@@ -202,10 +198,8 @@ class TestLibraryBuilder:
     @pytest.mark.parametrize(
         ("annotation", "expected_type"),
         [
-            (VBABoolean, "boolean"),
             (VBAInteger, "integer"),
             (VBALong, "long"),
-            (VBADouble, "double"),
             (VBAString, "string"),
             (VBANumericType, "variant"),
             (VBATypeBase, "variant"),
