@@ -62,17 +62,17 @@ class TestLibraryBuilder:
         )
 
         assert project["name"] == "myproject"
-        assert project["type"] == "Library"
+        assert project["type"] == "library"
         assert "mymodule" in project["modules"]
         assert "myclass" in project["classes"]
 
         mod = project["modules"]["mymodule"]
         assert mod["name"] == "mymodule"
-        assert mod["type"] == "Module"
+        assert mod["type"] == "module"
 
         cls_def = project["classes"]["myclass"]
         assert cls_def["name"] == "myclass"
-        assert cls_def["type"] == "Class"
+        assert cls_def["type"] == "class"
 
     def test_ignores_private_and_non_callable_attributes(
         self: TestLibraryBuilder,
