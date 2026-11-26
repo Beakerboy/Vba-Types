@@ -59,7 +59,7 @@ class LibraryBuilder:
         mod_key = module_name.lower()
         self._modules[mod_key] = {
             "name": mod_key,
-            "type": "Module",
+            "type": "module",
             "functions": self._extract_procedures(mod_key, cls),
         }
         return self
@@ -68,7 +68,7 @@ class LibraryBuilder:
         cls_key = class_name.lower()
         self._classes[cls_key] = {
             "name": cls_key,
-            "type": "Class",
+            "type": "class",
             "functions": self._extract_procedures(cls_key, cls),
         }
         return self
@@ -76,7 +76,7 @@ class LibraryBuilder:
     def build(self: T) -> LibProjectDefinition:
         return {
             "name": self.name,
-            "type": "Library",
+            "type": "library",
             "modules": self._modules,
             "classes": self._classes,
         }
