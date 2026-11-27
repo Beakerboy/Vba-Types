@@ -5,6 +5,7 @@ from .double import VBADouble
 from .empty import VBAEmpty, Empty
 from .integral_type import VBAInteger,  VBALong
 from .library_builder import LibraryBuilder
+from .numeric_type import VBANumericType
 from .string import VBAString
 from .vba_type_base import VBATypeBase
 from .literal_factory import literal_from_string
