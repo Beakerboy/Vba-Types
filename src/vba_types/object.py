@@ -1,0 +1,2 @@
+class VBAObject:
+    pass
